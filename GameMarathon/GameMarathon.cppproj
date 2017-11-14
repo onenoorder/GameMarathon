@@ -240,6 +240,12 @@
     </VisualMicroSettings>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="Game.cpp">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="Game.h">
+      <SubType>compile</SubType>
+    </Compile>
     <Compile Include="GameMarathon.ino">
       <SubType>compile</SubType>
     </Compile>

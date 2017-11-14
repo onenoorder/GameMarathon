@@ -1,0 +1,18 @@
+/*
+ * GameMarathon.cpp
+ *
+ * Created: 14-11-2017 10:50:11
+ * Author : Gerhard
+ */ 
+
+#include <avr/io.h>
+
+
+int main(void)
+{
+    /* Replace with your application code */
+    while (1) 
+    {
+    }
+}
+

@@ -2,19 +2,13 @@
  * GameMarathon.ino
  *
  * Created: 11/14/2017 10:50:10 AM
- * Author: Gerhard
+ * Author: GameMarathonTeam
  */ 
 
-void setup()
-{
+int main(void){
 
-	  /* add setup code here, setup code runs once when the processor starts */
+	while(1){
 
-}
-
-void loop()
-{
-
-	  /* add main program code here, this code starts again each time it ends */
-
+	}
+	return 0;
 }

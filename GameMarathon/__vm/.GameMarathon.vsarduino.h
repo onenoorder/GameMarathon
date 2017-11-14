@@ -18,8 +18,7 @@
 #define ARDUINO 10804
 #define ARDUINO_AVR_UNO
 #define ARDUINO_ARCH_AVR
-//
-//
+int main(void);
 
 #include "pins_arduino.h" 
 #include "Arduino.h"

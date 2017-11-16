@@ -18,9 +18,7 @@ int main(void)
 	Slave slave(0);
 
 	games[0] = new Bomberman();
-	games[0]->LoadMap();
-
-	
+	games[0]->Load();
 
 	/* Replace with your application code */
 	while (1)

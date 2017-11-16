@@ -17,7 +17,7 @@ protected:
 	MI0283QT9 *_LCD;
 //functions
 public:
-	virtual void LoadMap() = 0;
+	virtual void Load() = 0;
 	virtual ~Game();
 protected:
 	void InitScreen();

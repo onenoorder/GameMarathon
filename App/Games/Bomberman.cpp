@@ -11,7 +11,7 @@
 Bomberman::Bomberman()
 {
 	this->InitScreen();
-	_gridSize = 15;
+	_gridBlockSize = 15;
 	_offsetX = 16;
 	_offsetY = 8;
 	_maxX = 19;
@@ -28,12 +28,12 @@ Bomberman::Bomberman()
 		_grid[x] = new char[_maxY];
 } //Bomberman
 
-void Bomberman::LoadMap()
+void Bomberman::Load()
 {
 	// Border
 	_LCD->fillScreen(_wall);
 	// Background
-	_LCD->fillRect(_offsetX, _offsetY, _gridSize * _maxX, _gridSize * _maxY, _background);
+	_LCD->fillRect(_offsetX, _offsetY, _gridBlockSize * _maxX, _gridBlockSize * _maxY, _background);
 
 	for(char x = 0; x < _maxX; x++){
 		for(char y = 0; y < _maxY; y++){
@@ -43,23 +43,25 @@ void Bomberman::LoadMap()
 			// Player 3 location
 			else if(x == _maxX - 1 && y < 3 || y == 0 && x > _maxX-4)
 				_grid[x][y] = 0;
+			// Player 4 location
 			else if(y == _maxY - 1 && x < 3 || x == 0 && y > _maxY-4)
 				_grid[x][y] = 0;
-			// Player 4 location
+			// Player 2 location
 			else if(y == _maxY - 1 && x > _maxX - 4 || x == _maxX-1 && y > _maxY-4)
 				_grid[x][y] = 0;
-			// Player 2 location
+			// Wall
 			else if(x % 2 == 1 && y % 2 == 1)
 				_grid[x][y] = 64;
+			// Rock
 			else
 				_grid[x][y] = 32;
 
 			// Wall
 			if(_grid[x][y] > 32)
-				_LCD->fillRect(_offsetX + x * _gridSize, _offsetY + y * _gridSize, _gridSize, _gridSize, _wall);
+				_LCD->fillRect(_offsetX + x * _gridBlockSize, _offsetY + y * _gridBlockSize, _gridBlockSize, _gridBlockSize, _wall);
 			// Rock
 			else if(_grid[x][y] > 16)
-				_LCD->fillRect(_offsetX + x * _gridSize, _offsetY + y * _gridSize, _gridSize, _gridSize, _rock);
+				_LCD->fillRect(_offsetX + x * _gridBlockSize, _offsetY + y * _gridBlockSize, _gridBlockSize, _gridBlockSize, _rock);
 		}
 	}
 }

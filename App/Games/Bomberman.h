@@ -17,7 +17,7 @@ public:
 protected:
 private:
 	char **_grid;
-	char _gridSize;
+	char _gridBlockSize;
 	char _maxX;
 	char _maxY;
 	char _offsetX;
@@ -29,7 +29,7 @@ private:
 //functions
 public:
 	Bomberman();
-	void LoadMap();
+	virtual void Load();
 	~Bomberman();
 protected:
 private:

@@ -5,6 +5,7 @@
 * Author: Gerhard
 */
 
+#include "../Lib/MI0283QT9/MI0283QT9.h"
 
 #ifndef __GAME_H__
 #define __GAME_H__
@@ -12,12 +13,14 @@
 
 class Game
 {
+protected:
+	MI0283QT9 *_LCD;
 //functions
 public:
+	virtual void Load() = 0;
 	virtual ~Game();
-	virtual void Method1()=0;//make Game not instantiable
-	virtual void Method2();
-	void Method3();
+protected:
+	void InitScreen();
 
 }; //Game
 

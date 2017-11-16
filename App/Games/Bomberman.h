@@ -4,7 +4,6 @@
 * Created: 14-11-2017 14:05:47
 * Author: Gerhard
 */
-
 #include "Game.h"
 
 #ifndef __BOMBERMAN_H__
@@ -17,10 +16,20 @@ class Bomberman : public Game
 public:
 protected:
 private:
+	char **_grid;
+	char _gridBlockSize;
+	char _maxX;
+	char _maxY;
+	char _offsetX;
+	char _offsetY;
+	uint16_t _rock;
+	uint16_t _wall;
+	uint16_t _background;
 
 //functions
 public:
 	Bomberman();
+	virtual void Load();
 	~Bomberman();
 protected:
 private:

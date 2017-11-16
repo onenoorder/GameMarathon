@@ -18,8 +18,7 @@
     <ToolchainFlavour>Native</ToolchainFlavour>
     <KeepTimersRunning>true</KeepTimersRunning>
     <OverrideVtor>false</OverrideVtor>
-    <OverrideVtorValue>
-    </OverrideVtorValue>
+    <OverrideVtorValue>exception_table</OverrideVtorValue>
     <eraseonlaunchrule>0</eraseonlaunchrule>
     <ProgFlashFromRam>true</ProgFlashFromRam>
     <RamSnippetAddress>0x20000000</RamSnippetAddress>
@@ -66,6 +65,8 @@
   </avrgcc.compiler.symbols.DefSymbols>
   <avrgcc.compiler.directories.IncludePaths>
     <ListValues>
+      <Value>C:/Program Files (x86)/Arduino/hardware/arduino/avr/libraries/SPI/src</Value>
+      <Value>C:/Program Files (x86)/Arduino/hardware/arduino/avr/libraries/Wire/src</Value>
       <Value>C:/Program Files (x86)/Arduino/libraries</Value>
       <Value>C:/Program Files (x86)/Arduino/hardware/arduino/avr/libraries</Value>
       <Value>C:/Users/Gerhard/Documents/Arduino/libraries</Value>
@@ -101,6 +102,8 @@
   </avrgcccpp.compiler.symbols.DefSymbols>
   <avrgcccpp.compiler.directories.IncludePaths>
     <ListValues>
+      <Value>C:/Program Files (x86)/Arduino/hardware/arduino/avr/libraries/SPI/src</Value>
+      <Value>C:/Program Files (x86)/Arduino/hardware/arduino/avr/libraries/Wire/src</Value>
       <Value>C:/Program Files (x86)/Arduino/libraries</Value>
       <Value>C:/Program Files (x86)/Arduino/hardware/arduino/avr/libraries</Value>
       <Value>C:/Users/Gerhard/Documents/Arduino/libraries</Value>
@@ -125,6 +128,11 @@
       <Value>libm</Value>
     </ListValues>
   </avrgcccpp.linker.libraries.Libraries>
+  <avrgcccpp.linker.libraries.LibrarySearchPaths>
+    <ListValues>
+      <Value>C:\Users\Gerhard\Dropbox\Windesheim\KBS\KBS 4 Bomberman\GameMarathon\App\Lib\ADS7846</Value>
+    </ListValues>
+  </avrgcccpp.linker.libraries.LibrarySearchPaths>
   <avrgcccpp.assembler.general.IncludePaths>
     <ListValues>
       <Value>%24(PackRepoDir)\atmel\ATmega_DFP\1.2.132\include</Value>
@@ -133,10 +141,11 @@
   <avrgcccpp.assembler.debugging.DebugLevel>Default (-Wa,-g)</avrgcccpp.assembler.debugging.DebugLevel>
 </AvrGccCpp>
     </ToolchainSettings>
-    <VMSETTING_IncludePaths>C:/Program Files (x86)/Arduino/libraries;C:/Program Files (x86)/Arduino/hardware/arduino/avr/libraries;C:/Users/Gerhard/Documents/Arduino/libraries;C:/Program Files (x86)/Arduino/hardware/arduino/avr/cores/arduino;C:/Program Files (x86)/Arduino/hardware/arduino/avr/variants/standard;../../../App;C:/Program Files (x86)/Arduino/hardware/tools/avr/avr/include/;C:/Program Files (x86)/Arduino/hardware/tools/avr/avr/include/avr/;C:/Program Files (x86)/Arduino/hardware/tools/avr/lib/gcc/avr/4.8.1/include;C:/Program Files (x86)/Arduino/hardware/tools/avr/lib/gcc/avr/4.9.2/include;C:/Program Files (x86)/Arduino/hardware/tools/avr/lib/gcc/avr/4.9.3/include;</VMSETTING_IncludePaths>
+    <VMSETTING_IncludePaths>C:/Program Files (x86)/Arduino/libraries;C:/Program Files (x86)/Arduino/hardware/arduino/avr/libraries;C:/Users/Gerhard/Documents/Arduino/libraries;C:/Program Files (x86)/Arduino/hardware/arduino/avr/cores/arduino;C:/Program Files (x86)/Arduino/hardware/arduino/avr/variants/standard;../../../App;C:/Program Files (x86)/Arduino/hardware/tools/avr/avr/include/;C:/Program Files (x86)/Arduino/hardware/tools/avr/avr/include/avr/;C:/Program Files (x86)/Arduino/hardware/tools/avr/lib/gcc/avr/4.8.1/include;C:/Program Files (x86)/Arduino/hardware/tools/avr/lib/gcc/avr/4.9.2/include;C:/Program Files (x86)/Arduino/hardware/tools/avr/lib/gcc/avr/4.9.3/include;C:/Program Files (x86)/Arduino/hardware/arduino/avr/libraries/SPI/src;C:/Program Files (x86)/Arduino/hardware/arduino/avr/libraries/Wire/src;</VMSETTING_IncludePaths>
     <VisualMicroSettings>
-      <VisualMicroSettings xmlns="">
+      <VisualMicroSettings>
         <ValidatedAS7>1</ValidatedAS7>
+        <arduino.upload.port>COM3</arduino.upload.port>
       </VisualMicroSettings>
     </VisualMicroSettings>
   </PropertyGroup>
@@ -165,6 +174,8 @@
   </avrgcc.compiler.symbols.DefSymbols>
   <avrgcc.compiler.directories.IncludePaths>
     <ListValues>
+      <Value>C:/Program Files (x86)/Arduino/hardware/arduino/avr/libraries/SPI/src</Value>
+      <Value>C:/Program Files (x86)/Arduino/hardware/arduino/avr/libraries/Wire/src</Value>
       <Value>C:/Program Files (x86)/Arduino/libraries</Value>
       <Value>C:/Program Files (x86)/Arduino/hardware/arduino/avr/libraries</Value>
       <Value>C:/Users/Gerhard/Documents/Arduino/libraries</Value>
@@ -200,6 +211,8 @@
   </avrgcccpp.compiler.symbols.DefSymbols>
   <avrgcccpp.compiler.directories.IncludePaths>
     <ListValues>
+      <Value>C:/Program Files (x86)/Arduino/hardware/arduino/avr/libraries/SPI/src</Value>
+      <Value>C:/Program Files (x86)/Arduino/hardware/arduino/avr/libraries/Wire/src</Value>
       <Value>C:/Program Files (x86)/Arduino/libraries</Value>
       <Value>C:/Program Files (x86)/Arduino/hardware/arduino/avr/libraries</Value>
       <Value>C:/Users/Gerhard/Documents/Arduino/libraries</Value>
@@ -224,6 +237,11 @@
       <Value>libm</Value>
     </ListValues>
   </avrgcccpp.linker.libraries.Libraries>
+  <avrgcccpp.linker.libraries.LibrarySearchPaths>
+    <ListValues>
+      <Value>C:\Users\Gerhard\Dropbox\Windesheim\KBS\KBS 4 Bomberman\GameMarathon\App\Lib\ADS7846</Value>
+    </ListValues>
+  </avrgcccpp.linker.libraries.LibrarySearchPaths>
   <avrgcccpp.assembler.general.IncludePaths>
     <ListValues>
       <Value>%24(PackRepoDir)\atmel\ATmega_DFP\1.2.132\include</Value>
@@ -232,10 +250,11 @@
   <avrgcccpp.assembler.debugging.DebugLevel>Default (-Wa,-g)</avrgcccpp.assembler.debugging.DebugLevel>
 </AvrGccCpp>
     </ToolchainSettings>
-    <VMSETTING_IncludePaths>C:/Program Files (x86)/Arduino/libraries;C:/Program Files (x86)/Arduino/hardware/arduino/avr/libraries;C:/Users/Gerhard/Documents/Arduino/libraries;C:/Program Files (x86)/Arduino/hardware/arduino/avr/cores/arduino;C:/Program Files (x86)/Arduino/hardware/arduino/avr/variants/standard;../../../App;C:/Program Files (x86)/Arduino/hardware/tools/avr/avr/include/;C:/Program Files (x86)/Arduino/hardware/tools/avr/avr/include/avr/;C:/Program Files (x86)/Arduino/hardware/tools/avr/lib/gcc/avr/4.8.1/include;C:/Program Files (x86)/Arduino/hardware/tools/avr/lib/gcc/avr/4.9.2/include;C:/Program Files (x86)/Arduino/hardware/tools/avr/lib/gcc/avr/4.9.3/include;</VMSETTING_IncludePaths>
+    <VMSETTING_IncludePaths>C:/Program Files (x86)/Arduino/libraries;C:/Program Files (x86)/Arduino/hardware/arduino/avr/libraries;C:/Users/Gerhard/Documents/Arduino/libraries;C:/Program Files (x86)/Arduino/hardware/arduino/avr/cores/arduino;C:/Program Files (x86)/Arduino/hardware/arduino/avr/variants/standard;../../../App;C:/Program Files (x86)/Arduino/hardware/tools/avr/avr/include/;C:/Program Files (x86)/Arduino/hardware/tools/avr/avr/include/avr/;C:/Program Files (x86)/Arduino/hardware/tools/avr/lib/gcc/avr/4.8.1/include;C:/Program Files (x86)/Arduino/hardware/tools/avr/lib/gcc/avr/4.9.2/include;C:/Program Files (x86)/Arduino/hardware/tools/avr/lib/gcc/avr/4.9.3/include;C:/Program Files (x86)/Arduino/hardware/arduino/avr/libraries/SPI/src;C:/Program Files (x86)/Arduino/hardware/arduino/avr/libraries/Wire/src;</VMSETTING_IncludePaths>
     <VisualMicroSettings>
-      <VisualMicroSettings xmlns="">
+      <VisualMicroSettings>
         <ValidatedAS7>1</ValidatedAS7>
+        <arduino.upload.port>COM3</arduino.upload.port>
       </VisualMicroSettings>
     </VisualMicroSettings>
   </PropertyGroup>
@@ -255,6 +274,84 @@
     <Compile Include="Games\Game.h">
       <SubType>compile</SubType>
     </Compile>
+    <Compile Include="Lib\ADS7846\ADS7846.cpp">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="Lib\ADS7846\ADS7846.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="Lib\digitalWriteFast\digitalWriteFast.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="Lib\DS1307\DS1307.cpp">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="Lib\DS1307\DS1307.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="Lib\GraphicsLib\BMPheader.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="Lib\GraphicsLib\fonts.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="Lib\GraphicsLib\font_10x16.c">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="Lib\GraphicsLib\font_12x16.c">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="Lib\GraphicsLib\font_12x20.c">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="Lib\GraphicsLib\font_16x26.c">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="Lib\GraphicsLib\font_4x6.c">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="Lib\GraphicsLib\font_5x12.c">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="Lib\GraphicsLib\font_5x8.c">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="Lib\GraphicsLib\font_6x10.c">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="Lib\GraphicsLib\font_6x8.c">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="Lib\GraphicsLib\font_7x12.c">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="Lib\GraphicsLib\font_8x12.c">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="Lib\GraphicsLib\font_8x14.c">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="Lib\GraphicsLib\font_8x8.c">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="Lib\GraphicsLib\GraphicsLib.cpp">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="Lib\GraphicsLib\GraphicsLib.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="Lib\MI0283QT2\MI0283QT2.cpp">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="Lib\MI0283QT2\MI0283QT2.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="Lib\MI0283QT9\MI0283QT9.cpp">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="Lib\MI0283QT9\MI0283QT9.h">
+      <SubType>compile</SubType>
+    </Compile>
     <Compile Include="Master.cpp">
       <SubType>compile</SubType>
     </Compile>
@@ -272,6 +369,13 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
+    <Folder Include="Lib" />
+    <Folder Include="Lib\ADS7846" />
+    <Folder Include="Lib\digitalWriteFast" />
+    <Folder Include="Lib\DS1307" />
+    <Folder Include="Lib\GraphicsLib" />
+    <Folder Include="Lib\MI0283QT2" />
+    <Folder Include="Lib\MI0283QT9" />
     <Folder Include="Games" />
     <Folder Include="Communication" />
     <Folder Include="__vm\" />

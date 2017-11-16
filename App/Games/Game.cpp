@@ -8,13 +8,9 @@
 
 #include "Game.h"
 
-// functions
-void Game::Method2()//virtual
-{
-}
-
-void Game::Method3()
-{
+void Game::InitScreen(){
+	_LCD = new MI0283QT9();
+	_LCD->begin();
 }
 
 // virtual destructor

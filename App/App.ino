@@ -8,6 +8,7 @@
 #include "Slave.h"
 #include "Games/Bomberman.h"
 
+MI0283QT9 *LCD;
 Game * games[1];
 
 int main(void)
@@ -17,7 +18,9 @@ int main(void)
 	Master master();
 	Slave slave(0);
 
-	games[0] = new Bomberman();
+	LCD = new MI0283QT9();
+	LCD->begin();
+	games[0] = new Bomberman(LCD);
 	games[0]->Load();
 
 	/* Replace with your application code */

@@ -22,19 +22,17 @@ private:
 	char _maxY;
 	char _offsetX;
 	char _offsetY;
-	uint16_t _rock;
-	uint16_t _wall;
-	uint16_t _background;
+	uint16_t _rockColor;
+	uint16_t _wallColor;
+	uint16_t _backgroundColor;
 
 //functions
 public:
-	Bomberman();
+	Bomberman(MI0283QT9 *LCD);
 	virtual void Load();
 	~Bomberman();
 protected:
 private:
-	Bomberman( const Bomberman &c );
-	Bomberman& operator=( const Bomberman &c );
 
 }; //Bomberman
 

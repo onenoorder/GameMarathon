@@ -13,8 +13,8 @@ BombermanPlayer::BombermanPlayer(char X,char Y, uint16_t color)
 {
 	this->X = X;
 	this->Y = Y;
-	direction = Up;
-	this->color = color;
+	Direction = Up;
+	this->Color = color;
 } //BombermanPlayer
 
 // default destructor

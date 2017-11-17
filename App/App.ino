@@ -17,6 +17,7 @@ ISR(TIMER2_OVF_vect) {
 	if (CurrentGame->Timer >= 30) {
 		CurrentGame->Timer = 0;
 		CurrentGame->GameTime++;
+		CurrentGame->NewFrame = 1;
 	}
 }
 
@@ -44,7 +45,8 @@ int main(void)
 	/* Replace with your application code */
 	while (1)
 	{
-		games[0]->Update();
-		_delay_ms(100);
+		//if(CurrentGame->NewFrame > 0)
+		CurrentGame->Update();
+
 	}
 }

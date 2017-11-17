@@ -14,7 +14,7 @@ Bomberman::Bomberman(MI0283QT9 *LCD) : Game(LCD)
 	_gridBlockSize = 15;
 	_offsetX = 16;
 	_offsetY = 8;
-	_maxX = 15;
+	_maxX = 19;
 	_maxY = 15;
 	
 	// Colors
@@ -75,12 +75,13 @@ void Bomberman::Load()
 }
 
 void Bomberman::Update(){
+	Game::Update();
 	_InputController->UpdateInput();
 	Serial.print("Gametime: ");
 	Serial.print(GameTime);
 	if(_InputController->nunchuckanalogX > 200){
 		Serial.println("right");
-		_currentPlayer->direction = Right;
+		_currentPlayer->Direction = Right;
 		if(_currentPlayer->X+1 < _maxX &&_grid[_currentPlayer->X+1][_currentPlayer->Y] == Walkable){
 			_grid[_currentPlayer->X][_currentPlayer->Y] = Walkable;
 			drawGridCell(_currentPlayer->X,_currentPlayer->Y);
@@ -91,7 +92,7 @@ void Bomberman::Update(){
 		drawGridCell(_currentPlayer->X,_currentPlayer->Y);
 	}else if(_InputController->nunchuckanalogY > 200){
 		Serial.println("Up");
-		_currentPlayer->direction = Up;
+		_currentPlayer->Direction = Up;
 		if(_currentPlayer->Y-1 >= 0 && _grid[_currentPlayer->X][_currentPlayer->Y-1] == Walkable){
 			_grid[_currentPlayer->X][_currentPlayer->Y] = Walkable;
 			drawGridCell(_currentPlayer->X,_currentPlayer->Y);
@@ -103,7 +104,7 @@ void Bomberman::Update(){
 	}
 	else if(_InputController->nunchuckanalogX < 50){
 	Serial.println("Left");
-		_currentPlayer->direction = Left;
+		_currentPlayer->Direction = Left;
 		 if(_currentPlayer->X-1 >= 0 &&_grid[_currentPlayer->X-1][_currentPlayer->Y] == Walkable){
 			_grid[_currentPlayer->X][_currentPlayer->Y] = Walkable;
 			drawGridCell(_currentPlayer->X,_currentPlayer->Y);
@@ -115,7 +116,7 @@ void Bomberman::Update(){
 	}
 	else if(_InputController->nunchuckanalogY < 50){
 		Serial.println("Down");
-		_currentPlayer->direction = Down;
+		_currentPlayer->Direction = Down;
 		if(_currentPlayer->Y+1 < _maxY &&_grid[_currentPlayer->X][_currentPlayer->Y+1] == Walkable){
 			_grid[_currentPlayer->X][_currentPlayer->Y] = Walkable;
 			drawGridCell(_currentPlayer->X,_currentPlayer->Y);
@@ -140,20 +141,20 @@ void Bomberman::drawGridCell(char x, char y){
 		_LCD->fillRect(_offsetX + x * _gridBlockSize, _offsetY + y * _gridBlockSize, _gridBlockSize, _gridBlockSize, _backgroundColor);
 	else if(_grid[x][y] == Player2 || _grid[x][y] == Player1){		
 
-		if(_currentPlayer->direction == Up){
-			_LCD->fillEllipse(_offsetX + x * _gridBlockSize + (_gridBlockSize/2), _offsetY + y * _gridBlockSize + (_gridBlockSize/2), _gridBlockSize/2, _gridBlockSize/4, _currentPlayer->color);
+		if(_currentPlayer->Direction == Up){
+			_LCD->fillEllipse(_offsetX + x * _gridBlockSize + (_gridBlockSize/2), _offsetY + y * _gridBlockSize + (_gridBlockSize/2), _gridBlockSize/2, _gridBlockSize/4, _currentPlayer->Color);
 			_LCD->fillRect(_offsetX + x * _gridBlockSize + (_gridBlockSize/2)+3 , _offsetY + y * _gridBlockSize + (_gridBlockSize/2)-7,3,_gridBlockSize/3, RGB(55,55,55));
 		}
-		else if(_currentPlayer->direction == Right){
-			_LCD->fillEllipse(_offsetX + x * _gridBlockSize + (_gridBlockSize/2), _offsetY + y * _gridBlockSize + (_gridBlockSize/2), _gridBlockSize/4, _gridBlockSize/2, _currentPlayer->color);
+		else if(_currentPlayer->Direction == Right){
+			_LCD->fillEllipse(_offsetX + x * _gridBlockSize + (_gridBlockSize/2), _offsetY + y * _gridBlockSize + (_gridBlockSize/2), _gridBlockSize/4, _gridBlockSize/2, _currentPlayer->Color);
 			_LCD->fillRect(_offsetX + x * _gridBlockSize + (_gridBlockSize/2)+2 , _offsetY + y * _gridBlockSize + (_gridBlockSize/2)-6,_gridBlockSize/3,3, RGB(55,55,55));			
 		}
-		else if(_currentPlayer->direction == Down){
-			_LCD->fillEllipse(_offsetX + x * _gridBlockSize + (_gridBlockSize/2), _offsetY + y * _gridBlockSize + (_gridBlockSize/2), _gridBlockSize/2, _gridBlockSize/4, _currentPlayer->color);
+		else if(_currentPlayer->Direction == Down){
+			_LCD->fillEllipse(_offsetX + x * _gridBlockSize + (_gridBlockSize/2), _offsetY + y * _gridBlockSize + (_gridBlockSize/2), _gridBlockSize/2, _gridBlockSize/4, _currentPlayer->Color);
 			_LCD->fillRect(_offsetX + x * _gridBlockSize + (_gridBlockSize/2)-6 , _offsetY + y * _gridBlockSize + (_gridBlockSize/2)+2,3,_gridBlockSize/3, RGB(55,55,55));
 		}
-		else if(_currentPlayer->direction == Left){
-			_LCD->fillEllipse(_offsetX + x * _gridBlockSize + (_gridBlockSize/2), _offsetY + y * _gridBlockSize + (_gridBlockSize/2), _gridBlockSize/4, _gridBlockSize/2, _currentPlayer->color);
+		else if(_currentPlayer->Direction == Left){
+			_LCD->fillEllipse(_offsetX + x * _gridBlockSize + (_gridBlockSize/2), _offsetY + y * _gridBlockSize + (_gridBlockSize/2), _gridBlockSize/4, _gridBlockSize/2, _currentPlayer->Color);
 			_LCD->fillRect(_offsetX + x * _gridBlockSize + (_gridBlockSize/2)-7 , _offsetY + y * _gridBlockSize + (_gridBlockSize/2)+3,_gridBlockSize/3,3, RGB(55,55,55));		
 		}
 		_LCD->fillCircle(_offsetX + x * _gridBlockSize + (_gridBlockSize/2), _offsetY + y * _gridBlockSize + (_gridBlockSize/2), _gridBlockSize/6, RGB(0, 0, 0));

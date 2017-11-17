@@ -21,15 +21,16 @@ enum DirectionEnum {
 class Game
 {
 public:
-	unsigned int Timer = 0;
+	unsigned char Timer = 0;
 	unsigned int GameTime = 0;
+	unsigned char NewFrame;
 protected:
 	MI0283QT9 *_LCD;
 	InputController * _InputController;
 //functions
 public:
 	virtual void Load() = 0;
-	virtual void Update() = 0;
+	virtual void Update();
 
 	virtual ~Game();
 protected:

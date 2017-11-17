@@ -8,13 +8,15 @@
 #include "Slave.h"
 #include "Games/Bomberman.h"
 
-Game * Currentgame;
+MI0283QT9 *LCD;
+Game * games[1];
+Game * CurrentGame;
 
 ISR(TIMER2_OVF_vect) {
-	Currentgame->Timer++;
-	if (Currentgame->Timer >= 30) {
-		Currentgame->Timer = 0;
-		Currentgame->GameTime++;
+	CurrentGame->Timer++;
+	if (CurrentGame->Timer >= 30) {
+		CurrentGame->Timer = 0;
+		CurrentGame->GameTime++;
 	}
 }
 
@@ -31,16 +33,18 @@ int main(void)
 	Serial.begin(9600);
 	Master master();
 	Slave slave(0);
-
-	Currentgame = new Bomberman();
-	Currentgame->Load();
-
+	
 	sei();
+	LCD = new MI0283QT9();
+	LCD->begin();
+	games[0] = new Bomberman(LCD);
+	games[0]->Load();
+	CurrentGame = games[0];
 
 	/* Replace with your application code */
 	while (1)
 	{
-		Currentgame->Update();
+		games[0]->Update();
 		_delay_ms(100);
 	}
 }

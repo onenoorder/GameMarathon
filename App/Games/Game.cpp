@@ -8,10 +8,8 @@
 
 #include "Game.h"
 
-void Game::InitScreen(){
-	_LCD = new MI0283QT9();
-	_LCD->begin();
-
+Game::Game(MI0283QT9 *LCD){
+	_LCD = LCD;
 	_InputController = new InputController();
 	_InputController->UpdateInput();
 }

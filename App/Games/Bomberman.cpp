@@ -9,9 +9,8 @@
 
 
 // default constructor
-Bomberman::Bomberman()
+Bomberman::Bomberman(MI0283QT9 *LCD) : Game(LCD)
 {
-	this->InitScreen();
 	_gridBlockSize = 15;
 	_offsetX = 16;
 	_offsetY = 8;
@@ -19,9 +18,9 @@ Bomberman::Bomberman()
 	_maxY = 15;
 	
 	// Colors
-	_wall = RGB(24,24,24);
-	_background = RGB(31, 145, 39);
-	_rock = RGB(85,85,85);
+	_wallColor = RGB(24,24,24);
+	_backgroundColor = RGB(31, 145, 39);
+	_rockColor = RGB(85,85,85);
 
 	// Make grid
 	_grid = new char*[_maxX];
@@ -32,9 +31,9 @@ Bomberman::Bomberman()
 void Bomberman::Load()
 {
 	// Border
-	_LCD->fillScreen(_wall);
+	_LCD->fillScreen(_wallColor);
 	// Background
-	_LCD->fillRect(_offsetX, _offsetY, _gridBlockSize * _maxX, _gridBlockSize * _maxY, _background);	
+	_LCD->fillRect(_offsetX, _offsetY, _gridBlockSize * _maxX, _gridBlockSize * _maxY, _backgroundColor);
 
 	for(char x = 0; x < _maxX; x++){
 		for(char y = 0; y < _maxY; y++){
@@ -131,14 +130,14 @@ void Bomberman::Update(){
 }
 
 void Bomberman::drawGridCell(char x, char y){
-	_LCD->fillRect(_offsetX + x * _gridBlockSize, _offsetY + y * _gridBlockSize, _gridBlockSize, _gridBlockSize, _background);
+	_LCD->fillRect(_offsetX + x * _gridBlockSize, _offsetY + y * _gridBlockSize, _gridBlockSize, _gridBlockSize, _backgroundColor);
 
 	if(_grid[x][y] == Wall)
-		_LCD->fillRect(_offsetX + x * _gridBlockSize, _offsetY + y * _gridBlockSize, _gridBlockSize, _gridBlockSize, _wall);
+		_LCD->fillRect(_offsetX + x * _gridBlockSize, _offsetY + y * _gridBlockSize, _gridBlockSize, _gridBlockSize, _wallColor);
 	else if(_grid[x][y] >= Rock)
-		_LCD->fillRect(_offsetX + x * _gridBlockSize, _offsetY + y * _gridBlockSize, _gridBlockSize, _gridBlockSize, _rock);
+		_LCD->fillRect(_offsetX + x * _gridBlockSize, _offsetY + y * _gridBlockSize, _gridBlockSize, _gridBlockSize, _rockColor);
 	else if(_grid[x][y] == Walkable)
-		_LCD->fillRect(_offsetX + x * _gridBlockSize, _offsetY + y * _gridBlockSize, _gridBlockSize, _gridBlockSize, _background);
+		_LCD->fillRect(_offsetX + x * _gridBlockSize, _offsetY + y * _gridBlockSize, _gridBlockSize, _gridBlockSize, _backgroundColor);
 	else if(_grid[x][y] == Player2 || _grid[x][y] == Player1){		
 
 		if(_currentPlayer->direction == Up){

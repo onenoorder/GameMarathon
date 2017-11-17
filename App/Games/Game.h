@@ -33,8 +33,7 @@ public:
 
 	virtual ~Game();
 protected:
-	void InitScreen();
-
+	Game(MI0283QT9 *LCD);
 }; //Game
 
 #endif //__GAME_H__

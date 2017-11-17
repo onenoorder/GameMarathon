@@ -29,14 +29,16 @@ private:
 	char Rock = 64;
 	char Player1 = 1;
 	char Player2 = 2;
-	uint16_t _rock;
-	uint16_t _wall;
-	uint16_t _background;
+	uint16_t _rockColor;
+	uint16_t _wallColor;
+	uint16_t _backgroundColor;
 	BombermanPlayer *_players;
 	BombermanPlayer *_currentPlayer;
+	
+
 //functions
 public:
-	Bomberman();
+	Bomberman(MI0283QT9 *LCD);
 	virtual void Load();
 	virtual void Update();
 

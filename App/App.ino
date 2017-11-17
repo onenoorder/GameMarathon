@@ -11,7 +11,7 @@
 Game * Currentgame;
 
 ISR(TIMER2_OVF_vect) {
-Currentgame->Timer++;
+	Currentgame->Timer++;
 	if (Currentgame->Timer >= 30) {
 		Currentgame->Timer = 0;
 		Currentgame->GameTime++;
@@ -41,6 +41,6 @@ int main(void)
 	while (1)
 	{
 		Currentgame->Update();
-		_delay_ms(20);
+		_delay_ms(100);
 	}
 }

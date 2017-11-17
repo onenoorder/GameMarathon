@@ -15,7 +15,7 @@ Bomberman::Bomberman()
 	_gridBlockSize = 15;
 	_offsetX = 16;
 	_offsetY = 8;
-	_maxX = 19;
+	_maxX = 15;
 	_maxY = 15;
 	
 	// Colors

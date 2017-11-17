@@ -5,6 +5,7 @@
 * Author: Gerhard
 */
 #include "Game.h"
+#include "../Model/BombermanPlayer.h"
 
 #ifndef __BOMBERMAN_H__
 #define __BOMBERMAN_H__
@@ -22,19 +23,27 @@ private:
 	char _maxY;
 	char _offsetX;
 	char _offsetY;
+	char _playercount;
+	char Walkable = 0;
+	char Wall = 32;
+	char Rock = 64;
+	char Player1 = 1;
+	char Player2 = 2;
 	uint16_t _rock;
 	uint16_t _wall;
 	uint16_t _background;
-
+	BombermanPlayer *_players;
+	BombermanPlayer *_currentPlayer;
 //functions
 public:
 	Bomberman();
 	virtual void Load();
+	virtual void Update();
+
 	~Bomberman();
 protected:
 private:
-	Bomberman( const Bomberman &c );
-	Bomberman& operator=( const Bomberman &c );
+	void drawGridCell(char x, char y);
 
 }; //Bomberman
 

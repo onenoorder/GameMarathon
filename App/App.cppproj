@@ -274,6 +274,12 @@
     <Compile Include="Games\Game.h">
       <SubType>compile</SubType>
     </Compile>
+    <Compile Include="Games\Snake.cpp">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="Games\Snake.h">
+      <SubType>compile</SubType>
+    </Compile>
     <Compile Include="Helpers\InputController.cpp">
       <SubType>compile</SubType>
     </Compile>
@@ -364,6 +370,12 @@
     <Compile Include="Lib\MI0283QT9\MI0283QT9.h">
       <SubType>compile</SubType>
     </Compile>
+    <Compile Include="Lib\Queue\Queue.cpp">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="Lib\Queue\Queue.h">
+      <SubType>compile</SubType>
+    </Compile>
     <Compile Include="Master.cpp">
       <SubType>compile</SubType>
     </Compile>
@@ -374,6 +386,12 @@
       <SubType>compile</SubType>
     </Compile>
     <Compile Include="Model\BombermanPlayer.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="Model\SnakePlayer.cpp">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="Model\SnakePlayer.h">
       <SubType>compile</SubType>
     </Compile>
     <Compile Include="Slave.cpp">
@@ -398,6 +416,7 @@
     <Folder Include="Communication" />
     <Folder Include="Helpers" />
     <Folder Include="Lib\ArduinoNunchuk" />
+    <Folder Include="Lib\Queue" />
     <Folder Include="Model" />
     <Folder Include="__vm\" />
   </ItemGroup>

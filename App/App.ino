@@ -7,9 +7,10 @@
 #include "Master.h"
 #include "Slave.h"
 #include "Games/Bomberman.h"
+#include "Games/Snake.h"
 
 MI0283QT9 *LCD;
-Game * games[1];
+Game * games[2];
 Game * CurrentGame;
 
 ISR(TIMER2_OVF_vect) {
@@ -39,8 +40,9 @@ int main(void)
 	LCD = new MI0283QT9();
 	LCD->begin();
 	games[0] = new Bomberman(LCD);
-	games[0]->Load();
-	CurrentGame = games[0];
+	games[1] = new Snake(LCD);
+	CurrentGame = games[1];
+	CurrentGame->Load();
 
 	/* Replace with your application code */
 	while (1)

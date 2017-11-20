@@ -11,6 +11,7 @@
 
 MI0283QT9 *LCD;
 Game * games[2];
+InputController *inputController;
 Game * CurrentGame;
 
 ISR(TIMER2_OVF_vect) {
@@ -30,21 +31,23 @@ int main(void)
 	TCCR2B |= (1 << CS22) | (1<<CS21) | (1<<CS20);	//zet de klok op prescaler 1024
 	TIMSK2 |= (1<<TOIE0); // zet interupt aan
 	TCNT2 = 0;// zet count op 0
-
+		sei();
 
 	Serial.begin(9600);
 	Master master();
 	Slave slave(0);
 	
-	sei();
+
 	LCD = new MI0283QT9();
 	LCD->begin();
-	games[0] = new Bomberman(LCD);
-	games[1] = new Snake(LCD);
-	CurrentGame = games[1];
-	CurrentGame->Load();
 
-	/* Replace with your application code */
+	inputController = new InputController();
+
+	games[0] = new Bomberman(LCD, inputController);
+	games[1] = new Snake(LCD, inputController);
+	games[0]->Load();
+	CurrentGame = games[0];
+
 	while (1)
 	{
 		//if(CurrentGame->NewFrame > 0)

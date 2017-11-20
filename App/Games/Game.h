@@ -34,7 +34,7 @@ public:
 
 	virtual ~Game();
 protected:
-	Game(MI0283QT9 *LCD);
+	Game(MI0283QT9 *LCD, InputController *inputController);
 }; //Game
 
 #endif //__GAME_H__

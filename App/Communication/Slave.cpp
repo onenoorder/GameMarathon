@@ -13,8 +13,8 @@ Slave::Slave(unsigned char ID)
 {
 	this->ID = ID;
 	Wire.begin(ID);
-	//Wire.onReceive(ReceiveData);
-	//Wire.onRequest(RequestData);
+	Wire.onReceive(ReceiveData);
+	Wire.onRequest(RequestData);
 } //Slave
 
 // default destructor

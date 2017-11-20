@@ -9,7 +9,7 @@
 
 
 // default constructor
-Bomberman::Bomberman(MI0283QT9 *LCD) : Game(LCD)
+Bomberman::Bomberman(unsigned char ID, MI0283QT9 *LCD) : Game(ID, LCD)
 {
 	_gridBlockSize = 15;
 	_offsetX = 16;
@@ -128,9 +128,8 @@ void Bomberman::Update(){
 	}
 
 	if(PlayerID == 0){
-		Master *master = new Master();
-		OutputData = 1;
-		master->Update();
+		OutputData |= PLAYER0 | MOVE_DOWN;
+		_master->Update();
 	}
 }
 
@@ -143,7 +142,7 @@ void Bomberman::drawGridCell(char x, char y){
 		_LCD->fillRect(_offsetX + x * _gridBlockSize, _offsetY + y * _gridBlockSize, _gridBlockSize, _gridBlockSize, _rockColor);
 	else if(_grid[x][y] == Walkable)
 		_LCD->fillRect(_offsetX + x * _gridBlockSize, _offsetY + y * _gridBlockSize, _gridBlockSize, _gridBlockSize, _backgroundColor);
-	else if(_grid[x][y] == Player2 || _grid[x][y] == Player1){		
+	else if(_grid[x][y] == PLAYER2 || _grid[x][y] == PLAYER1){		
 
 		if(_currentPlayer->Direction == Up){
 			_LCD->fillEllipse(_offsetX + x * _gridBlockSize + (_gridBlockSize/2), _offsetY + y * _gridBlockSize + (_gridBlockSize/2), _gridBlockSize/2, _gridBlockSize/4, _currentPlayer->Color);

@@ -28,6 +28,8 @@ public:
 	unsigned char NewFrame;
 	unsigned char PlayerID;
 protected:
+	Master *_master;
+	Slave *_slave;
 	MI0283QT9 *_LCD;
 	InputController * _InputController;
 //functions
@@ -37,7 +39,7 @@ public:
 
 	virtual ~Game();
 protected:
-	Game(MI0283QT9 *LCD);
+	Game(unsigned char ID, MI0283QT9 *LCD);
 }; //Game
 
 #endif //__GAME_H__

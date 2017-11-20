@@ -15,15 +15,17 @@ Master::Master()
 } //Master
 
 void Master::Update(){
-	/*Wire.beginTransmission(1);
+	Wire.beginTransmission(1);
 	Wire.write(OutputData);
 	Wire.endTransmission();
+	
+	OutputData = 0;
 
 	Wire.requestFrom(1, 1);
 
 	while (Wire.available()) {
 		InputData = Wire.read();
-	}*/
+	}
 }
 
 // default destructor

@@ -1,6 +1,9 @@
 _vm/
 *.atsuo
 App/_vm/
+App/__vm/Compile.vmps.xml
+App/__vm/Configuration.Debug.vmps.xml
+App/__vm/Upload.vmps.xml
 
 #################
 ## Eclipse

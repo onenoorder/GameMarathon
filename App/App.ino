@@ -35,8 +35,7 @@ int main(void)
 	sei();
 	LCD = new MI0283QT9();
 	LCD->begin();
-	games[0] = new Bomberman(LCD);
-	games[0]->PlayerID = 0;
+	games[0] = new Bomberman(0, LCD);
 	games[0]->Load();
 	CurrentGame = games[0];
 

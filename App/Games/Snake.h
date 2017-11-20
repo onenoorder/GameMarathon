@@ -25,7 +25,7 @@ private:
 
 //functions
 public:
-	Snake(MI0283QT9 *LCD);
+	Snake(MI0283QT9 *LCD, InputController *inputController);
 	virtual void Load();
 	virtual void Update();
 	~Snake();

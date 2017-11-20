@@ -8,7 +8,7 @@
 #include "Snake.h"
 
 // default constructor
-Snake::Snake(MI0283QT9 *LCD) : Game(LCD)
+Snake::Snake(MI0283QT9 *LCD, InputController *inputController) : Game(LCD, inputController)
 {
 	_backgroundColor = RGB(0, 0, 0);
 	_playerCount = 0;
@@ -27,20 +27,20 @@ void Snake::Load()
 void Snake::Update(){
 	Game::Update();
 	_InputController->UpdateInput();
-	Serial.println(_InputController->nunchuckanalogX);
+	Serial.println(_InputController->NunchuckAnalogX);
 
-	if(_InputController->nunchuckanalogX > 200){
+	if(_InputController->NunchuckAnalogX > 200){
 		Serial.println("right");
 		_currentPlayer->Direction = Right;
-		}else if(_InputController->nunchuckanalogY > 200){
+		}else if(_InputController->NunchuckAnalogY > 200){
 		Serial.println("Up");
 		_currentPlayer->Direction = Up;
 	}
-	else if(_InputController->nunchuckanalogX < 50){
+	else if(_InputController->NunchuckAnalogX < 50){
 		Serial.println("Left");
 		_currentPlayer->Direction = Left;
 	}
-	else if(_InputController->nunchuckanalogY < 50){
+	else if(_InputController->NunchuckAnalogY < 50){
 		Serial.println("Down");
 		_currentPlayer->Direction = Down;
 	}

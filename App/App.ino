@@ -7,10 +7,11 @@
 #include "Master.h"
 #include "Slave.h"
 #include "Games/Bomberman.h"
+#include "Games/Snake.h"
 
 MI0283QT9 *LCD;
+Game * games[2];
 InputController *inputController;
-Game * games[1];
 Game * CurrentGame;
 
 ISR(TIMER2_OVF_vect) {
@@ -40,14 +41,13 @@ int main(void)
 	LCD = new MI0283QT9();
 	LCD->begin();
 
-
 	inputController = new InputController();
 
 	games[0] = new Bomberman(LCD, inputController);
+	games[1] = new Snake(LCD, inputController);
 	games[0]->Load();
 	CurrentGame = games[0];
 
-	/* Replace with your application code */
 	while (1)
 	{
 		//if(CurrentGame->NewFrame > 0)

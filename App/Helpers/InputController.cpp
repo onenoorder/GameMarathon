@@ -25,6 +25,7 @@ void InputController::UpdateInput(){
 	nunchuckaccelZ = _nunchuck->accelZ;
 	nunchuckanalogX = _nunchuck->analogX;
 	nunchuckanalogY = _nunchuck->analogY;
+	_delay_ms(10);
 	//_printInput();
 }
 void InputController::_printInput(){

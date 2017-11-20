@@ -11,7 +11,6 @@
 #ifndef __SNAKEPLAYER_H__
 #define __SNAKEPLAYER_H__
 
-
 class SnakePlayer
 {
 //variables
@@ -22,7 +21,7 @@ public:
 	DirectionEnum Direction;
 protected:
 private:
-	Queue *_snake;
+	Queue<SnakeQueueData> *_snake;
 	unsigned char _size;
 	unsigned char _maxSize;
 

@@ -5,7 +5,6 @@
 * Author: Gerhard
 */
 
-
 #include "SnakePlayer.h"
 
 // default constructor
@@ -14,7 +13,7 @@ SnakePlayer::SnakePlayer(char x, char y, uint16_t color)
 	this->X = x;
 	this->Y = y;
 	this->Color = color;
-	_snake = new Queue();
+	_snake = new Queue<SnakeQueueData>();
 	_size = 0;
 	_maxSize = 100;
 } //SnakePlayer
@@ -40,12 +39,13 @@ void SnakePlayer::Move(){
 }
 
 void SnakePlayer::Draw(MI0283QT9 *LCD){
-	_snake->Enqueue(X, Y);
+	SnakeQueueData data = {X,Y};
+	_snake->Enqueue(data);
 	LCD->fillCircle(X, Y, 1, Color);
 	if(_size < _maxSize){
 		_size++;
 	} else {
-		QueueData back = _snake->Dequeue();
+		SnakeQueueData back = _snake->Dequeue();
 		LCD->fillCircle(back.X, back.Y, 1, RGB(0,0,0));
 	}
 }

@@ -5,21 +5,24 @@
 * Author: Gerhard
 */
 
-
 #include "Queue.h"
 
-// default constructor
-Queue::Queue()
+template class Queue<SnakeQueueData>;
+
+template<typename T>
+Queue<T>::Queue()
 {
-	_array = new QueueData[200];
+	_array = new T[200];
 } //Queue
 
-void Queue::Clear(){
+template<typename T>
+void Queue<T>::Clear(){
 	delete[] _array;
-	_array = new QueueData[200];
+	_array = new T[200];
 }
 
-void Queue::Enqueue(QueueData data){
+template<typename T>
+void Queue<T>::Enqueue(T data){
 	if (_back < 200) {
 		_array[_back] = data;
 		_back++;
@@ -29,12 +32,9 @@ void Queue::Enqueue(QueueData data){
 	}
 }
 
-void Queue::Enqueue(short x, short y){
-	Enqueue(QueueData { x, y });
-}
-
-QueueData Queue::Dequeue(){
-	QueueData data = _array[_front];
+template<typename T>
+T Queue<T>::Dequeue(){
+	T data = _array[_front];
 	_array[_front] = {};
 	if (_front < 200) {
 		_front++;
@@ -45,8 +45,8 @@ QueueData Queue::Dequeue(){
 	return data;
 }
 
-// default destructor
-Queue::~Queue()
+template<typename T>
+Queue<T>::~Queue()
 {
 	delete[] _array;
 } //~Queue

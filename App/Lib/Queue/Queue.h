@@ -9,18 +9,19 @@
 #ifndef __QUEUE_H__
 #define __QUEUE_H__
 
-struct QueueData{
+struct SnakeQueueData{
 	short X;
 	short Y;
 };
 
+template <typename T>
 class Queue
 {
 //variables
 public:
 protected:
 private:
-	QueueData *_array;
+	T *_array;
 	unsigned char _front = 0;
 	unsigned char _back = 0;
 
@@ -28,9 +29,8 @@ private:
 public:
 	Queue();
 	void Clear();
-	void Enqueue(QueueData data);
-	void Enqueue(short x, short y);
-	QueueData Dequeue();
+	void Enqueue(T data);
+	T Dequeue();
 	~Queue();
 protected:
 private:

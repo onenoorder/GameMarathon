@@ -25,6 +25,7 @@ private:
 
 //functions
 public:
+	void DrawPlayer();
 	BombermanPlayer(char X,char Y,uint16_t color);
 	~BombermanPlayer();
 protected:

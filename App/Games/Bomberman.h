@@ -38,7 +38,7 @@ private:
 
 //functions
 public:
-	Bomberman(MI0283QT9 *LCD);
+	Bomberman(MI0283QT9 *LCD, InputController *inputController);
 	virtual void Load();
 	virtual void Update();
 

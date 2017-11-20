@@ -9,7 +9,7 @@
 
 
 // default constructor
-Bomberman::Bomberman(MI0283QT9 *LCD) : Game(LCD)
+Bomberman::Bomberman(MI0283QT9 *LCD, InputController *inputController) : Game(LCD, inputController)
 {
 	_gridBlockSize = 15;
 	_offsetX = 16;
@@ -77,9 +77,9 @@ void Bomberman::Load()
 void Bomberman::Update(){
 	Game::Update();
 	_InputController->UpdateInput();
-	Serial.print("Gametime: ");
+	Serial.print("Game time: ");
 	Serial.print(GameTime);
-	if(_InputController->nunchuckanalogX > 200){
+	if(_InputController->NunchuckAnalogX > 200){
 		Serial.println("right");
 		_currentPlayer->Direction = Right;
 		if(_currentPlayer->X+1 < _maxX &&_grid[_currentPlayer->X+1][_currentPlayer->Y] == Walkable){
@@ -90,7 +90,7 @@ void Bomberman::Update(){
 			_grid[_currentPlayer->X][_currentPlayer->Y] = 1;
 		}
 		drawGridCell(_currentPlayer->X,_currentPlayer->Y);
-	}else if(_InputController->nunchuckanalogY > 200){
+	}else if(_InputController->NunchuckAnalogY > 200){
 		Serial.println("Up");
 		_currentPlayer->Direction = Up;
 		if(_currentPlayer->Y-1 >= 0 && _grid[_currentPlayer->X][_currentPlayer->Y-1] == Walkable){
@@ -102,7 +102,7 @@ void Bomberman::Update(){
 		}
 		drawGridCell(_currentPlayer->X,_currentPlayer->Y);
 	}
-	else if(_InputController->nunchuckanalogX < 50){
+	else if(_InputController->NunchuckAnalogX < 50){
 	Serial.println("Left");
 		_currentPlayer->Direction = Left;
 		 if(_currentPlayer->X-1 >= 0 &&_grid[_currentPlayer->X-1][_currentPlayer->Y] == Walkable){
@@ -114,7 +114,7 @@ void Bomberman::Update(){
 		 }
 		 drawGridCell(_currentPlayer->X,_currentPlayer->Y);
 	}
-	else if(_InputController->nunchuckanalogY < 50){
+	else if(_InputController->NunchuckAnalogY < 50){
 		Serial.println("Down");
 		_currentPlayer->Direction = Down;
 		if(_currentPlayer->Y+1 < _maxY &&_grid[_currentPlayer->X][_currentPlayer->Y+1] == Walkable){
@@ -140,14 +140,13 @@ void Bomberman::drawGridCell(char x, char y){
 	else if(_grid[x][y] == Walkable)
 		_LCD->fillRect(_offsetX + x * _gridBlockSize, _offsetY + y * _gridBlockSize, _gridBlockSize, _gridBlockSize, _backgroundColor);
 	else if(_grid[x][y] == Player2 || _grid[x][y] == Player1){		
-
 		if(_currentPlayer->Direction == Up){
 			_LCD->fillEllipse(_offsetX + x * _gridBlockSize + (_gridBlockSize/2), _offsetY + y * _gridBlockSize + (_gridBlockSize/2), _gridBlockSize/2, _gridBlockSize/4, _currentPlayer->Color);
 			_LCD->fillRect(_offsetX + x * _gridBlockSize + (_gridBlockSize/2)+3 , _offsetY + y * _gridBlockSize + (_gridBlockSize/2)-7,3,_gridBlockSize/3, RGB(55,55,55));
 		}
 		else if(_currentPlayer->Direction == Right){
 			_LCD->fillEllipse(_offsetX + x * _gridBlockSize + (_gridBlockSize/2), _offsetY + y * _gridBlockSize + (_gridBlockSize/2), _gridBlockSize/4, _gridBlockSize/2, _currentPlayer->Color);
-			_LCD->fillRect(_offsetX + x * _gridBlockSize + (_gridBlockSize/2)+2 , _offsetY + y * _gridBlockSize + (_gridBlockSize/2)-6,_gridBlockSize/3,3, RGB(55,55,55));			
+			_LCD->fillRect(_offsetX + x * _gridBlockSize + (_gridBlockSize/2)+2 , _offsetY + y * _gridBlockSize + (_gridBlockSize/2)-6,_gridBlockSize/3,3, RGB(55,55,55));
 		}
 		else if(_currentPlayer->Direction == Down){
 			_LCD->fillEllipse(_offsetX + x * _gridBlockSize + (_gridBlockSize/2), _offsetY + y * _gridBlockSize + (_gridBlockSize/2), _gridBlockSize/2, _gridBlockSize/4, _currentPlayer->Color);
@@ -155,10 +154,10 @@ void Bomberman::drawGridCell(char x, char y){
 		}
 		else if(_currentPlayer->Direction == Left){
 			_LCD->fillEllipse(_offsetX + x * _gridBlockSize + (_gridBlockSize/2), _offsetY + y * _gridBlockSize + (_gridBlockSize/2), _gridBlockSize/4, _gridBlockSize/2, _currentPlayer->Color);
-			_LCD->fillRect(_offsetX + x * _gridBlockSize + (_gridBlockSize/2)-7 , _offsetY + y * _gridBlockSize + (_gridBlockSize/2)+3,_gridBlockSize/3,3, RGB(55,55,55));		
+			_LCD->fillRect(_offsetX + x * _gridBlockSize + (_gridBlockSize/2)-7 , _offsetY + y * _gridBlockSize + (_gridBlockSize/2)+3,_gridBlockSize/3,3, RGB(55,55,55));
 		}
 		_LCD->fillCircle(_offsetX + x * _gridBlockSize + (_gridBlockSize/2), _offsetY + y * _gridBlockSize + (_gridBlockSize/2), _gridBlockSize/6, RGB(0, 0, 0));
-		
+			
 	}
 }
 

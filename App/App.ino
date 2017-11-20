@@ -9,6 +9,7 @@
 #include "Games/Bomberman.h"
 
 MI0283QT9 *LCD;
+InputController *inputController;
 Game * games[1];
 Game * CurrentGame;
 
@@ -29,16 +30,20 @@ int main(void)
 	TCCR2B |= (1 << CS22) | (1<<CS21) | (1<<CS20);	//zet de klok op prescaler 1024
 	TIMSK2 |= (1<<TOIE0); // zet interupt aan
 	TCNT2 = 0;// zet count op 0
-
+		sei();
 
 	Serial.begin(9600);
 	Master master();
 	Slave slave(0);
 	
-	sei();
+
 	LCD = new MI0283QT9();
 	LCD->begin();
-	games[0] = new Bomberman(LCD);
+
+
+	inputController = new InputController();
+
+	games[0] = new Bomberman(LCD, inputController);
 	games[0]->Load();
 	CurrentGame = games[0];
 

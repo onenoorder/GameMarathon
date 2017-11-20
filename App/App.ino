@@ -4,8 +4,8 @@
  * Created: 11/14/2017 1:51:07 PM
  * Author: Gerhard
  */ 
-#include "Master.h"
-#include "Slave.h"
+#include "Communication/Master.h"
+#include "Communication/Slave.h"
 #include "Games/Bomberman.h"
 
 MI0283QT9 *LCD;
@@ -30,15 +30,13 @@ int main(void)
 	TIMSK2 |= (1<<TOIE0); // zet interupt aan
 	TCNT2 = 0;// zet count op 0
 
-
 	Serial.begin(9600);
-	Master master();
-	Slave slave(0);
 	
 	sei();
 	LCD = new MI0283QT9();
 	LCD->begin();
 	games[0] = new Bomberman(LCD);
+	games[0]->PlayerID = 0;
 	games[0]->Load();
 	CurrentGame = games[0];
 

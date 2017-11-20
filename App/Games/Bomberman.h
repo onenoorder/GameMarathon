@@ -31,7 +31,7 @@ private:
 	uint16_t _rockColor;
 	uint16_t _wallColor;
 	uint16_t _backgroundColor;
-	BombermanPlayer *_players;
+	BombermanPlayer *_players[4];
 	BombermanPlayer *_currentPlayer;
 	
 

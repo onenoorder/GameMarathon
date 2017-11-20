@@ -7,6 +7,8 @@
 
 #include "../Lib/MI0283QT9/MI0283QT9.h"
 #include "../Helpers/InputController.h"
+#include "../Communication/Master.h"
+#include "../Communication/Slave.h"
 
 #ifndef __GAME_H__
 #define __GAME_H__
@@ -24,6 +26,7 @@ public:
 	unsigned char Timer = 0;
 	unsigned int GameTime = 0;
 	unsigned char NewFrame;
+	unsigned char PlayerID;
 protected:
 	MI0283QT9 *_LCD;
 	InputController * _InputController;

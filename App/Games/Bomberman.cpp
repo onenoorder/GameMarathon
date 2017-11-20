@@ -33,9 +33,7 @@ void Bomberman::Load()
 	// Border
 	_LCD->fillScreen(_wallColor);
 	// Background
-
 	_LCD->fillRect(_offsetX, _offsetY, _gridBlockSize * _maxX, _gridBlockSize * _maxY, _backgroundColor);
-
 
 	for(char x = 0; x < _maxX; x++){
 		for(char y = 0; y < _maxY; y++){
@@ -62,18 +60,16 @@ void Bomberman::Load()
 		}
 	}
 
-	/*_players[0] = BombermanPlayer(0,0);
-	_grid[_players[0].X][_players[0].Y] = 1;
-	drawGridCell(_players[0].X,_players[0].Y);*/
-
-	_currentPlayer = new BombermanPlayer(_maxX-1,_maxY-1, RGB(255, 120, 66));
-	_grid[_currentPlayer->X][_currentPlayer->Y] = 1;
-	drawGridCell(_currentPlayer->X,_currentPlayer->Y);
-
-	//_players[1] = BombermanPlayer(_maxX-1,_maxY-1);
-	//_playercount = 2;	
-
+	_players[0] = new BombermanPlayer(0, 0, RGB(255, 120, 66));
+	_players[1] = new BombermanPlayer(_maxX-1, _maxY-1, RGB(255, 120, 66));
 	
+	_grid[_players[0]->X][_players[0]->Y] = 1;
+	_grid[_players[1]->X][_players[1]->Y] = 1;
+
+	drawGridCell(_players[0]->X, _players[0]->Y);
+	drawGridCell(_players[1]->X, _players[1]->Y);
+
+	_currentPlayer = _players[PlayerID];
 }
 
 void Bomberman::Update(){
@@ -129,7 +125,13 @@ void Bomberman::Update(){
 		}
 
 		drawGridCell(_currentPlayer->X,_currentPlayer->Y);
-	}	
+	}
+
+	if(PlayerID == 0){
+		Master *master = new Master();
+		OutputData = 1;
+		master->Update();
+	}
 }
 
 void Bomberman::drawGridCell(char x, char y){

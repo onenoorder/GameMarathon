@@ -65,8 +65,8 @@
   </avrgcc.compiler.symbols.DefSymbols>
   <avrgcc.compiler.directories.IncludePaths>
     <ListValues>
-      <Value>C:/Program Files (x86)/Arduino/hardware/arduino/avr/libraries/SPI/src</Value>
       <Value>C:/Program Files (x86)/Arduino/hardware/arduino/avr/libraries/Wire/src</Value>
+      <Value>C:/Program Files (x86)/Arduino/hardware/arduino/avr/libraries/SPI/src</Value>
       <Value>C:/Program Files (x86)/Arduino/libraries</Value>
       <Value>C:/Program Files (x86)/Arduino/hardware/arduino/avr/libraries</Value>
       <Value>C:/Users/Gerhard/Documents/Arduino/libraries</Value>
@@ -102,8 +102,8 @@
   </avrgcccpp.compiler.symbols.DefSymbols>
   <avrgcccpp.compiler.directories.IncludePaths>
     <ListValues>
-      <Value>C:/Program Files (x86)/Arduino/hardware/arduino/avr/libraries/SPI/src</Value>
       <Value>C:/Program Files (x86)/Arduino/hardware/arduino/avr/libraries/Wire/src</Value>
+      <Value>C:/Program Files (x86)/Arduino/hardware/arduino/avr/libraries/SPI/src</Value>
       <Value>C:/Program Files (x86)/Arduino/libraries</Value>
       <Value>C:/Program Files (x86)/Arduino/hardware/arduino/avr/libraries</Value>
       <Value>C:/Users/Gerhard/Documents/Arduino/libraries</Value>
@@ -145,7 +145,7 @@
     <VisualMicroSettings>
       <VisualMicroSettings>
         <ValidatedAS7>1</ValidatedAS7>
-        <arduino.upload.port>COM4</arduino.upload.port>
+        <arduino.upload.port>COM3</arduino.upload.port>
       </VisualMicroSettings>
     </VisualMicroSettings>
   </PropertyGroup>
@@ -174,8 +174,8 @@
   </avrgcc.compiler.symbols.DefSymbols>
   <avrgcc.compiler.directories.IncludePaths>
     <ListValues>
-      <Value>C:/Program Files (x86)/Arduino/hardware/arduino/avr/libraries/SPI/src</Value>
       <Value>C:/Program Files (x86)/Arduino/hardware/arduino/avr/libraries/Wire/src</Value>
+      <Value>C:/Program Files (x86)/Arduino/hardware/arduino/avr/libraries/SPI/src</Value>
       <Value>C:/Program Files (x86)/Arduino/libraries</Value>
       <Value>C:/Program Files (x86)/Arduino/hardware/arduino/avr/libraries</Value>
       <Value>C:/Users/Gerhard/Documents/Arduino/libraries</Value>
@@ -211,8 +211,8 @@
   </avrgcccpp.compiler.symbols.DefSymbols>
   <avrgcccpp.compiler.directories.IncludePaths>
     <ListValues>
-      <Value>C:/Program Files (x86)/Arduino/hardware/arduino/avr/libraries/SPI/src</Value>
       <Value>C:/Program Files (x86)/Arduino/hardware/arduino/avr/libraries/Wire/src</Value>
+      <Value>C:/Program Files (x86)/Arduino/hardware/arduino/avr/libraries/SPI/src</Value>
       <Value>C:/Program Files (x86)/Arduino/libraries</Value>
       <Value>C:/Program Files (x86)/Arduino/hardware/arduino/avr/libraries</Value>
       <Value>C:/Users/Gerhard/Documents/Arduino/libraries</Value>
@@ -254,12 +254,30 @@
     <VisualMicroSettings>
       <VisualMicroSettings>
         <ValidatedAS7>1</ValidatedAS7>
-        <arduino.upload.port>COM4</arduino.upload.port>
+        <arduino.upload.port>COM3</arduino.upload.port>
       </VisualMicroSettings>
     </VisualMicroSettings>
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="App.ino">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="Communication\Data.cpp">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="Communication\Data.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="Communication\Master.cpp">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="Communication\Master.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="Communication\Slave.cpp">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="Communication\Slave.h">
       <SubType>compile</SubType>
     </Compile>
     <Compile Include="Games\Bomberman.cpp">
@@ -364,22 +382,10 @@
     <Compile Include="Lib\MI0283QT9\MI0283QT9.h">
       <SubType>compile</SubType>
     </Compile>
-    <Compile Include="Master.cpp">
-      <SubType>compile</SubType>
-    </Compile>
-    <Compile Include="Master.h">
-      <SubType>compile</SubType>
-    </Compile>
     <Compile Include="Model\BombermanPlayer.cpp">
       <SubType>compile</SubType>
     </Compile>
     <Compile Include="Model\BombermanPlayer.h">
-      <SubType>compile</SubType>
-    </Compile>
-    <Compile Include="Slave.cpp">
-      <SubType>compile</SubType>
-    </Compile>
-    <Compile Include="Slave.h">
       <SubType>compile</SubType>
     </Compile>
     <Compile Include="__vm\.App.vsarduino.h">

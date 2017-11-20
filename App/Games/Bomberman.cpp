@@ -33,7 +33,9 @@ void Bomberman::Load()
 	// Border
 	_LCD->fillScreen(_wallColor);
 	// Background
+
 	_LCD->fillRect(_offsetX, _offsetY, _gridBlockSize * _maxX, _gridBlockSize * _maxY, _backgroundColor);
+
 
 	for(char x = 0; x < _maxX; x++){
 		for(char y = 0; y < _maxY; y++){
@@ -156,8 +158,10 @@ void Bomberman::drawGridCell(char x, char y){
 			_LCD->fillEllipse(_offsetX + x * _gridBlockSize + (_gridBlockSize/2), _offsetY + y * _gridBlockSize + (_gridBlockSize/2), _gridBlockSize/4, _gridBlockSize/2, _currentPlayer->Color);
 			_LCD->fillRect(_offsetX + x * _gridBlockSize + (_gridBlockSize/2)-7 , _offsetY + y * _gridBlockSize + (_gridBlockSize/2)+3,_gridBlockSize/3,3, RGB(55,55,55));
 		}
+
 		_LCD->fillCircle(_offsetX + x * _gridBlockSize + (_gridBlockSize/2), _offsetY + y * _gridBlockSize + (_gridBlockSize/2), _gridBlockSize/6, RGB(0, 0, 0));
 			
+
 	}
 }
 

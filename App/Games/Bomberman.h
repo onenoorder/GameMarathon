@@ -23,7 +23,6 @@ private:
 	char _maxY;
 	char _offsetX;
 	char _offsetY;
-	char _playercount;
 	char Walkable = 0;
 	char Wall = 32;
 	char Rock = 64;

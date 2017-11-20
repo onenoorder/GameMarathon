@@ -18,6 +18,7 @@ InputController::InputController()
 
 void InputController::UpdateInput(){
 	_nunchuck->update();
+
 	NunchuckCButton = _nunchuck->cButton;
 	NunchuckZButton = _nunchuck->zButton;
 	NunchuckAccelX = _nunchuck->accelX;
@@ -25,6 +26,7 @@ void InputController::UpdateInput(){
 	NunchuckAccelZ = _nunchuck->accelZ;
 	NunchuckAnalogX = _nunchuck->analogX;
 	NunchuckAnalogY = _nunchuck->analogY;
+
 	//_printInput();
 }
 void InputController::_printInput(){

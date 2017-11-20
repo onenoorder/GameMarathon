@@ -32,8 +32,6 @@ public:
 	void UpdateInput();
 protected:
 private:
-	InputController( const InputController &c );
-	InputController& operator=( const InputController &c );
 	void _printInput();
 }; //InputController
 

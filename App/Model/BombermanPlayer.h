@@ -16,7 +16,7 @@ class BombermanPlayer
 public:
 	char X;
 	char Y;
-	char blastpower;
+	char Blastpower;
 	char Bombs;
 	DirectionEnum Direction;
 	uint16_t Color;

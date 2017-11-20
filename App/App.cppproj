@@ -65,8 +65,8 @@
   </avrgcc.compiler.symbols.DefSymbols>
   <avrgcc.compiler.directories.IncludePaths>
     <ListValues>
-      <Value>C:/Program Files (x86)/Arduino/hardware/arduino/avr/libraries/SPI/src</Value>
       <Value>C:/Program Files (x86)/Arduino/hardware/arduino/avr/libraries/Wire/src</Value>
+      <Value>C:/Program Files (x86)/Arduino/hardware/arduino/avr/libraries/SPI/src</Value>
       <Value>C:/Program Files (x86)/Arduino/libraries</Value>
       <Value>C:/Program Files (x86)/Arduino/hardware/arduino/avr/libraries</Value>
       <Value>C:/Users/Gerhard/Documents/Arduino/libraries</Value>
@@ -102,8 +102,8 @@
   </avrgcccpp.compiler.symbols.DefSymbols>
   <avrgcccpp.compiler.directories.IncludePaths>
     <ListValues>
-      <Value>C:/Program Files (x86)/Arduino/hardware/arduino/avr/libraries/SPI/src</Value>
       <Value>C:/Program Files (x86)/Arduino/hardware/arduino/avr/libraries/Wire/src</Value>
+      <Value>C:/Program Files (x86)/Arduino/hardware/arduino/avr/libraries/SPI/src</Value>
       <Value>C:/Program Files (x86)/Arduino/libraries</Value>
       <Value>C:/Program Files (x86)/Arduino/hardware/arduino/avr/libraries</Value>
       <Value>C:/Users/Gerhard/Documents/Arduino/libraries</Value>
@@ -174,8 +174,8 @@
   </avrgcc.compiler.symbols.DefSymbols>
   <avrgcc.compiler.directories.IncludePaths>
     <ListValues>
-      <Value>C:/Program Files (x86)/Arduino/hardware/arduino/avr/libraries/SPI/src</Value>
       <Value>C:/Program Files (x86)/Arduino/hardware/arduino/avr/libraries/Wire/src</Value>
+      <Value>C:/Program Files (x86)/Arduino/hardware/arduino/avr/libraries/SPI/src</Value>
       <Value>C:/Program Files (x86)/Arduino/libraries</Value>
       <Value>C:/Program Files (x86)/Arduino/hardware/arduino/avr/libraries</Value>
       <Value>C:/Users/Gerhard/Documents/Arduino/libraries</Value>
@@ -211,8 +211,8 @@
   </avrgcccpp.compiler.symbols.DefSymbols>
   <avrgcccpp.compiler.directories.IncludePaths>
     <ListValues>
-      <Value>C:/Program Files (x86)/Arduino/hardware/arduino/avr/libraries/SPI/src</Value>
       <Value>C:/Program Files (x86)/Arduino/hardware/arduino/avr/libraries/Wire/src</Value>
+      <Value>C:/Program Files (x86)/Arduino/hardware/arduino/avr/libraries/SPI/src</Value>
       <Value>C:/Program Files (x86)/Arduino/libraries</Value>
       <Value>C:/Program Files (x86)/Arduino/hardware/arduino/avr/libraries</Value>
       <Value>C:/Users/Gerhard/Documents/Arduino/libraries</Value>
@@ -260,6 +260,24 @@
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="App.ino">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="Communication\Data.cpp">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="Communication\Data.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="Communication\Master.cpp">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="Communication\Master.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="Communication\Slave.cpp">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="Communication\Slave.h">
       <SubType>compile</SubType>
     </Compile>
     <Compile Include="Games\Bomberman.cpp">
@@ -376,10 +394,10 @@
     <Compile Include="Lib\Queue\Queue.h">
       <SubType>compile</SubType>
     </Compile>
-    <Compile Include="Master.cpp">
+    <Compile Include="Communication\Master.cpp">
       <SubType>compile</SubType>
     </Compile>
-    <Compile Include="Master.h">
+    <Compile Include="Communication\Master.h">
       <SubType>compile</SubType>
     </Compile>
     <Compile Include="Model\BombermanBomb.cpp">
@@ -400,10 +418,10 @@
     <Compile Include="Model\SnakePlayer.h">
       <SubType>compile</SubType>
     </Compile>
-    <Compile Include="Slave.cpp">
+    <Compile Include="Communication\Slave.cpp">
       <SubType>compile</SubType>
     </Compile>
-    <Compile Include="Slave.h">
+    <Compile Include="Communication\Slave.h">
       <SubType>compile</SubType>
     </Compile>
     <Compile Include="__vm\.App.vsarduino.h">

@@ -8,7 +8,7 @@
 #include "Snake.h"
 
 // default constructor
-Snake::Snake(MI0283QT9 *LCD, InputController *inputController) : Game(LCD, inputController)
+Snake::Snake(unsigned char ID, MI0283QT9 *LCD, InputController *inputController) : Game(ID, LCD, inputController)
 {
 	_backgroundColor = RGB(0, 0, 0);
 	_playerCount = 0;

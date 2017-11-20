@@ -23,15 +23,14 @@ private:
 	char _maxY;
 	char _offsetX;
 	char _offsetY;
-	char _playercount;
 	char Walkable = 0;
 	char Wall = 32;
 	char Rock = 64;
 	char Player1 = 1;
 	char Player2 = 2;
-	uint16_t _rock;
-	uint16_t _wall;
-	uint16_t _background;
+	uint16_t _rockColor;
+	uint16_t _wallColor;
+	uint16_t _backgroundColor;
 	BombermanPlayer *_players;
 	BombermanPlayer *_currentPlayer;
 //functions

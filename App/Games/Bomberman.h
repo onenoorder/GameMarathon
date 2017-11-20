@@ -6,7 +6,7 @@
 */
 #include "Game.h"
 #include "../Model/BombermanPlayer.h"
-
+#include "../Model/BombermanBomb.h"
 #ifndef __BOMBERMAN_H__
 #define __BOMBERMAN_H__
 
@@ -26,11 +26,16 @@ private:
 	char Walkable = 0;
 	char Wall = 32;
 	char Rock = 64;
+	char Bomb = 128;
 	char Player1 = 1;
 	char Player2 = 2;
 	uint16_t _rockColor;
 	uint16_t _wallColor;
 	uint16_t _backgroundColor;
+	unsigned char BombStartIndex;
+	unsigned char BombsActiveCount;
+	BombermanBomb * _bombs[16];
+
 	BombermanPlayer *_players;
 	BombermanPlayer *_currentPlayer;
 	

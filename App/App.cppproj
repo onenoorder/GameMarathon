@@ -370,6 +370,12 @@
     <Compile Include="Master.h">
       <SubType>compile</SubType>
     </Compile>
+    <Compile Include="Model\BombermanBomb.cpp">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="Model\BombermanBomb.h">
+      <SubType>compile</SubType>
+    </Compile>
     <Compile Include="Model\BombermanPlayer.cpp">
       <SubType>compile</SubType>
     </Compile>

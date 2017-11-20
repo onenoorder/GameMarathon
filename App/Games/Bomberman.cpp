@@ -9,13 +9,12 @@
 
 
 // default constructor
-Bomberman::Bomberman()
+Bomberman::Bomberman(MI0283QT9 *LCD) : Game(LCD)
 {
-	this->InitScreen();
 	_gridBlockSize = 15;
 	_offsetX = 16;
 	_offsetY = 8;
-	_maxX = 15;
+	_maxX = 19;
 	_maxY = 15;
 	
 	// Colors
@@ -34,7 +33,9 @@ void Bomberman::Load()
 	// Border
 	_LCD->fillScreen(_wallColor);
 	// Background
-	_LCD->fillRect(_offsetX, _offsetY, _gridBlockSize * _maxX, _gridBlockSize * _maxY, _backgroundColor);	
+
+	_LCD->fillRect(_offsetX, _offsetY, _gridBlockSize * _maxX, _gridBlockSize * _maxY, _backgroundColor);
+
 
 	for(char x = 0; x < _maxX; x++){
 		for(char y = 0; y < _maxY; y++){
@@ -76,6 +77,7 @@ void Bomberman::Load()
 }
 
 void Bomberman::Update(){
+	Game::Update();
 	_InputController->UpdateInput();
 	Serial.print("Game time: ");
 	Serial.print(GameTime);

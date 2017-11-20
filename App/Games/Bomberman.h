@@ -33,9 +33,11 @@ private:
 	uint16_t _backgroundColor;
 	BombermanPlayer *_players;
 	BombermanPlayer *_currentPlayer;
+	
+
 //functions
 public:
-	Bomberman();
+	Bomberman(MI0283QT9 *LCD);
 	virtual void Load();
 	virtual void Update();
 

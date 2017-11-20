@@ -6,7 +6,7 @@
 */
 #include "Game.h"
 #include "../Model/BombermanPlayer.h"
-
+#include "../Model/BombermanBomb.h"
 #ifndef __BOMBERMAN_H__
 #define __BOMBERMAN_H__
 
@@ -26,10 +26,14 @@ private:
 	char Walkable = 0;
 	char Wall = 32;
 	char Rock = 64;
+	char Bomb = 128;
 	uint16_t _rockColor;
 	uint16_t _wallColor;
 	uint16_t _backgroundColor;
 	BombermanPlayer *_players[4];
+	unsigned char BombStartIndex;
+	unsigned char BombsActiveCount;
+	BombermanBomb * _bombs[16];
 	BombermanPlayer *_currentPlayer;
 	enum BombermanData{
 		PLAYER0 = 0,
@@ -52,7 +56,7 @@ private:
 
 //functions
 public:
-	Bomberman(unsigned char ID, MI0283QT9 *LCD);
+	Bomberman(unsigned char ID, MI0283QT9 *LCD, InputController *inputController);
 	virtual void Load();
 	virtual void Update();
 

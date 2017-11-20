@@ -14,13 +14,13 @@ class InputController
 {
 //variables
 public:
-    int nunchuckanalogX;
-    int nunchuckanalogY;
-    int nunchuckaccelX;
-    int nunchuckaccelY;
-    int nunchuckaccelZ;
-    int nunchuckzButton;
-    int nunchuckcButton;
+    int NunchuckAnalogX;
+    int NunchuckAnalogY;
+    int NunchuckAccelX;
+    int NunchuckAccelY;
+    int NunchuckAccelZ;
+    int NunchuckZButton;
+    int NunchuckCButton;
 protected:
 private:
 ArduinoNunchuk * _nunchuck;

@@ -8,9 +8,9 @@
 
 #include "Game.h"
 
-Game::Game(unsigned char ID, MI0283QT9 *LCD){
+Game::Game(unsigned char ID, MI0283QT9 *LCD, InputController *inputController){
 	_LCD = LCD;
-	_InputController = new InputController();
+	_InputController = inputController;
 	_InputController->UpdateInput();
 	NewFrame = 0;
 	PlayerID = ID;

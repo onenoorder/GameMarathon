@@ -7,9 +7,11 @@
 #include "Communication/Master.h"
 #include "Communication/Slave.h"
 #include "Games/Bomberman.h"
+#include "Games/Snake.h"
 
 MI0283QT9 *LCD;
-Game * games[1];
+Game * games[2];
+InputController *inputController;
 Game * CurrentGame;
 
 ISR(TIMER2_OVF_vect) {
@@ -29,17 +31,20 @@ int main(void)
 	TCCR2B |= (1 << CS22) | (1<<CS21) | (1<<CS20);	//zet de klok op prescaler 1024
 	TIMSK2 |= (1<<TOIE0); // zet interupt aan
 	TCNT2 = 0;// zet count op 0
+	sei();
 
 	Serial.begin(9600);
 	
-	sei();
 	LCD = new MI0283QT9();
 	LCD->begin();
-	games[0] = new Bomberman(0, LCD);
+
+	inputController = new InputController();
+
+	games[0] = new Bomberman(0, LCD, inputController);
+	games[1] = new Snake(0, LCD, inputController);
 	games[0]->Load();
 	CurrentGame = games[0];
 
-	/* Replace with your application code */
 	while (1)
 	{
 		//if(CurrentGame->NewFrame > 0)

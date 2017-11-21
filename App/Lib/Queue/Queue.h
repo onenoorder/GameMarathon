@@ -8,7 +8,7 @@
 
 #ifndef __QUEUE_H__
 #define __QUEUE_H__
-
+class BombermanBomb;
 struct SnakeQueueData{
 	short X;
 	short Y;
@@ -31,6 +31,7 @@ public:
 	void Clear();
 	void Enqueue(T data);
 	T Dequeue();
+	T Peek();
 	~Queue();
 protected:
 private:

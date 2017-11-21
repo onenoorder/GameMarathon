@@ -5,11 +5,11 @@
 * Author: Mikena
 */
 
-#include "BombermanPlayer.h"
+
 #ifndef __BOMBERMANBOMB_H__
 #define __BOMBERMANBOMB_H__
-
-
+#include "BombermanPlayer.h"
+class BombermanPlayer;
 class BombermanBomb
 {
 //variables

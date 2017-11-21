@@ -14,6 +14,7 @@ Game * games[2];
 InputController *inputController;
 Game * CurrentGame;
 
+
 ISR(TIMER2_OVF_vect) {
 	CurrentGame->Timer++;
 	if (CurrentGame->Timer >= 30) {
@@ -49,6 +50,7 @@ int main(void)
 	{
 		//if(CurrentGame->NewFrame > 0)
 		CurrentGame->Update();
+
 
 	}
 }

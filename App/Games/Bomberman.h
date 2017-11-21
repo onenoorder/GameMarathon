@@ -4,37 +4,46 @@
 * Created: 14-11-2017 14:05:47
 * Author: Gerhard
 */
-#include "Game.h"
-#include "../Model/BombermanPlayer.h"
-#include "../Model/BombermanBomb.h"
+
 #ifndef __BOMBERMAN_H__
 #define __BOMBERMAN_H__
 
+#include "Game.h"
+#include "../Model/BombermanPlayer.h"
+#include "../Model/BombermanBomb.h"
+#include "../Lib/Queue/Queue.h"
+class BombermanPlayer;
+class BombermanBomb;
 
 class Bomberman : public Game
 {
 //variables
 public:
+	unsigned char **Grid;
+	char GridBlockSize;
+	char MaxX;
+	char MaxY;
+		char OffsetX;
+		char OffsetY;
+	uint16_t RockColor;
+	uint16_t WallColor;
+	uint16_t BackgroundColor;
+	enum GridCell{
+		 Walkable = 0,
+		 Wall = 32,
+		 Rock = 64,
+		 Bomb = 128		
+	};
 protected:
 private:
-	char **_grid;
-	char _gridBlockSize;
-	char _maxX;
-	char _maxY;
-	char _offsetX;
-	char _offsetY;
-	char Walkable = 0;
-	char Wall = 32;
-	char Rock = 64;
-	char Bomb = 128;
-	uint16_t _rockColor;
-	uint16_t _wallColor;
-	uint16_t _backgroundColor;
+
 	BombermanPlayer *_players[4];
 	unsigned char BombStartIndex;
 	unsigned char BombsActiveCount;
-	BombermanBomb * _bombs[16];
+
+	Queue<BombermanBomb*> * _bombs;
 	BombermanPlayer *_currentPlayer;
+
 	enum BombermanData{
 		PLAYER0 = 0,
 		PLAYER1 = 1,

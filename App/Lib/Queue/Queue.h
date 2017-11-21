@@ -24,14 +24,17 @@ private:
 	T *_array;
 	unsigned char _front = 0;
 	unsigned char _back = 0;
-
+	int _length;
+	int _nextIndex;
 //functions
 public:
 	Queue();
 	void Clear();
+	int Length(); 
 	void Enqueue(T data);
 	T Dequeue();
 	T Peek();
+	T Peek(int indx);
 	~Queue();
 protected:
 private:

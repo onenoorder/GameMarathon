@@ -32,6 +32,7 @@ public:
 		 Walkable = 0,
 		 Wall = 32,
 		 Rock = 64,
+		 Explotion = 16,
 		 Bomb = 128		
 	};
 protected:

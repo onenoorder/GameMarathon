@@ -19,6 +19,7 @@ public:
 	BombermanPlayer * Player;
 	int TimePlaced;
 	char BombIndex;
+	char Exploding;
 protected:
 private:
 

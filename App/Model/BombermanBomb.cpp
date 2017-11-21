@@ -17,6 +17,7 @@
 	this->TimePlaced = TimePlaced;
 	this->BombIndex = index;
 	this->Player = Player;
+	this->Exploding = 0;
 }
 
 // default destructor

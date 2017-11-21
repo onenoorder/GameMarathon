@@ -8,7 +8,7 @@
 #include "Queue.h"
 
 template class Queue<SnakeQueueData>;
-
+template class Queue<BombermanBomb*>;
 template<typename T>
 Queue<T>::Queue()
 {
@@ -43,6 +43,11 @@ T Queue<T>::Dequeue(){
 		_front = 0;
 	}
 	return data;
+}
+
+template<typename T>
+T Queue<T>::Peek(){
+	return _array[_front];
 }
 
 template<typename T>

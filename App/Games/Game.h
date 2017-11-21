@@ -5,13 +5,15 @@
 * Author: Gerhard
 */
 
+
+
+#ifndef __GAME_H__
+#define __GAME_H__
+
 #include "../Lib/MI0283QT9/MI0283QT9.h"
 #include "../Helpers/InputController.h"
 #include "../Communication/Master.h"
 #include "../Communication/Slave.h"
-
-#ifndef __GAME_H__
-#define __GAME_H__
 
 enum DirectionEnum {
 	Left = 1,

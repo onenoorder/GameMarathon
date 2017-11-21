@@ -5,11 +5,13 @@
 * Author: Gerhard
 */
 
-#include "../Games/Game.h"
-#include "../Lib/Queue/Queue.h"
+
 
 #ifndef __SNAKEPLAYER_H__
 #define __SNAKEPLAYER_H__
+
+#include "../Games/Game.h"
+#include "../Lib/Queue/Queue.h"
 
 class SnakePlayer
 {

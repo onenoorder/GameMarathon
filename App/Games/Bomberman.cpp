@@ -93,11 +93,6 @@ void Bomberman::Update(){
 	else if(_InputController->NunchuckAnalogY < 50){
 		_currentPlayer->Direction = Down;
 		_currentPlayer->PlayerUpdated = 1;
-	}	
-	if(_currentPlayer->PlayerUpdated){
-			drawGridCell(_currentPlayer->X,_currentPlayer->Y);
-			_currentPlayer->Move();
-			_currentPlayer->DrawPlayer(_LCD);
 	}
 
 	if(PlayerID == 0){
@@ -108,7 +103,8 @@ void Bomberman::Update(){
 		DoInputData(InputData);
 		Serial.println(InputData);*/
 		OutputData = GetOutputData();
-		Serial.write(OutputData);
+		OutputData += 48;
+		//Serial.write(OutputData);
 
 		while(!Serial.available());
 		InputData = Serial.read();
@@ -118,11 +114,16 @@ void Bomberman::Update(){
 		while(ReceivedData == 0);
 		DoInputData(InputData);
 		Serial.println(InputData);*/
+		
 		while(!Serial.available());
-		InputData = Serial.read();
+		_delay_ms(100);
+		InputData = Serial.read() - 'd';
+		Serial.println(InputData);
 		DoInputData(InputData);
 
 		OutputData = GetOutputData();
+		Serial.println(OutputData);
+		_delay_ms(100);
 		Serial.write(OutputData);
 	}
 
@@ -159,22 +160,25 @@ void Bomberman::Update(){
 }
 
 unsigned char Bomberman::GetOutputData(){
-	// TODO:if player moved?
-	unsigned char data = PlayerID;
-	switch(_currentPlayer->Direction){
-		case Up:
-			data |= BOMBERMAN_MOVE_UP;
-			break;
-		case Left:
-			data |= BOMBERMAN_MOVE_LEFT;
-			break;
-		case Right:
-			data |= BOMBERMAN_MOVE_RIGHT;
-			break;
-		case Down:
-			data |= BOMBERMAN_MOVE_DOWN;
-			break;
-	};
+	unsigned char data = 0;
+	if(_currentPlayer->PlayerUpdated == 1){
+		data = PlayerID;
+		switch(_currentPlayer->Direction){
+			case Up:
+				data |= BOMBERMAN_MOVE_UP;
+				break;
+			case Left:
+				data |= BOMBERMAN_MOVE_LEFT;
+				break;
+			case Right:
+				data |= BOMBERMAN_MOVE_RIGHT;
+				break;
+			case Down:
+				data |= BOMBERMAN_MOVE_DOWN;
+				break;
+		};
+		DoInputData(data);
+	}
 	return data;
 }
 
@@ -196,7 +200,9 @@ void Bomberman::DoInputData(unsigned char data){
 				player->Direction = Down;
 				break;
 		};
-		// TODO:move player
+		drawGridCell(player->X, player->Y);
+		player->Move();
+		player->DrawPlayer(_LCD);
 	}
 }
 

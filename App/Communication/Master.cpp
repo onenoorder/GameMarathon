@@ -14,14 +14,14 @@ Master::Master()
 	Wire.begin();
 } //Master
 
-void Master::Update(){
-	Wire.beginTransmission(1);
+void Master::SendTo(int ID){
+	Wire.beginTransmission(ID);
 	Wire.write(OutputData);
 	Wire.endTransmission();
-	
-	OutputData = 0;
+}
 
-	Wire.requestFrom(1, 1);
+void Master::ReceiveFrom(int ID){
+	Wire.requestFrom(ID, 1);
 
 	while (Wire.available()) {
 		InputData = Wire.read();

@@ -25,6 +25,8 @@ private:
 //functions
 public:
 	BombermanBomb(char X, char Y,int TimePlaced, BombermanPlayer * Player , int index);
+	unsigned char GetOutputData();
+	void DoInputData(unsigned char data);
 	~BombermanBomb();
 protected:
 private:

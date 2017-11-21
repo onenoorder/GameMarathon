@@ -76,8 +76,6 @@ void Bomberman::Load()
 void Bomberman::Update(){
 	Game::Update();
 	_InputController->UpdateInput();
-	Serial.print("Game time: ");
-	Serial.print(GameTime);
 
 	if(_InputController->NunchuckAnalogX > 200){
 		Serial.println("right");
@@ -133,9 +131,30 @@ void Bomberman::Update(){
 	}
 
 	if(PlayerID == 0){
-		OutputData |= PLAYER0 | MOVE_DOWN;
-		_master->Update();
-	}	
+		/*OutputData = GetOutputData();
+		Serial.println(OutputData);
+		_master->SendTo(1);
+		_master->ReceiveFrom(1);
+		DoInputData(InputData);
+		Serial.println(InputData);*/
+		OutputData = GetOutputData();
+		Serial.write(OutputData);
+
+		while(!Serial.available());
+		InputData = Serial.read();
+		DoInputData(InputData);
+	} else {
+		/*OutputData = GetOutputData();
+		while(ReceivedData == 0);
+		DoInputData(InputData);
+		Serial.println(InputData);*/
+		while(!Serial.available());
+		InputData = Serial.read();
+		DoInputData(InputData);
+
+		OutputData = GetOutputData();
+		Serial.write(OutputData);
+	}
 
 	if(_InputController->NunchuckZButton){
 		_bombs[BombsActiveCount] = new  BombermanBomb(_currentPlayer->X,_currentPlayer->Y,GameTime, _currentPlayer, BombsActiveCount);
@@ -170,6 +189,48 @@ void Bomberman::Update(){
 	}
 }
 
+unsigned char Bomberman::GetOutputData(){
+	// TODO:if player moved?
+	unsigned char data = PlayerID;
+	switch(_currentPlayer->Direction){
+		case Up:
+			data |= BOMBERMAN_MOVE_UP;
+			break;
+		case Left:
+			data |= BOMBERMAN_MOVE_LEFT;
+			break;
+		case Right:
+			data |= BOMBERMAN_MOVE_RIGHT;
+			break;
+		case Down:
+			data |= BOMBERMAN_MOVE_DOWN;
+			break;
+	};
+	return data;
+}
+
+void Bomberman::DoInputData(unsigned char data){
+	if(data != 0){
+		BombermanPlayer *player = _players[data & BOMBERMAN_PLAYERS];
+
+		switch(data & BOMBERMAN_ACTIONS){
+			case BOMBERMAN_MOVE_UP:
+				player->Direction = Up;
+				break;
+			case BOMBERMAN_MOVE_LEFT:
+				player->Direction = Left;
+				break;
+			case BOMBERMAN_MOVE_RIGHT:
+				player->Direction = Right;
+				break;
+			case BOMBERMAN_MOVE_DOWN:
+				player->Direction = Down;
+				break;
+		};
+		// TODO:move player
+	}
+}
+
 void Bomberman::drawGridCell(char x, char y){
 	_LCD->fillRect(_offsetX + x * _gridBlockSize, _offsetY + y * _gridBlockSize, _gridBlockSize, _gridBlockSize, _backgroundColor);
 
@@ -182,7 +243,7 @@ void Bomberman::drawGridCell(char x, char y){
 	else if(_grid[x][y] == Bomb){
 			_LCD->fillEllipse(_offsetX + x * _gridBlockSize + (_gridBlockSize/2), _offsetY + y * _gridBlockSize + (_gridBlockSize/2), _gridBlockSize/2, _gridBlockSize/2, RGB(0,0,0));
 			}			
-	else if(_grid[x][y] == PLAYER2 || _grid[x][y] == PLAYER1){
+	else if(_grid[x][y] == BOMBERMAN_PLAYER2 || _grid[x][y] == BOMBERMAN_PLAYER1){
 		if(_currentPlayer->Direction == Up){
 			_LCD->fillEllipse(_offsetX + x * _gridBlockSize + (_gridBlockSize/2), _offsetY + y * _gridBlockSize + (_gridBlockSize/2), _gridBlockSize/2, _gridBlockSize/4, _currentPlayer->Color);
 			_LCD->fillRect(_offsetX + x * _gridBlockSize + (_gridBlockSize/2)+3 , _offsetY + y * _gridBlockSize + (_gridBlockSize/2)-7,3,_gridBlockSize/3, RGB(55,55,55));

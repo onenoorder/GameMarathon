@@ -17,8 +17,6 @@ BombermanPlayer::BombermanPlayer(char X,char Y, uint16_t color)
 	this->Color = color;
 } //BombermanPlayer
 
-
-
 // default destructor
 BombermanPlayer::~BombermanPlayer()
 {

@@ -8,11 +8,17 @@
 
 #include "Game.h"
 
-Game::Game(MI0283QT9 *LCD, InputController *inputController){
+Game::Game(unsigned char ID, MI0283QT9 *LCD, InputController *inputController){
 	_LCD = LCD;
 	_InputController = inputController;
 	_InputController->UpdateInput();
 	NewFrame = 0;
+	PlayerID = ID;
+	
+	if(PlayerID == 0)
+		_master = new Master();
+	else
+		_slave = new Slave(PlayerID);
 }
 
 void Game::Update(){

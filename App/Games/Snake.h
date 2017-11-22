@@ -21,6 +21,7 @@ private:
 	uint16_t _backgroundColor;
 	SnakePlayer *_players[4];
 	SnakePlayer *_currentPlayer;
+	SnakePlayer *_secondPlayer;
 	char _playerCount;
 
 //functions

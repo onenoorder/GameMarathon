@@ -12,21 +12,29 @@ template class Queue<BombermanBomb*>;
 template<typename T>
 Queue<T>::Queue()
 {
-	_array = new T[200];
+	_size = 200;
+	_array = new T[_size];
 	_length = 0;
 	_nextIndex = 0;
 } //Queue
 
 template<typename T>
+Queue<T>::Queue(int size)
+{
+	_size = size;
+	_array = new T[_size];
+} //Queue
+
+template<typename T>
 void Queue<T>::Clear(){
 	delete[] _array;
-	_array = new T[200];
+	_array = new T[_size];
 }
 
 template<typename T>
 void Queue<T>::Enqueue(T data){
 	_length++;
-	if (_back < 200) {
+	if (_back < _size-1) {
 		_array[_back] = data;
 		_back++;
 		} else {
@@ -41,7 +49,7 @@ T Queue<T>::Dequeue(){
 	_length--;
 	T data = _array[_front];
 	_array[_front] = {};
-	if (_front < 200) {
+	if (_front < _size-1) {
 		_front++;
 	}
 	else {
@@ -56,8 +64,8 @@ int Queue<T>::Length(){
 }
 
 template<typename T>
-T Queue<T>::Peek(int indx){
-	int id = _front+indx;
+T Queue<T>::Peek(int index){
+	int id = _front+index;
 	if(id >= 200)
 		id -= 200;
 

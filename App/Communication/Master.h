@@ -4,11 +4,10 @@
 * Created: 14-11-2017 13:54:38
 * Author: Gerhard
 */
-#include "Data.h"
-
 #ifndef __MASTER_H__
 #define __MASTER_H__
 
+#include "Data.h"
 
 class Master
 {
@@ -20,7 +19,8 @@ private:
 //functions
 public:
 	Master();
-	void Update();
+	void SendTo(int ID);
+	void ReceiveFrom(int ID);
 	~Master();
 protected:
 private:

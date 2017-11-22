@@ -4,11 +4,10 @@
 * Created: 14-11-2017 13:54:24
 * Author: Gerhard
 */
-#include "Data.h"
-
 #ifndef __SLAVE_H__
 #define __SLAVE_H__
 
+#include "Data.h"
 
 class Slave
 {

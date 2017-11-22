@@ -5,12 +5,12 @@
 * Author: Gerhard
 */
 
-#include "Game.h"
-#include "../Model/SnakePlayer.h"
+
 
 #ifndef __SNAKE_H__
 #define __SNAKE_H__
-
+#include "Game.h"
+#include "../Model/SnakePlayer.h"
 
 class Snake : public Game
 {

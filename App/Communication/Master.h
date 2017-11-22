@@ -4,7 +4,7 @@
 * Created: 14-11-2017 13:54:38
 * Author: Gerhard
 */
-
+#include "Data.h"
 
 #ifndef __MASTER_H__
 #define __MASTER_H__
@@ -20,11 +20,10 @@ private:
 //functions
 public:
 	Master();
+	void Update();
 	~Master();
 protected:
 private:
-	Master( const Master &c );
-	Master& operator=( const Master &c );
 
 }; //Master
 

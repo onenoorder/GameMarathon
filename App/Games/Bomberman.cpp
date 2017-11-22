@@ -9,7 +9,7 @@
 
 
 // default constructor
-Bomberman::Bomberman(MI0283QT9 *LCD, InputController *inputController) : Game(LCD, inputController)
+Bomberman::Bomberman(unsigned char ID, MI0283QT9 *LCD, InputController *inputController) : Game(ID, LCD, inputController)
 {
 	_gridBlockSize = 15;
 	_offsetX = 16;
@@ -34,9 +34,7 @@ void Bomberman::Load()
 	// Border
 	_LCD->fillScreen(_wallColor);
 	// Background
-
 	_LCD->fillRect(_offsetX, _offsetY, _gridBlockSize * _maxX, _gridBlockSize * _maxY, _backgroundColor);
-
 
 	for(char x = 0; x < _maxX; x++){
 		for(char y = 0; y < _maxY; y++){
@@ -63,18 +61,16 @@ void Bomberman::Load()
 		}
 	}
 
-	/*_players[0] = BombermanPlayer(0,0);
-	_grid[_players[0].X][_players[0].Y] = 1;
-	drawGridCell(_players[0].X,_players[0].Y);*/
-
-	_currentPlayer = new BombermanPlayer(_maxX-1,_maxY-1, RGB(255, 120, 66));
-	_grid[_currentPlayer->X][_currentPlayer->Y] = 1;
-	drawGridCell(_currentPlayer->X,_currentPlayer->Y);
-
-	//_players[1] = BombermanPlayer(_maxX-1,_maxY-1);
-	//_playercount = 2;	
-
+	_players[0] = new BombermanPlayer(0, 0, RGB(255, 120, 66));
+	_players[1] = new BombermanPlayer(_maxX-1, _maxY-1, RGB(255, 120, 66));
 	
+	_grid[_players[0]->X][_players[0]->Y] = 1;
+	_grid[_players[1]->X][_players[1]->Y] = 1;
+
+	drawGridCell(_players[0]->X, _players[0]->Y);
+	drawGridCell(_players[1]->X, _players[1]->Y);
+
+	_currentPlayer = _players[PlayerID];
 }
 
 void Bomberman::Update(){
@@ -134,6 +130,11 @@ void Bomberman::Update(){
 			_grid[_currentPlayer->X][_currentPlayer->Y] = 1;			
 		}
 		drawGridCell(_currentPlayer->X,_currentPlayer->Y);
+	}
+
+	if(PlayerID == 0){
+		OutputData |= PLAYER0 | MOVE_DOWN;
+		_master->Update();
 	}	
 
 	if(_InputController->NunchuckZButton){
@@ -181,8 +182,7 @@ void Bomberman::drawGridCell(char x, char y){
 	else if(_grid[x][y] == Bomb){
 			_LCD->fillEllipse(_offsetX + x * _gridBlockSize + (_gridBlockSize/2), _offsetY + y * _gridBlockSize + (_gridBlockSize/2), _gridBlockSize/2, _gridBlockSize/2, RGB(0,0,0));
 			}			
-	else if(_grid[x][y] == Player2 || _grid[x][y] == Player1){		
-	
+	else if(_grid[x][y] == PLAYER2 || _grid[x][y] == PLAYER1){
 		if(_currentPlayer->Direction == Up){
 			_LCD->fillEllipse(_offsetX + x * _gridBlockSize + (_gridBlockSize/2), _offsetY + y * _gridBlockSize + (_gridBlockSize/2), _gridBlockSize/2, _gridBlockSize/4, _currentPlayer->Color);
 			_LCD->fillRect(_offsetX + x * _gridBlockSize + (_gridBlockSize/2)+3 , _offsetY + y * _gridBlockSize + (_gridBlockSize/2)-7,3,_gridBlockSize/3, RGB(55,55,55));

@@ -95,6 +95,10 @@ void Bomberman::Update(){
 		_currentPlayer->PlayerUpdated = 1;
 	}
 
+	if(_InputController->NunchuckZButton && Grid[_currentPlayer->X][_currentPlayer->Y] != Bomb && _currentPlayer->Bombs != _currentPlayer->MaxBombs){
+		_currentPlayer->PlaceBomb = 1;
+	}
+
 	if(PlayerID == 0){
 		/*OutputData = GetOutputData();
 		Serial.println(OutputData);
@@ -104,11 +108,11 @@ void Bomberman::Update(){
 		Serial.println(InputData);*/
 		OutputData = GetOutputData();
 		OutputData += 48;
-		//Serial.write(OutputData);
+		Serial.write(OutputData);
 
-		while(!Serial.available());
+		/*while(!Serial.available());
 		InputData = Serial.read();
-		DoInputData(InputData);
+		DoInputData(InputData);*/
 	} else {
 		/*OutputData = GetOutputData();
 		while(ReceivedData == 0);
@@ -125,14 +129,6 @@ void Bomberman::Update(){
 		Serial.println(OutputData);
 		_delay_ms(100);
 		Serial.write(OutputData);
-	}
-
-	if(_InputController->NunchuckZButton && Grid[_currentPlayer->X][_currentPlayer->Y] != Bomb && _currentPlayer->Bombs != _currentPlayer->MaxBombs){
-		Serial.println("Bomb!");
-		_bombs->Enqueue( new  BombermanBomb(_currentPlayer->X,_currentPlayer->Y,GameTime, _currentPlayer, BombsActiveCount));
-		Grid[_currentPlayer->X][_currentPlayer->Y] = Bomb;
-		drawGridCell(_currentPlayer->X,_currentPlayer->Y);		
-		_currentPlayer->Bombs++;	
 	}
 
 	while(1){
@@ -161,22 +157,28 @@ void Bomberman::Update(){
 
 unsigned char Bomberman::GetOutputData(){
 	unsigned char data = 0;
-	if(_currentPlayer->PlayerUpdated == 1){
+	if(_currentPlayer->PlayerUpdated == 1 || _currentPlayer->PlaceBomb == 1){
 		data = PlayerID;
-		switch(_currentPlayer->Direction){
-			case Up:
-				data |= BOMBERMAN_MOVE_UP;
-				break;
-			case Left:
-				data |= BOMBERMAN_MOVE_LEFT;
-				break;
-			case Right:
-				data |= BOMBERMAN_MOVE_RIGHT;
-				break;
-			case Down:
-				data |= BOMBERMAN_MOVE_DOWN;
-				break;
-		};
+		if(_currentPlayer->PlayerUpdated == 1){
+			switch(_currentPlayer->Direction){
+				case Up:
+					data |= BOMBERMAN_MOVE_UP;
+					break;
+				case Left:
+					data |= BOMBERMAN_MOVE_LEFT;
+					break;
+				case Right:
+					data |= BOMBERMAN_MOVE_RIGHT;
+					break;
+				case Down:
+					data |= BOMBERMAN_MOVE_DOWN;
+					break;
+			};
+		}
+		if(_currentPlayer->PlaceBomb == 1){
+			data |= BOMBERMAN_PLACE_BOM;
+			_currentPlayer->PlaceBomb = 0;
+		}
 		DoInputData(data);
 	}
 	return data;
@@ -200,6 +202,14 @@ void Bomberman::DoInputData(unsigned char data){
 				player->Direction = Down;
 				break;
 		};
+
+		if(data >= BOMBERMAN_PLACE_BOM){
+			_bombs->Enqueue(new  BombermanBomb(player->X, player->Y, GameTime, player, BombsActiveCount));
+			Grid[player->X][player->Y] = Bomb;
+			drawGridCell(player->X,player->Y);
+			player->Bombs++;
+		}
+			
 		drawGridCell(player->X, player->Y);
 		player->Move();
 		player->DrawPlayer(_LCD);

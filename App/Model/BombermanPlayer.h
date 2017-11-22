@@ -22,6 +22,7 @@ public:
 	char PlayerUpdated;
 	DirectionEnum Direction;
 	uint16_t Color;
+	unsigned char PlaceBomb;
 protected:
 private:
 	Bomberman * _game;

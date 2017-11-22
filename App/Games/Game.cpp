@@ -23,6 +23,7 @@ Game::Game(unsigned char ID, MI0283QT9 *LCD, InputController *inputController){
 
 void Game::Update(){
 	NewFrame = 0;
+		Serial.println("FRAME null");
 }
 
 // virtual destructor

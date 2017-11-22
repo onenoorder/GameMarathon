@@ -15,8 +15,9 @@ BombermanPlayer::BombermanPlayer(char X,char Y, uint16_t color, Bomberman * game
 	this->Y = Y;
 	this->Direction = Up;
 	this->Color = color;
+	this->Blastpower = 4;
 	this->Bombs =0;
-	this->MaxBombs = 1;
+	this->MaxBombs = 4;
 	this->_game = game;
 	this->PlayerUpdated = 0;
 } //BombermanPlayer
@@ -62,19 +63,19 @@ void BombermanPlayer::Move(){
 void BombermanPlayer::DrawPlayer(MI0283QT9 * LCD){	
 		if(this->Direction == Up){
 			LCD->fillEllipse(_game->OffsetX + this->X * _game->GridBlockSize + (_game->GridBlockSize/2), _game->OffsetY + this->Y * _game->GridBlockSize + (_game->GridBlockSize/2), _game->GridBlockSize/2, _game->GridBlockSize/4, this->Color);
-			LCD->fillRect(_game->OffsetX + this->X * _game->GridBlockSize + (_game->GridBlockSize/2)+3 , _game->OffsetY + this->Y * _game->GridBlockSize + (_game->GridBlockSize/2)-7,3,_game->GridBlockSize/3, RGB(55,55,55));
+			LCD->fillRect(_game->OffsetX + this->X * _game->GridBlockSize + (_game->GridBlockSize/2)*1.5 , _game->OffsetY + this->Y * _game->GridBlockSize + (_game->GridBlockSize/2)*0.2,_game->GridBlockSize/6,_game->GridBlockSize/2.5, RGB(55,55,55));
 		}
 		else if(this->Direction == Right){
 			LCD->fillEllipse(_game->OffsetX + this->X * _game->GridBlockSize + (_game->GridBlockSize/2), _game->OffsetY + this->Y * _game->GridBlockSize + (_game->GridBlockSize/2), _game->GridBlockSize/4, _game->GridBlockSize/2, this->Color);
-			LCD->fillRect(_game->OffsetX + this->X * _game->GridBlockSize + (_game->GridBlockSize/2)+2 , _game->OffsetY + this->Y * _game->GridBlockSize + (_game->GridBlockSize/2)-6,_game->GridBlockSize/3,3, RGB(55,55,55));
+			LCD->fillRect(_game->OffsetX + this->X * _game->GridBlockSize + (_game->GridBlockSize/2)*1.1 , _game->OffsetY + this->Y * _game->GridBlockSize + (_game->GridBlockSize/2)*0.3,_game->GridBlockSize/2.5,_game->GridBlockSize/6, RGB(55,55,55));
 		}
 		else if(this->Direction == Down){
 			LCD->fillEllipse(_game->OffsetX + this->X * _game->GridBlockSize + (_game->GridBlockSize/2), _game->OffsetY + this->Y * _game->GridBlockSize + (_game->GridBlockSize/2), _game->GridBlockSize/2, _game->GridBlockSize/4, this->Color);
-			LCD->fillRect(_game->OffsetX + this->X * _game->GridBlockSize + (_game->GridBlockSize/2)-6 , _game->OffsetY + this->Y * _game->GridBlockSize + (_game->GridBlockSize/2)+2,3,_game->GridBlockSize/3, RGB(55,55,55));
+			LCD->fillRect(_game->OffsetX + this->X * _game->GridBlockSize + (_game->GridBlockSize/2)*0.3 , _game->OffsetY + this->Y * _game->GridBlockSize + (_game->GridBlockSize/2)*1.1,_game->GridBlockSize/6,_game->GridBlockSize/2.5, RGB(55,55,55));
 		}
 		else if(this->Direction == Left){
 			LCD->fillEllipse(_game->OffsetX + this->X * _game->GridBlockSize + (_game->GridBlockSize/2), _game->OffsetY + this->Y * _game->GridBlockSize + (_game->GridBlockSize/2), _game->GridBlockSize/4, _game->GridBlockSize/2, this->Color);
-			LCD->fillRect(_game->OffsetX + this->X * _game->GridBlockSize + (_game->GridBlockSize/2)-7 , _game->OffsetY + this->Y * _game->GridBlockSize + (_game->GridBlockSize/2)+3,_game->GridBlockSize/3,3, RGB(55,55,55));
+			LCD->fillRect(_game->OffsetX + this->X * _game->GridBlockSize + (_game->GridBlockSize/2)*0.2 , _game->OffsetY + this->Y * _game->GridBlockSize + (_game->GridBlockSize/2)*1.5,_game->GridBlockSize/2.5,_game->GridBlockSize/6, RGB(55,55,55));
 		}
 
 		LCD->fillCircle(_game->OffsetX + this->X * _game->GridBlockSize + (_game->GridBlockSize/2), _game->OffsetY + this->Y * _game->GridBlockSize + (_game->GridBlockSize/2), _game->GridBlockSize/6, RGB(0, 0, 0));

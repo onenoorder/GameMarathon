@@ -12,18 +12,26 @@ template class Queue<SnakeQueueData>;
 template<typename T>
 Queue<T>::Queue()
 {
-	_array = new T[200];
+	_size = 200;
+	_array = new T[_size];
+} //Queue
+
+template<typename T>
+Queue<T>::Queue(int size)
+{
+	_size = size;
+	_array = new T[_size];
 } //Queue
 
 template<typename T>
 void Queue<T>::Clear(){
 	delete[] _array;
-	_array = new T[200];
+	_array = new T[_size];
 }
 
 template<typename T>
 void Queue<T>::Enqueue(T data){
-	if (_back < 200) {
+	if (_back < _size) {
 		_array[_back] = data;
 		_back++;
 		} else {
@@ -36,7 +44,7 @@ template<typename T>
 T Queue<T>::Dequeue(){
 	T data = _array[_front];
 	_array[_front] = {};
-	if (_front < 200) {
+	if (_front < _size-1) {
 		_front++;
 	}
 	else {

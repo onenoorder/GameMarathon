@@ -22,12 +22,14 @@ public:
 protected:
 private:
 	T *_array;
+	int _size;
 	unsigned char _front = 0;
 	unsigned char _back = 0;
 
 //functions
 public:
 	Queue();
+	Queue(int size);
 	void Clear();
 	void Enqueue(T data);
 	T Dequeue();

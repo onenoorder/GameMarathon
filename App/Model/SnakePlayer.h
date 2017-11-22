@@ -22,12 +22,13 @@ public:
 protected:
 private:
 	Queue<SnakeQueueData> *_snake;
+	unsigned char _snakeSize;
 	unsigned char _size;
 	unsigned char _maxSize;
 
 //functions
 public:
-	SnakePlayer(char x, char y, uint16_t color);
+	SnakePlayer(short x, short y, uint16_t color);
 	void Move();
 	void Draw(MI0283QT9 *LCD);
 	~SnakePlayer();

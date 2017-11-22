@@ -40,6 +40,7 @@ int main(void)
 
 	inputController = new InputController();
 
+
 	games[0] = new Bomberman(0, LCD, inputController);
 	games[1] = new Snake(0, LCD, inputController);
 	games[0]->Load();

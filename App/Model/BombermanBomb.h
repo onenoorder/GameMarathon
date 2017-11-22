@@ -15,7 +15,6 @@ class BombermanBomb
 {
 //variables
 public:
-
 	char X;
 	char Y;
 	BombermanPlayer * Player;

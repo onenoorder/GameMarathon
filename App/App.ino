@@ -45,14 +45,17 @@ int main(void)
 
 	games[0] = new Bomberman(0, LCD, inputController);
 	games[1] = new Snake(0, LCD, inputController);
-	games[0]->Load();
 	CurrentGame = games[0];
 	CurrentGame->NewFrame = 1;
+	CurrentGame->Load();
 	while (1)
 	{
-		if(CurrentGame->NewFrame == 1){
+		if(CurrentGame->PlayerID == 0){
+			if(CurrentGame->NewFrame == 1){
+				CurrentGame->Update();
+			}
+		} else {
 			CurrentGame->Update();
 		}
-		_delay_ms(10);
 	}
 }

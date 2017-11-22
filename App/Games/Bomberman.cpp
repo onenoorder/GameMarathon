@@ -107,12 +107,11 @@ void Bomberman::Update(){
 		DoInputData(InputData);
 		Serial.println(InputData);*/
 		OutputData = GetOutputData();
-		OutputData += 48;
 		Serial.write(OutputData);
 
-		/*while(!Serial.available());
+		while(!Serial.available());
 		InputData = Serial.read();
-		DoInputData(InputData);*/
+		DoInputData(InputData);
 	} else {
 		/*OutputData = GetOutputData();
 		while(ReceivedData == 0);
@@ -120,14 +119,10 @@ void Bomberman::Update(){
 		Serial.println(InputData);*/
 		
 		while(!Serial.available());
-		_delay_ms(100);
-		InputData = Serial.read() - 'd';
-		Serial.println(InputData);
+		InputData = Serial.read();
 		DoInputData(InputData);
-
+		
 		OutputData = GetOutputData();
-		Serial.println(OutputData);
-		_delay_ms(100);
 		Serial.write(OutputData);
 	}
 

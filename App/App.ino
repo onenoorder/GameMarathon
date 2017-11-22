@@ -17,10 +17,12 @@ Game * CurrentGame;
 
 ISR(TIMER2_OVF_vect) {
 	CurrentGame->Timer++;
+	if(CurrentGame->Timer % 5 == 0 ){
+		CurrentGame->NewFrame = 1;
+	}
 	if (CurrentGame->Timer >= 30) {
 		CurrentGame->Timer = 0;
 		CurrentGame->GameTime++;
-		CurrentGame->NewFrame = 1;
 	}
 }
 
@@ -45,12 +47,12 @@ int main(void)
 	games[1] = new Snake(0, LCD, inputController);
 	games[0]->Load();
 	CurrentGame = games[0];
-
+	CurrentGame->NewFrame = 1;
 	while (1)
 	{
-		//if(CurrentGame->NewFrame > 0)
-		CurrentGame->Update();
-
-
+		if(CurrentGame->NewFrame == 1){
+			CurrentGame->Update();
+		}
+		_delay_ms(10);
 	}
 }

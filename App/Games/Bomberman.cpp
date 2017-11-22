@@ -109,9 +109,9 @@ void Bomberman::Update(){
 		OutputData = GetOutputData();
 		Serial.write(OutputData);
 
-		while(!Serial.available());
+		/*while(!Serial.available());
 		InputData = Serial.read();
-		DoInputData(InputData);
+		DoInputData(InputData);*/
 	} else {
 		/*OutputData = GetOutputData();
 		while(ReceivedData == 0);

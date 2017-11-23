@@ -8,12 +8,13 @@
 
 #include "Game.h"
 
-Game::Game(unsigned char ID, MI0283QT9 *LCD, InputController *inputController){
+Game::Game(unsigned char ID, unsigned char playerCount, MI0283QT9 *LCD, InputController *inputController){
 	_LCD = LCD;
 	_InputController = inputController;
 	_InputController->UpdateInput();
 	NewFrame = 0;
 	PlayerID = ID;
+	PlayerCount = playerCount;
 	
 	if(PlayerID == 0)
 		_master = new Master();
@@ -23,7 +24,6 @@ Game::Game(unsigned char ID, MI0283QT9 *LCD, InputController *inputController){
 
 void Game::Update(){
 	NewFrame = 0;
-		Serial.println("FRAME null");
 }
 
 // virtual destructor

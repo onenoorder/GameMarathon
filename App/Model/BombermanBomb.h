@@ -27,9 +27,9 @@ private:
 	Bomberman * _game;
 //functions
 public:
+	BombermanBomb(char X, char Y,int TimePlaced, BombermanPlayer * Player , int index, Bomberman * game);
 	void Tick(MI0283QT9 * LCD);
 	void Explode(MI0283QT9 * LCD);
-	BombermanBomb(char X, char Y,int TimePlaced, BombermanPlayer * Player , int index, Bomberman * game);
 	~BombermanBomb();
 protected:
 private:

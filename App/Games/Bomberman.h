@@ -46,27 +46,25 @@ private:
 	BombermanPlayer *_currentPlayer;
 
 	enum BombermanData{
-		PLAYER0 = 0,
-		PLAYER1 = 1,
-		PLAYER2 = 2,
-		PLAYER3 = 3,
-		MOVE_UP = 4,
-		MOVE_DOWN = 8,
-		MOVE_LEFT = 12,
-		MOVE_RIGHT = 16,
-		VIEW_UP = 20,
-		VIEW_DOWN = 24,
-		VIEW_LEFT = 28,
-		VIEW_RIGHT = 32,
-		PLACE_BOM = 36,
-		WIN = 40,
-		LOSE = 44
+		BOMBERMAN_PLAYER0 = 0,
+		BOMBERMAN_PLAYER1 = 1,
+		BOMBERMAN_PLAYER2 = 2,
+		BOMBERMAN_PLAYER3 = 3,
+		BOMBERMAN_PLAYERS = 3,
+		BOMBERMAN_MOVE_UP = 4,
+		BOMBERMAN_MOVE_DOWN = 8,
+		BOMBERMAN_MOVE_LEFT = 12,
+		BOMBERMAN_MOVE_RIGHT = 16,
+		BOMBERMAN_WIN = 20,
+		BOMBERMAN_LOSE = 24,
+		BOMBERMAN_ACTIONS = 28,
+		BOMBERMAN_PLACE_BOM = 32
 	};
 	
 
 //functions
 public:
-	Bomberman(unsigned char ID, MI0283QT9 *LCD, InputController *inputController);
+	Bomberman(unsigned char ID, unsigned char playerCount, MI0283QT9 *LCD, InputController *inputController);
 	virtual void Load();
 	virtual void Update();
 
@@ -74,6 +72,8 @@ public:
 protected:
 private:
 	void drawGridCell(char x, char y);
+	unsigned char GetOutputData();
+	void DoInputData(unsigned char data);
 
 }; //Bomberman
 

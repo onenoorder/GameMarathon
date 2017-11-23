@@ -22,6 +22,7 @@ public:
 protected:
 private:
 	T *_array;
+	int _size;
 	unsigned char _front = 0;
 	unsigned char _back = 0;
 	int _length;
@@ -29,12 +30,13 @@ private:
 //functions
 public:
 	Queue();
+	Queue(int size);
 	void Clear();
 	int Length(); 
 	void Enqueue(T data);
 	T Dequeue();
 	T Peek();
-	T Peek(int indx);
+	T Peek(int index);
 	~Queue();
 protected:
 private:

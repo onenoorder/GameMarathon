@@ -11,11 +11,11 @@
 // default constructor
 Bomberman::Bomberman(unsigned char ID, MI0283QT9 *LCD, InputController *inputController) : Game(ID, LCD, inputController)
 {
-	GridBlockSize = 15;
+	GridBlockSize = 25;
 	OffsetX = 16;
 	OffsetY = 8;
-	MaxX = 19;
-	MaxY = 15;
+	MaxX = 9;
+	MaxY = 9;
 	BombsActiveCount = 0;
 	BombStartIndex = 0;
 	_bombs = new Queue<BombermanBomb*>();
@@ -100,24 +100,13 @@ void Bomberman::Update(){
 	}
 
 	if(PlayerID == 0){
-		/*OutputData = GetOutputData();
-		Serial.println(OutputData);
-		_master->SendTo(1);
-		_master->ReceiveFrom(1);
-		DoInputData(InputData);
-		Serial.println(InputData);*/
 		OutputData = GetOutputData();
 		Serial.write(OutputData);
 
-		/*while(!Serial.available());
+		while(!Serial.available());
 		InputData = Serial.read();
-		DoInputData(InputData);*/
-	} else {
-		/*OutputData = GetOutputData();
-		while(ReceivedData == 0);
 		DoInputData(InputData);
-		Serial.println(InputData);*/
-		
+	} else {
 		while(!Serial.available());
 		InputData = Serial.read();
 		DoInputData(InputData);
@@ -141,52 +130,6 @@ void Bomberman::Update(){
 			}
 			else if( bomb->TimePlaced+4 <= GameTime && !bomb->Exploding ){
 				bomb->Explode(_LCD);
-				/*bomb->Exploding = 1;
-				char directions = 0x00;
-				for (int blast = 0; blast < bomb->Player->Blastpower; blast++)
-				{
-					if( !(directions & 0x01) && bomb->Y+blast+1 < MaxY && Grid[bomb->X][bomb->Y+blast+1]  != Wall ){
-						if(Grid[bomb->X][bomb->Y+blast+1]  == Rock ){
-							directions |= 0x01;
-						}
-						Grid[bomb->X][bomb->Y+blast+1] = Explotion;
-						drawGridCell(bomb->X,bomb->Y+blast+1);
-					
-					}else{
-						directions |= 0x01;
-					}
-
-					if(!(directions & 0x02) && bomb->Y-blast-1 >= 0 && Grid[bomb->X][bomb->Y-blast-1]  != Wall ){
-						if(Grid[bomb->X][bomb->Y-blast-1]  == Rock ){
-							directions |= 0x02;
-						}
-						Grid[bomb->X][bomb->Y-blast-1] = Explotion;
-						drawGridCell(bomb->X,bomb->Y-blast-1);
-						
-					}else{
-						directions |= 0x02;
-					}
-
-					if(!(directions & 0x04) && bomb->X+blast+1 < MaxX && Grid[bomb->X+blast+1][bomb->Y] != Wall ){
-						if(Grid[bomb->X+blast+1][bomb->Y]  == Rock ){
-							directions |= 0x04;
-						}
-						Grid[bomb->X+blast+1][bomb->Y] = Explotion;
-						drawGridCell(bomb->X+blast+1,bomb->Y);					
-					}else{
-						directions |= 0x04;
-					}
-
-					if(!(directions & 0x08) && bomb->X-blast-1 >= 0 && Grid[bomb->X-blast-1][bomb->Y] != Wall ){
-						if(Grid[bomb->X-blast-1][bomb->Y]  == Rock ){
-							directions |= 0x08;
-						}
-						Grid[bomb->X-blast-1][bomb->Y] = Explotion;
-						drawGridCell(bomb->X-blast-1,bomb->Y);					
-					}else{
-						directions |= 0x08;
-					}
-				}*/
 			}
 		}
 

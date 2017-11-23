@@ -95,7 +95,7 @@ void Bomberman::Update(){
 		_currentPlayer->PlayerUpdated = 1;
 	}
 
-	if(_InputController->NunchuckZButton && Grid[_currentPlayer->X][_currentPlayer->Y] != Bomb && _currentPlayer->Bombs != _currentPlayer->MaxBombs){
+	if(_InputController->NunchuckZButton && Grid[_currentPlayer->X][_currentPlayer->Y] != Bomb && _currentPlayer->Bombs != _currentPlayer->MaxBombs && _currentPlayer->BombTime +1 < GameTime){
 		_currentPlayer->PlaceBomb = 1;
 	}
 
@@ -130,17 +130,18 @@ void Bomberman::Update(){
 		for(int i = 0; i < _bombs->Length(); i++){
 			BombermanBomb * bomb = _bombs->Peek(i);	
 
-			if( bomb->TimePlaced+1 == GameTime ){
+			if( bomb->TimePlaced+1 == GameTime  && bomb->Ticks == 0 ){
 				bomb->Tick(_LCD);
 			}
-			else if( bomb->TimePlaced+2 == GameTime ){
+			else if( bomb->TimePlaced+2 == GameTime && bomb->Ticks == 1){
 				bomb->Tick(_LCD);
 			}
-			else if( bomb->TimePlaced+3 == GameTime ){
+			else if( bomb->TimePlaced+3 == GameTime && bomb->Ticks == 2){
 				bomb->Tick(_LCD);
 			}
 			else if( bomb->TimePlaced+4 <= GameTime && !bomb->Exploding ){
-				bomb->Exploding = 1;
+				bomb->Explode(_LCD);
+				/*bomb->Exploding = 1;
 				char directions = 0x00;
 				for (int blast = 0; blast < bomb->Player->Blastpower; blast++)
 				{
@@ -185,7 +186,7 @@ void Bomberman::Update(){
 					}else{
 						directions |= 0x08;
 					}
-				}
+				}*/
 			}
 		}
 
@@ -276,10 +277,11 @@ void Bomberman::DoInputData(unsigned char data){
 		};
 
 		if(data >= BOMBERMAN_PLACE_BOM){
-			_bombs->Enqueue(new  BombermanBomb(player->X, player->Y, GameTime, player, BombsActiveCount, this));
+			_bombs->Enqueue( new  BombermanBomb(player->X,player->Y,GameTime, player, BombsActiveCount, this));
 			Grid[player->X][player->Y] = Bomb;
-			drawGridCell(player->X,player->Y);
-			player->Bombs++;
+			drawGridCell(player->X,player->Y);		
+			player->Bombs++;	
+			player->BombTime = GameTime;
 		}
 			
 		drawGridCell(player->X, player->Y);

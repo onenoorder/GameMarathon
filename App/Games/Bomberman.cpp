@@ -9,7 +9,7 @@
 
 
 // default constructor
-Bomberman::Bomberman(unsigned char ID, MI0283QT9 *LCD, InputController *inputController) : Game(ID, LCD, inputController)
+Bomberman::Bomberman(unsigned char ID, unsigned char playerCount, MI0283QT9 *LCD, InputController *inputController) : Game(ID, playerCount, LCD, inputController)
 {
 	GridBlockSize = 25;
 	OffsetX = 16;
@@ -103,14 +103,18 @@ void Bomberman::Update(){
 		OutputData = GetOutputData();
 		Serial.write(OutputData);
 
-		while(!Serial.available());
-		InputData = Serial.read();
-		DoInputData(InputData);
+		if(PlayerCount > 1){
+			while(!Serial.available());
+			InputData = Serial.read();
+			DoInputData(InputData);
+		}
 	} else {
-		while(!Serial.available());
-		InputData = Serial.read();
-		DoInputData(InputData);
-		
+		if(PlayerCount > 1){
+			while(!Serial.available());
+			InputData = Serial.read();
+			DoInputData(InputData);
+		}
+
 		OutputData = GetOutputData();
 		Serial.write(OutputData);
 	}

@@ -63,8 +63,8 @@ void Bomberman::Load()
 		}
 	}
 
-	_players[0] = new BombermanPlayer(0, 0, RGB(255, 120, 66), this);
-	_players[1] = new BombermanPlayer(MaxX-1, MaxY-1, RGB(255, 120, 66), this);
+	_players[0] = new BombermanPlayer(0, 0, RGB(255, 0, 0), this);
+	_players[1] = new BombermanPlayer(MaxX-1, MaxY-1, RGB(0, 0, 255), this);
 	
 	Grid[_players[0]->X][_players[0]->Y] = 1;
 	Grid[_players[1]->X][_players[1]->Y] = 1;
@@ -208,32 +208,36 @@ void Bomberman::DoInputData(unsigned char data){
 	if(data != 0){
 		BombermanPlayer *player = _players[data & BOMBERMAN_PLAYERS];
 
-		switch(data & BOMBERMAN_ACTIONS){
-			case BOMBERMAN_MOVE_UP:
-				player->Direction = Up;
-				break;
-			case BOMBERMAN_MOVE_LEFT:
-				player->Direction = Left;
-				break;
-			case BOMBERMAN_MOVE_RIGHT:
-				player->Direction = Right;
-				break;
-			case BOMBERMAN_MOVE_DOWN:
-				player->Direction = Down;
-				break;
-		};
+		if((data & BOMBERMAN_ACTIONS) > 0){
+			switch(data & BOMBERMAN_ACTIONS){
+				case BOMBERMAN_MOVE_UP:
+					player->Direction = Up;
+					break;
+				case BOMBERMAN_MOVE_LEFT:
+					player->Direction = Left;
+					break;
+				case BOMBERMAN_MOVE_RIGHT:
+					player->Direction = Right;
+					break;
+				case BOMBERMAN_MOVE_DOWN:
+					player->Direction = Down;
+					break;
+			};
+			drawGridCell(player->X, player->Y);
+			player->Move();
+			player->DrawPlayer(_LCD);
+		}
 
 		if(data >= BOMBERMAN_PLACE_BOM){
-			_bombs->Enqueue( new  BombermanBomb(player->X,player->Y,GameTime, player, BombsActiveCount, this));
+			_bombs->Enqueue(new  BombermanBomb(player->X,player->Y,GameTime, player, BombsActiveCount, this));
 			Grid[player->X][player->Y] = Bomb;
 			drawGridCell(player->X,player->Y);		
 			player->Bombs++;	
 			player->BombTime = GameTime;
+
+			drawGridCell(player->X, player->Y);
+			player->DrawPlayer(_LCD);
 		}
-			
-		drawGridCell(player->X, player->Y);
-		player->Move();
-		player->DrawPlayer(_LCD);
 	}
 }
 

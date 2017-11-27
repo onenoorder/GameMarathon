@@ -14,6 +14,7 @@
 	this->BombIndex = index;
 	this->Player = Player;
 	this->Exploding = 0;
+	
 	this->Ticks = 0;
 	this->_game = game;
 }
@@ -23,7 +24,7 @@ void BombermanBomb::Tick(MI0283QT9 * LCD){
 		LCD->fillEllipse(_game->OffsetX + this->X * _game->GridBlockSize + (_game->GridBlockSize/2), _game->OffsetY + this->Y * _game->GridBlockSize + (_game->GridBlockSize/2), _game->GridBlockSize/2, _game->GridBlockSize/2, RGB(89,26,3));
 	}else if (Ticks ==1){
 		LCD->fillEllipse(_game->OffsetX + this->X * _game->GridBlockSize + (_game->GridBlockSize/2), _game->OffsetY + this->Y * _game->GridBlockSize + (_game->GridBlockSize/2), _game->GridBlockSize/2, _game->GridBlockSize/2, RGB(186,57,11));	
-	}else if (Ticks ==1){
+	}else if (Ticks ==2){
 		LCD->fillEllipse(_game->OffsetX + this->X * _game->GridBlockSize + (_game->GridBlockSize/2), _game->OffsetY + this->Y * _game->GridBlockSize + (_game->GridBlockSize/2), _game->GridBlockSize/2, _game->GridBlockSize/2, RGB(255,77,18));	
 	}
 	Ticks++;
@@ -32,6 +33,9 @@ void BombermanBomb::Tick(MI0283QT9 * LCD){
 void BombermanBomb::Explode(MI0283QT9 * LCD){
 	this->Exploding = 1;
 	char directions = 0x00;
+
+	LCD->fillRect(_game->OffsetX + this->X * _game->GridBlockSize, _game->OffsetY + (this->Y) * _game->GridBlockSize, _game->GridBlockSize, _game->GridBlockSize, RGB(255,0,0));
+					
 	for (int blast = 0; blast < this->Player->Blastpower; blast++)
 	{
 		if( !(directions & 0x01) && this->Y+blast+1 < _game->MaxY && _game->Grid[this->X][this->Y+blast+1]  != _game->Wall ){
@@ -39,8 +43,7 @@ void BombermanBomb::Explode(MI0283QT9 * LCD){
 				directions |= 0x01;
 			}
 			_game->Grid[this->X][this->Y+blast+1] = _game->Explotion;
-			LCD->fillRect(_game->OffsetX + this->X * _game->GridBlockSize, _game->OffsetY + this->Y * _game->GridBlockSize, _game->GridBlockSize, _game->GridBlockSize, RGB(255,0,0));
-
+			LCD->fillRect(_game->OffsetX + this->X * _game->GridBlockSize, _game->OffsetY + (this->Y+blast+1) * _game->GridBlockSize, _game->GridBlockSize, _game->GridBlockSize, RGB(255,0,0));		
 		}else{
 			directions |= 0x01;
 		}
@@ -50,8 +53,7 @@ void BombermanBomb::Explode(MI0283QT9 * LCD){
 				directions |= 0x02;
 			}
 			_game->Grid[this->X][this->Y-blast-1] = _game->Explotion;
-			LCD->fillRect(_game->OffsetX + this->X * _game->GridBlockSize, _game->OffsetY + this->Y * _game->GridBlockSize, _game->GridBlockSize, _game->GridBlockSize, RGB(255,0,0));
-	
+			LCD->fillRect(_game->OffsetX + this->X * _game->GridBlockSize, _game->OffsetY + (this->Y-blast-1) * _game->GridBlockSize, _game->GridBlockSize, _game->GridBlockSize, RGB(255,0,0));		
 		}else{
 			directions |= 0x02;
 		}
@@ -61,7 +63,7 @@ void BombermanBomb::Explode(MI0283QT9 * LCD){
 				directions |= 0x04;
 			}
 			_game->Grid[this->X+blast+1][this->Y] = _game->Explotion;
-			LCD->fillRect(_game->OffsetX + this->X * _game->GridBlockSize, _game->OffsetY + this->Y * _game->GridBlockSize, _game->GridBlockSize, _game->GridBlockSize, RGB(255,0,0));
+				LCD->fillRect(_game->OffsetX + (this->X+blast+1) * _game->GridBlockSize, _game->OffsetY + (this->Y) * _game->GridBlockSize, _game->GridBlockSize, _game->GridBlockSize, RGB(255,0,0));
 
 		}else{
 			directions |= 0x04;
@@ -72,7 +74,7 @@ void BombermanBomb::Explode(MI0283QT9 * LCD){
 				directions |= 0x08;
 			}
 			_game->Grid[this->X-blast-1][this->Y] = _game->Explotion;
-			LCD->fillRect(_game->OffsetX + this->X * _game->GridBlockSize, _game->OffsetY + this->Y * _game->GridBlockSize, _game->GridBlockSize, _game->GridBlockSize, RGB(255,0,0));
+			LCD->fillRect(_game->OffsetX + (this->X-blast-1) * _game->GridBlockSize, _game->OffsetY + (this->Y) * _game->GridBlockSize, _game->GridBlockSize, _game->GridBlockSize, RGB(255,0,0));
 
 		}else{
 			directions |= 0x08;

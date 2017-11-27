@@ -5,7 +5,6 @@
 * Author: Mikena
 */
 
-
 #include "BombermanPlayer.h"
 
 // default constructor
@@ -15,11 +14,12 @@ BombermanPlayer::BombermanPlayer(char X,char Y, uint16_t color, Bomberman * game
 	this->Y = Y;
 	this->Direction = Up;
 	this->Color = color;
-	this->Blastpower = 4;
-	this->Bombs =0;
-	this->MaxBombs = 4;
+	this->Blastpower = 1;
+	this->Bombs = 0;
+	this->MaxBombs = 1;
 	this->_game = game;
 	this->PlayerUpdated = 0;
+	this->BombTime = 0;
 } //BombermanPlayer
 
 void BombermanPlayer::Move(){

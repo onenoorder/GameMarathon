@@ -58,13 +58,13 @@ private:
 		BOMBERMAN_WIN = 20,
 		BOMBERMAN_LOSE = 24,
 		BOMBERMAN_ACTIONS = 28,
-		BOMBERMAN_PLACE_BOM = 36
+		BOMBERMAN_PLACE_BOM = 32
 	};
 	
 
 //functions
 public:
-	Bomberman(unsigned char ID, MI0283QT9 *LCD, InputController *inputController);
+	Bomberman(unsigned char ID, unsigned char playerCount, MI0283QT9 *LCD, InputController *inputController);
 	virtual void Load();
 	virtual void Update();
 

@@ -26,7 +26,7 @@ private:
 
 //functions
 public:
-	Snake(unsigned char ID, MI0283QT9 *LCD, InputController *inputController);
+	Snake(unsigned char ID, unsigned char playerCount, MI0283QT9 *LCD, InputController *inputController);
 	virtual void Load();
 	virtual void Update();
 	~Snake();

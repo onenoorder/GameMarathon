@@ -29,6 +29,7 @@ public:
 	unsigned int GameTime = 0;
 	unsigned char NewFrame;
 	unsigned char PlayerID;
+	unsigned char PlayerCount;
 protected:
 	Master *_master;
 	Slave *_slave;
@@ -41,7 +42,7 @@ public:
 
 	virtual ~Game();
 protected:
-	Game(unsigned char ID, MI0283QT9 *LCD, InputController *inputController);
+	Game(unsigned char ID, unsigned char playerCount, MI0283QT9 *LCD, InputController *inputController);
 }; //Game
 
 #endif //__GAME_H__

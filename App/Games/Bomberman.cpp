@@ -16,7 +16,9 @@ Bomberman::Bomberman(unsigned char ID, unsigned char playerCount, MI0283QT9 *LCD
 	OffsetY = 8;
 	MaxX = 9;
 	MaxY = 9;
-	_bombs = new Queue<BombermanBomb*>();
+
+	_bombs = new Queue<BombermanBomb*>(20);
+
 
 	// Colors
 	WallColor = RGB(24,24,24);

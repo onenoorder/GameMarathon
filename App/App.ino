@@ -45,7 +45,7 @@ int main(void)
 
 	games[0] = new Bomberman(0, 1, LCD, inputController);
 	games[1] = new Snake(0, 1, LCD, inputController);
-	CurrentGame = games[0];
+	CurrentGame = games[1];
 	CurrentGame->NewFrame = 1;
 	CurrentGame->Load();
 	while (1)

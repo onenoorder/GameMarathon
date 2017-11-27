@@ -34,7 +34,7 @@ void Queue<T>::Clear(){
 template<typename T>
 void Queue<T>::Enqueue(T data){
 	_length++;
-	if (_back < _size-1) {
+	if (_back < _size) {
 		_array[_back] = data;
 		_back++;
 		} else {

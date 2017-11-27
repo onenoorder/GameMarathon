@@ -5,12 +5,12 @@
 * Author: Gerhard
 */
 
-#include "Game.h"
-#include "../Model/SnakePlayer.h"
+
 
 #ifndef __SNAKE_H__
 #define __SNAKE_H__
-
+#include "Game.h"
+#include "../Model/SnakePlayer.h"
 
 class Snake : public Game
 {
@@ -26,7 +26,7 @@ private:
 
 //functions
 public:
-	Snake(unsigned char ID, MI0283QT9 *LCD, InputController *inputController);
+	Snake(unsigned char ID, unsigned char playerCount, MI0283QT9 *LCD, InputController *inputController);
 	virtual void Load();
 	virtual void Update();
 	~Snake();

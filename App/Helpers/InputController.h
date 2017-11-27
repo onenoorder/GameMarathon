@@ -4,11 +4,12 @@
 * Created: 17-11-2017 11:26:16
 * Author: Mikena
 */
-#include "../lib/ArduinoNunchuk/ArduinoNunchuk.h"
+
 
 #ifndef __INPUTCONTROLLER_H__
 #define __INPUTCONTROLLER_H__
 
+#include "../Lib/ArduinoNunchuk/ArduinoNunchuk.h"
 
 class InputController
 {

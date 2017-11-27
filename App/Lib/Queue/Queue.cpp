@@ -8,12 +8,14 @@
 #include "Queue.h"
 
 template class Queue<SnakeQueueData>;
-
+template class Queue<BombermanBomb*>;
 template<typename T>
 Queue<T>::Queue()
 {
 	_size = 200;
 	_array = new T[_size];
+	_length = 0;
+	_nextIndex = 0;
 } //Queue
 
 template<typename T>
@@ -31,7 +33,8 @@ void Queue<T>::Clear(){
 
 template<typename T>
 void Queue<T>::Enqueue(T data){
-	if (_back < _size) {
+	_length++;
+	if (_back < _size-1) {
 		_array[_back] = data;
 		_back++;
 		} else {
@@ -42,6 +45,8 @@ void Queue<T>::Enqueue(T data){
 
 template<typename T>
 T Queue<T>::Dequeue(){
+
+	_length--;
 	T data = _array[_front];
 	_array[_front] = {};
 	if (_front < _size-1) {
@@ -51,6 +56,26 @@ T Queue<T>::Dequeue(){
 		_front = 0;
 	}
 	return data;
+}
+
+template<typename T>
+int Queue<T>::Length(){
+	return _length;
+}
+
+template<typename T>
+T Queue<T>::Peek(int index){
+	int id = _front+index;
+	if(id >= 200)
+		id -= 200;
+
+	T result = _array[id];
+	return result;
+}
+
+template<typename T>
+T Queue<T>::Peek(){
+	return _array[_front];
 }
 
 template<typename T>

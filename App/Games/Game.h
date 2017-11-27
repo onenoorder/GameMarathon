@@ -5,13 +5,15 @@
 * Author: Gerhard
 */
 
+
+
+#ifndef __GAME_H__
+#define __GAME_H__
+
 #include "../Lib/MI0283QT9/MI0283QT9.h"
 #include "../Helpers/InputController.h"
 #include "../Communication/Master.h"
 #include "../Communication/Slave.h"
-
-#ifndef __GAME_H__
-#define __GAME_H__
 
 enum DirectionEnum {
 	Left = 1,
@@ -27,6 +29,7 @@ public:
 	unsigned int GameTime = 0;
 	unsigned char NewFrame;
 	unsigned char PlayerID;
+	unsigned char PlayerCount;
 protected:
 	Master *_master;
 	Slave *_slave;
@@ -39,7 +42,7 @@ public:
 
 	virtual ~Game();
 protected:
-	Game(unsigned char ID, MI0283QT9 *LCD, InputController *inputController);
+	Game(unsigned char ID, unsigned char playerCount, MI0283QT9 *LCD, InputController *inputController);
 }; //Game
 
 #endif //__GAME_H__

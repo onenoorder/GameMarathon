@@ -37,7 +37,6 @@ public:
 	};
 protected:
 private:
-
 	BombermanPlayer *_players[4];
 	Queue<BombermanBomb*> * _bombs;
 	BombermanPlayer *_currentPlayer;
@@ -56,8 +55,7 @@ private:
 		BOMBERMAN_LOSE = 24,
 		BOMBERMAN_ACTIONS = 28,
 		BOMBERMAN_PLACE_BOM = 32
-	};
-	
+	};	
 
 //functions
 public:

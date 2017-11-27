@@ -6,11 +6,12 @@
 */
 #include "BombermanBomb.h"
 
- BombermanBomb::BombermanBomb(char X, char Y,int TimePlaced, BombermanPlayer * Player, Bomberman * game)
+ BombermanBomb::BombermanBomb(char X, char Y,int TimePlaced, BombermanPlayer * Player ,Bomberman * game)
 {
 	this->X = X;
 	this->Y = Y;
 	this->TimePlaced = TimePlaced;
+
 	this->Player = Player;
 	this->Exploding = 0;
 	

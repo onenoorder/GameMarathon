@@ -23,8 +23,8 @@ public:
 	char GridBlockSize;
 	char MaxX;
 	char MaxY;
-		char OffsetX;
-		char OffsetY;
+	char OffsetX;
+	char OffsetY;
 	uint16_t RockColor;
 	uint16_t WallColor;
 	uint16_t BackgroundColor;
@@ -37,11 +37,7 @@ public:
 	};
 protected:
 private:
-
 	BombermanPlayer *_players[4];
-	unsigned char BombStartIndex;
-	unsigned char BombsActiveCount;
-
 	Queue<BombermanBomb*> * _bombs;
 	BombermanPlayer *_currentPlayer;
 
@@ -59,8 +55,7 @@ private:
 		BOMBERMAN_LOSE = 24,
 		BOMBERMAN_ACTIONS = 28,
 		BOMBERMAN_PLACE_BOM = 32
-	};
-	
+	};	
 
 //functions
 public:

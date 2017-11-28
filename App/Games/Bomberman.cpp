@@ -16,9 +16,9 @@ Bomberman::Bomberman(unsigned char ID, unsigned char playerCount, MI0283QT9 *LCD
 	OffsetY = 8;
 	MaxX = 9;
 	MaxY = 9;
-	BombsActiveCount = 0;
-	BombStartIndex = 0;
+
 	_bombs = new Queue<BombermanBomb*>(20);
+
 
 	// Colors
 	WallColor = RGB(24,24,24);
@@ -229,7 +229,7 @@ void Bomberman::DoInputData(unsigned char data){
 		}
 
 		if(data >= BOMBERMAN_PLACE_BOM){
-			_bombs->Enqueue(new  BombermanBomb(player->X,player->Y,GameTime, player, BombsActiveCount, this));
+			_bombs->Enqueue(new  BombermanBomb(player->X,player->Y,GameTime, player, this));
 			Grid[player->X][player->Y] = Bomb;
 			drawGridCell(player->X,player->Y);		
 			player->Bombs++;	

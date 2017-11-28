@@ -45,7 +45,6 @@ void Queue<T>::Enqueue(T data){
 
 template<typename T>
 T Queue<T>::Dequeue(){
-
 	_length--;
 	T data = _array[_front];
 	_array[_front] = {};
@@ -66,8 +65,8 @@ int Queue<T>::Length(){
 template<typename T>
 T Queue<T>::Peek(int index){
 	int id = _front+index;
-	if(id >= 200)
-		id -= 200;
+	if(id >= _size)
+		id -= _size;
 
 	T result = _array[id];
 	return result;

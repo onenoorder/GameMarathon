@@ -9,7 +9,7 @@
 
 
 // default constructor
-Bomberman::Bomberman(unsigned char ID, unsigned char playerCount, MI0283QT9 *LCD, InputController *inputController) : Game(ID, playerCount, LCD, inputController)
+Bomberman::Bomberman(unsigned char ID, unsigned char playerCount, MI0283QT9 *LCD, InputController *inputController, Communication *communication) : Game(ID, playerCount, LCD, inputController, communication)
 {
 	GridBlockSize = 25;
 	OffsetX = 16;
@@ -18,7 +18,6 @@ Bomberman::Bomberman(unsigned char ID, unsigned char playerCount, MI0283QT9 *LCD
 	MaxY = 9;
 
 	_bombs = new Queue<BombermanBomb*>(20);
-
 
 	// Colors
 	WallColor = RGB(24,24,24);
@@ -77,12 +76,33 @@ void Bomberman::Load()
 
 void Bomberman::Update(){
 	Game::Update();
+	
+	this->UpdatePlayerInput();
+	this->UpdatePlayers();
+	this->UpdateBombs();
+}
+
+void Bomberman::UpdatePlayers(){
+	if(PlayerID == 0){
+		_communication->Send(GetOutputData());
+
+		if(PlayerCount > 1)
+			DoInputData(_communication->Receive());
+	} else {
+		if(PlayerCount > 1)
+			DoInputData(_communication->Receive());
+
+		_communication->Send(GetOutputData());
+	}
+}
+
+void Bomberman::UpdatePlayerInput(){
 	_InputController->UpdateInput();
 	_currentPlayer->PlayerUpdated = 0;
-	if(_InputController->NunchuckAnalogX > 200){	
+	if(_InputController->NunchuckAnalogX > 200){
 		_currentPlayer->Direction = Right;
 		_currentPlayer->PlayerUpdated = 1;
-	}else if(_InputController->NunchuckAnalogY > 200 ){
+		}else if(_InputController->NunchuckAnalogY > 200 ){
 		_currentPlayer->Direction = Up;
 		_currentPlayer->PlayerUpdated = 1;
 	}
@@ -98,50 +118,29 @@ void Bomberman::Update(){
 	if(_InputController->NunchuckZButton && Grid[_currentPlayer->X][_currentPlayer->Y] != Bomb && _currentPlayer->Bombs != _currentPlayer->MaxBombs && _currentPlayer->BombTime +1 < GameTime){
 		_currentPlayer->PlaceBomb = 1;
 	}
+}
 
-	if(PlayerID == 0){
-		OutputData = GetOutputData();
-		Serial.write(OutputData);
-
-		if(PlayerCount > 1){
-			while(!Serial.available());
-			InputData = Serial.read();
-			DoInputData(InputData);
-		}
-	} else {
-		if(PlayerCount > 1){
-			while(!Serial.available());
-			InputData = Serial.read();
-			DoInputData(InputData);
-		}
-
-		OutputData = GetOutputData();
-		Serial.write(OutputData);
-	}
-
+void Bomberman::UpdateBombs(){
 	if(_bombs->Length()){
 		for(int i = 0; i < _bombs->Length(); i++){
-			BombermanBomb * bomb = _bombs->Peek(i);	
+			BombermanBomb * bomb = _bombs->Peek(i);
 
-			if( bomb->TimePlaced+1 == GameTime  && bomb->Ticks == 0 ){
+			if(bomb->TimePlaced+1 == GameTime  && bomb->Ticks == 0 ){
 				bomb->Tick(_LCD);
-			}
-			else if( bomb->TimePlaced+2 == GameTime && bomb->Ticks == 1){
+			} else if(bomb->TimePlaced+2 == GameTime && bomb->Ticks == 1){
 				bomb->Tick(_LCD);
-			}
-			else if( bomb->TimePlaced+3 == GameTime && bomb->Ticks == 2){
+			} else if(bomb->TimePlaced+3 == GameTime && bomb->Ticks == 2){
 				bomb->Tick(_LCD);
-			}
-			else if( bomb->TimePlaced+4 <= GameTime && !bomb->Exploding ){
+			} else if(bomb->TimePlaced+4 <= GameTime && !bomb->Exploding ){
 				bomb->Explode(_LCD);
 			}
 		}
 
 		// clear bombs
 		for(int x = 0; x < _bombs->Length(); x++){
-			BombermanBomb * bomb = _bombs->Peek(x);	
+			BombermanBomb * bomb = _bombs->Peek(x);
 			if( bomb->TimePlaced+5 <= GameTime ){
-				_bombs->Dequeue();						
+				_bombs->Dequeue();
 				bomb->Player->Bombs--;
 				//clear bomb
 				Grid[bomb->X][bomb->Y] = Walkable;
@@ -150,22 +149,22 @@ void Bomberman::Update(){
 				char directions = 0x00;
 				for (int blast = 0; blast < bomb->Player->Blastpower; blast++)
 				{
-					if(bomb->Y+blast+1 < MaxY && Grid[bomb->X][bomb->Y+blast+1]  == Explotion   ){					
+					if(bomb->Y+blast+1 < MaxY && Grid[bomb->X][bomb->Y+blast+1]  == Explotion   ){
 						Grid[bomb->X][bomb->Y+blast+1] = Walkable;
 						drawGridCell(bomb->X,bomb->Y+blast+1);
 					}
 
-					if(bomb->Y-blast-1 >= 0 && Grid[bomb->X][bomb->Y-blast-1]  == Explotion  ){					
+					if(bomb->Y-blast-1 >= 0 && Grid[bomb->X][bomb->Y-blast-1]  == Explotion  ){
 						Grid[bomb->X][bomb->Y-blast-1] = Walkable;
 						drawGridCell(bomb->X,bomb->Y-blast-1);
 					}
 
-					if(bomb->X+blast+1 < MaxX && Grid[bomb->X+blast+1][bomb->Y] == Explotion ){					
+					if(bomb->X+blast+1 < MaxX && Grid[bomb->X+blast+1][bomb->Y] == Explotion ){
 						Grid[bomb->X+blast+1][bomb->Y] = Walkable;
 						drawGridCell(bomb->X+blast+1,bomb->Y);
 					}
 
-					if(bomb->X-blast-1 >= 0 && Grid[bomb->X-blast-1][bomb->Y] == Explotion  ){					
+					if(bomb->X-blast-1 >= 0 && Grid[bomb->X-blast-1][bomb->Y] == Explotion  ){
 						Grid[bomb->X-blast-1][bomb->Y] = Walkable;
 						drawGridCell(bomb->X-blast-1,bomb->Y);
 					}

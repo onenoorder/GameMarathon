@@ -11,6 +11,7 @@
 // default constructor
 Bomberman::Bomberman(unsigned char ID, unsigned char playerCount, MI0283QT9 *LCD, InputController *inputController, Communication *communication) : Game(ID, playerCount, LCD, inputController, communication)
 {
+
 	GridBlockSize = 25;
 	OffsetX = 16;
 	OffsetY = 8;
@@ -33,9 +34,9 @@ Bomberman::Bomberman(unsigned char ID, unsigned char playerCount, MI0283QT9 *LCD
 void Bomberman::Load()
 {
 	// Border
-	_LCD->fillScreen(WallColor);
+	LCD->fillScreen(WallColor);
 	// Background
-	_LCD->fillRect(OffsetX, OffsetY, GridBlockSize * MaxX, GridBlockSize * MaxY, BackgroundColor);
+	LCD->fillRect(OffsetX, OffsetY, GridBlockSize * MaxX, GridBlockSize * MaxY, BackgroundColor);
 
 	for(char x = 0; x < MaxX; x++){
 		for(char y = 0; y < MaxY; y++){
@@ -68,10 +69,11 @@ void Bomberman::Load()
 	Grid[_players[0]->X][_players[0]->Y] = 1;
 	Grid[_players[1]->X][_players[1]->Y] = 1;
 
-	_players[0]->DrawPlayer(_LCD);
-	_players[1]->DrawPlayer(_LCD);
+	_players[0]->DrawPlayer(LCD);
+	_players[1]->DrawPlayer(LCD);
 
 	_currentPlayer = _players[PlayerID];
+	Loaded = 1;
 }
 
 void Bomberman::Update(){
@@ -97,25 +99,25 @@ void Bomberman::UpdatePlayers(){
 }
 
 void Bomberman::UpdatePlayerInput(){
-	_InputController->UpdateInput();
+	Input->UpdateInput();
 	_currentPlayer->PlayerUpdated = 0;
-	if(_InputController->NunchuckAnalogX > 200){
+	if(Input->NunchuckAnalogX > 200){
 		_currentPlayer->Direction = Right;
 		_currentPlayer->PlayerUpdated = 1;
-		}else if(_InputController->NunchuckAnalogY > 200 ){
+		}else if(Input->NunchuckAnalogY > 200 ){
 		_currentPlayer->Direction = Up;
 		_currentPlayer->PlayerUpdated = 1;
 	}
-	else if(_InputController->NunchuckAnalogX < 50 ){
+	else if(Input->NunchuckAnalogX < 50 ){
 		_currentPlayer->Direction = Left;
 		_currentPlayer->PlayerUpdated = 1;
 	}
-	else if(_InputController->NunchuckAnalogY < 50){
+	else if(Input->NunchuckAnalogY < 50){
 		_currentPlayer->Direction = Down;
 		_currentPlayer->PlayerUpdated = 1;
 	}
 
-	if(_InputController->NunchuckZButton && Grid[_currentPlayer->X][_currentPlayer->Y] != Bomb && _currentPlayer->Bombs != _currentPlayer->MaxBombs && _currentPlayer->BombTime +1 < GameTime){
+	if(Input->NunchuckZButton && Grid[_currentPlayer->X][_currentPlayer->Y] != Bomb && _currentPlayer->Bombs != _currentPlayer->MaxBombs && _currentPlayer->BombTime +1 < GameSeconds){
 		_currentPlayer->PlaceBomb = 1;
 	}
 }
@@ -125,21 +127,21 @@ void Bomberman::UpdateBombs(){
 		for(int i = 0; i < _bombs->Length(); i++){
 			BombermanBomb * bomb = _bombs->Peek(i);
 
-			if(bomb->TimePlaced+1 == GameTime  && bomb->Ticks == 0 ){
-				bomb->Tick(_LCD);
-			} else if(bomb->TimePlaced+2 == GameTime && bomb->Ticks == 1){
-				bomb->Tick(_LCD);
-			} else if(bomb->TimePlaced+3 == GameTime && bomb->Ticks == 2){
-				bomb->Tick(_LCD);
-			} else if(bomb->TimePlaced+4 <= GameTime && !bomb->Exploding ){
-				bomb->Explode(_LCD);
+			if(bomb->TimePlaced+1 == GameSeconds  && bomb->Ticks == 0 ){
+				bomb->Tick(LCD);
+			} else if(bomb->TimePlaced+2 == GameSeconds && bomb->Ticks == 1){
+				bomb->Tick(LCD);
+			} else if(bomb->TimePlaced+3 == GameSeconds && bomb->Ticks == 2){
+				bomb->Tick(LCD);
+			} else if(bomb->TimePlaced+4 <= GameSeconds && !bomb->Exploding ){
+				bomb->Explode(LCD);
 			}
 		}
 
 		// clear bombs
 		for(int x = 0; x < _bombs->Length(); x++){
 			BombermanBomb * bomb = _bombs->Peek(x);
-			if( bomb->TimePlaced+5 <= GameTime ){
+			if( bomb->TimePlaced+5 <= GameSeconds ){
 				_bombs->Dequeue();
 				bomb->Player->Bombs--;
 				//clear bomb
@@ -224,35 +226,35 @@ void Bomberman::DoInputData(unsigned char data){
 			};
 			drawGridCell(player->X, player->Y);
 			player->Move();
-			player->DrawPlayer(_LCD);
+			player->DrawPlayer(LCD);
 		}
 
 		if(data >= BOMBERMAN_PLACE_BOM){
-			_bombs->Enqueue(new  BombermanBomb(player->X,player->Y,GameTime, player, this));
+			_bombs->Enqueue(new  BombermanBomb(player->X,player->Y,GameSeconds, player, this));
 			Grid[player->X][player->Y] = Bomb;
 			drawGridCell(player->X,player->Y);		
 			player->Bombs++;	
-			player->BombTime = GameTime;
+			player->BombTime = GameSeconds;
 
 			drawGridCell(player->X, player->Y);
-			player->DrawPlayer(_LCD);
+			player->DrawPlayer(LCD);
 		}
 	}
 }
 
 void Bomberman::drawGridCell(char x, char y){
-	_LCD->fillRect(OffsetX + x * GridBlockSize, OffsetY + y * GridBlockSize, GridBlockSize, GridBlockSize, BackgroundColor);
+	LCD->fillRect(OffsetX + x * GridBlockSize, OffsetY + y * GridBlockSize, GridBlockSize, GridBlockSize, BackgroundColor);
 
 	if(Grid[x][y] == Wall)
-		_LCD->fillRect(OffsetX + x * GridBlockSize, OffsetY + y * GridBlockSize, GridBlockSize, GridBlockSize, WallColor);
+		LCD->fillRect(OffsetX + x * GridBlockSize, OffsetY + y * GridBlockSize, GridBlockSize, GridBlockSize, WallColor);
 	else if(Grid[x][y] == Rock)
-		_LCD->fillRect(OffsetX + x * GridBlockSize, OffsetY + y * GridBlockSize, GridBlockSize, GridBlockSize, RockColor);
+		LCD->fillRect(OffsetX + x * GridBlockSize, OffsetY + y * GridBlockSize, GridBlockSize, GridBlockSize, RockColor);
 	else if(Grid[x][y] == Explotion)
-		_LCD->fillRect(OffsetX + x * GridBlockSize, OffsetY + y * GridBlockSize, GridBlockSize, GridBlockSize, RGB(255,0,0));
+		LCD->fillRect(OffsetX + x * GridBlockSize, OffsetY + y * GridBlockSize, GridBlockSize, GridBlockSize, RGB(255,0,0));
 	else if(Grid[x][y] == Walkable)
-		_LCD->fillRect(OffsetX + x * GridBlockSize, OffsetY + y * GridBlockSize, GridBlockSize, GridBlockSize, BackgroundColor);
+		LCD->fillRect(OffsetX + x * GridBlockSize, OffsetY + y * GridBlockSize, GridBlockSize, GridBlockSize, BackgroundColor);
 	else if(Grid[x][y] == Bomb){
-		_LCD->fillEllipse(OffsetX + x * GridBlockSize + (GridBlockSize/2), OffsetY + y * GridBlockSize + (GridBlockSize/2), GridBlockSize/2, GridBlockSize/2, RGB(0,0,0));
+		LCD->fillEllipse(OffsetX + x * GridBlockSize + (GridBlockSize/2), OffsetY + y * GridBlockSize + (GridBlockSize/2), GridBlockSize/2, GridBlockSize/2, RGB(0,0,0));
 	}	
 
 }

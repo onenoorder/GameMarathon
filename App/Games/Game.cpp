@@ -8,10 +8,8 @@
 
 #include "Game.h"
 
-Game::Game(unsigned char ID, unsigned char playerCount, MI0283QT9 *LCD, InputController *inputController, Communication *communication){
-	_LCD = LCD;
-	_InputController = inputController;
-	_InputController->UpdateInput();
+Game::Game( unsigned char ID, unsigned char playerCount, MI0283QT9 *LCD, InputController *inputController, Communication *communication) :View(LCD,inputController)  {
+
 	NewFrame = 0;
 	PlayerID = ID;
 	PlayerCount = playerCount;
@@ -19,6 +17,7 @@ Game::Game(unsigned char ID, unsigned char playerCount, MI0283QT9 *LCD, InputCon
 }
 
 void Game::Update(){
+
 	NewFrame = 0;
 }
 

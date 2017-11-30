@@ -145,11 +145,7 @@
     <VisualMicroSettings>
       <VisualMicroSettings>
         <ValidatedAS7>1</ValidatedAS7>
-<<<<<<< HEAD
         <arduino.upload.port>COM3</arduino.upload.port>
-=======
-        <arduino.upload.port>COM4</arduino.upload.port>
->>>>>>> refs/remotes/origin/master
       </VisualMicroSettings>
     </VisualMicroSettings>
   </PropertyGroup>

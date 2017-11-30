@@ -43,8 +43,8 @@ int main(void)
 
 	inputController = new InputController();
 
-	games[0] = new Bomberman(1, 2, LCD, inputController, communication);
-	games[1] = new Snake(1, 2, LCD, inputController, communication);
+	games[0] = new Bomberman(0, 1, LCD, inputController, communication);
+	games[1] = new Snake(0, 1, LCD, inputController, communication);
 	CurrentGame = games[1];
 	CurrentGame->NewFrame = 1;
 	CurrentGame->Load();

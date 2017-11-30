@@ -5,13 +5,14 @@
 * Author: Gerhard
 */
 
-
-
 #ifndef __SNAKE_H__
 #define __SNAKE_H__
+
 #include "Game.h"
+#include "../Lib/Queue/Queue.h"
 #include "../Model/SnakePlayer.h"
 
+class SnakePlayer;
 class Snake : public Game
 {
 //variables
@@ -23,6 +24,12 @@ private:
 	SnakePlayer *_currentPlayer;
 	SnakePlayer *_secondPlayer;
 	char _playerCount;
+	unsigned int _cookieTime;
+	unsigned char _cookieDelay;
+	uint16_t _cookieColor;
+	unsigned char _cookieSize;
+	unsigned char _maxCookies;
+	Queue<SnakeCookie> *_cookies;
 
 	enum SnakeData{
 		SNAKE_PLAYER0 = 0,
@@ -36,7 +43,9 @@ private:
 		SNAKE_MOVE_RIGHT = 16,
 		SNAKE_WIN = 20,
 		SNAKE_LOSE = 24,
-		SNAKE_ACTIONS = 28
+		SNAKE_ACTIONS = 28,
+		SNAKE_COOKIE = 32,
+		SNAKE_SET_COOKIE = 64
 	};
 
 //functions
@@ -44,11 +53,17 @@ public:
 	Snake(unsigned char ID, unsigned char playerCount, MI0283QT9 *LCD, InputController *inputController, Communication *communication);
 	virtual void Load();
 	virtual void Update();
+	unsigned char CheckLocation(short x, short y);
 	~Snake();
 protected:
 private:
 	unsigned char GetOutputData();
 	void DoInputData(unsigned char data);
+	void UpdatePlayerInput();
+	void UpdatePlayers();
+	void CookieTime();
+	void PlaceCookie(short x, short y);
+	void UpdateCookies();
 
 }; //Snake
 

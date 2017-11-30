@@ -8,46 +8,56 @@
 #include "SnakePlayer.h"
 
 // default constructor
-SnakePlayer::SnakePlayer(short x, short y, uint16_t color)
+SnakePlayer::SnakePlayer(short x, short y, uint16_t color, Snake *game)
 {
 	this->X = x;
 	this->Y = y;
 	this->Color = color;
-	_maxSize = 2;
-	_size = 0;
-	_snakeSize = 10;
-	_snake = new Queue<SnakeQueueData>(30);
+	MaxSize = 2;
+	Size = 0;
+	SnakeSize = 10;
+	SnakeQueue = new Queue<SnakeQueueData>(30);
+	this->_game = game;
 } //SnakePlayer
 
 void SnakePlayer::Move(){
 	if(Direction == Up){
-		Y -= _snakeSize;
+		Y -= SnakeSize;
 		if(Y <= 0)
-			Y = 240 - _snakeSize/2;
+			Y = 240 - SnakeSize/2;
 	} else if(Direction == Right){
-		X += _snakeSize;
+		X += SnakeSize;
 		if(X >= 320)
-			X = 0 + _snakeSize/2;
+			X = 0 + SnakeSize/2;
 	} else if(Direction == Down){
-		Y += _snakeSize;
+		Y += SnakeSize;
 		if(Y >= 240)
-			Y = 0 +  _snakeSize/2;
+			Y = 0 +  SnakeSize/2;
 	} else if(Direction == Left){
-		X -= _snakeSize;
+		X -= SnakeSize;
 		if(X <= 0)
-			X = 320 - _snakeSize/2;
+			X = 320 - SnakeSize/2;
+	}
+	CheckNewLocation();
+}
+
+void SnakePlayer::CheckNewLocation(){
+	unsigned char element = _game->CheckLocation(X-SnakeSize/2, Y-SnakeSize/2);
+	if(element == 2){
+		if(MaxSize < SnakeSize)
+			MaxSize++;
 	}
 }
 
 void SnakePlayer::Draw(MI0283QT9 *LCD){
 	SnakeQueueData data = {X,Y};
-	_snake->Enqueue(data);
-	LCD->fillCircle(X, Y, _snakeSize/2, Color);
-	if(_size < _maxSize){
-		_size++;
+	SnakeQueue->Enqueue(data);
+	LCD->fillCircle(X, Y, SnakeSize/2, Color);
+	if(Size < MaxSize){
+		Size++;
 	} else {
-		SnakeQueueData back = _snake->Dequeue();
-		LCD->fillCircle(back.X, back.Y, _snakeSize/2, RGB(0,0,0));
+		SnakeQueueData back = SnakeQueue->Dequeue();
+		LCD->fillCircle(back.X, back.Y, SnakeSize/2, RGB(0,0,0));
 	}
 }
 

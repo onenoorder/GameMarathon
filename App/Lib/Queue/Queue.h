@@ -5,13 +5,18 @@
 * Author: Gerhard
 */
 
-
 #ifndef __QUEUE_H__
 #define __QUEUE_H__
+
 class BombermanBomb;
 struct SnakeQueueData{
 	short X;
 	short Y;
+};
+struct SnakeCookie{
+	short X;
+	short Y;
+	int TimePlaced;
 };
 
 template <typename T>

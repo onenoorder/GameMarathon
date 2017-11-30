@@ -145,7 +145,11 @@
     <VisualMicroSettings>
       <VisualMicroSettings>
         <ValidatedAS7>1</ValidatedAS7>
+<<<<<<< HEAD
         <arduino.upload.port>COM3</arduino.upload.port>
+=======
+        <arduino.upload.port>COM4</arduino.upload.port>
+>>>>>>> refs/remotes/origin/master
       </VisualMicroSettings>
     </VisualMicroSettings>
   </PropertyGroup>
@@ -262,22 +266,19 @@
     <Compile Include="App.ino">
       <SubType>compile</SubType>
     </Compile>
+    <Compile Include="Communication\Communication.h">
+      <SubType>compile</SubType>
+    </Compile>
     <Compile Include="Communication\Data.cpp">
       <SubType>compile</SubType>
     </Compile>
     <Compile Include="Communication\Data.h">
       <SubType>compile</SubType>
     </Compile>
-    <Compile Include="Communication\Master.cpp">
+    <Compile Include="Communication\SerialCommunication.cpp">
       <SubType>compile</SubType>
     </Compile>
-    <Compile Include="Communication\Master.h">
-      <SubType>compile</SubType>
-    </Compile>
-    <Compile Include="Communication\Slave.cpp">
-      <SubType>compile</SubType>
-    </Compile>
-    <Compile Include="Communication\Slave.h">
+    <Compile Include="Communication\SerialCommunication.h">
       <SubType>compile</SubType>
     </Compile>
     <Compile Include="Games\Bomberman.cpp">
@@ -394,12 +395,6 @@
     <Compile Include="Lib\Queue\Queue.h">
       <SubType>compile</SubType>
     </Compile>
-    <Compile Include="Communication\Master.cpp">
-      <SubType>compile</SubType>
-    </Compile>
-    <Compile Include="Communication\Master.h">
-      <SubType>compile</SubType>
-    </Compile>
     <Compile Include="Model\BombermanBomb.cpp">
       <SubType>compile</SubType>
     </Compile>
@@ -416,12 +411,6 @@
       <SubType>compile</SubType>
     </Compile>
     <Compile Include="Model\SnakePlayer.h">
-      <SubType>compile</SubType>
-    </Compile>
-    <Compile Include="Communication\Slave.cpp">
-      <SubType>compile</SubType>
-    </Compile>
-    <Compile Include="Communication\Slave.h">
       <SubType>compile</SubType>
     </Compile>
     <Compile Include="__vm\.App.vsarduino.h">

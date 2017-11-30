@@ -4,8 +4,7 @@
  * Created: 11/14/2017 1:51:07 PM
  * Author: Gerhard
  */ 
-#include "Communication/Master.h"
-#include "Communication/Slave.h"
+#include "Communication/SerialCommunication.h"
 #include "Games/Bomberman.h"
 #include "Games/Snake.h"
 
@@ -36,16 +35,17 @@ int main(void)
 	TCNT2 = 0;// zet count op 0
 	sei();
 
-	Serial.begin(9600);
-	
+	SerialCommunication *communication = new SerialCommunication();
+	communication->Begin();
+
 	LCD = new MI0283QT9();
 	LCD->begin();
 
 	inputController = new InputController();
 
-	games[0] = new Bomberman(0, 1, LCD, inputController);
-	games[1] = new Snake(0, 1, LCD, inputController);
-	CurrentGame = games[0];
+	games[0] = new Bomberman(1, 2, LCD, inputController, communication);
+	games[1] = new Snake(1, 2, LCD, inputController, communication);
+	CurrentGame = games[1];
 	CurrentGame->NewFrame = 1;
 	CurrentGame->Load();
 	while (1)

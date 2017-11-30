@@ -23,6 +23,8 @@ Queue<T>::Queue(int size)
 {
 	_size = size;
 	_array = new T[_size];
+	_length = 0;
+	_nextIndex = 0;
 } //Queue
 
 template<typename T>
@@ -37,7 +39,7 @@ void Queue<T>::Enqueue(T data){
 	if (_back < _size) {
 		_array[_back] = data;
 		_back++;
-		} else {
+	} else {
 		_array[0] = data;
 		_back = 1;
 	}
@@ -48,10 +50,10 @@ T Queue<T>::Dequeue(){
 	_length--;
 	T data = _array[_front];
 	_array[_front] = {};
+
 	if (_front < _size-1) {
 		_front++;
-	}
-	else {
+	} else {
 		_front = 0;
 	}
 	return data;
@@ -65,6 +67,7 @@ int Queue<T>::Length(){
 template<typename T>
 T Queue<T>::Peek(int index){
 	int id = _front+index;
+
 	if(id >= _size)
 		id -= _size;
 

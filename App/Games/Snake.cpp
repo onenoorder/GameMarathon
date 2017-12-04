@@ -97,7 +97,7 @@ void Snake::CookieTime(){
 
 void Snake::PlaceCookie(short x, short y){
 	if(_cookies->Length() < _maxCookies*5){
-		SnakeCookie cookie = {x, y, GameTime};
+		SnakeCookie cookie = {x, y, GameTime + (_cookieDelay*_maxCookies)};
 		_LCD->fillCircle(cookie.X+_cookieSize, cookie.Y+_cookieSize, _cookieSize/2, _cookieColor);
 		_cookies->Enqueue(cookie);
 	}
@@ -108,7 +108,7 @@ void Snake::UpdateCookies(){
 		for(int i = 0; i < _cookies->Length(); i++){
 			SnakeCookie cookie = _cookies->Peek(i);
 			
-			if(cookie.TimePlaced + (_cookieDelay*_maxCookies) <= GameTime){
+			if(cookie.Time <= GameTime){
 				_cookies->Dequeue();
 				_LCD->fillCircle(cookie.X+_cookieSize, cookie.Y+_cookieSize, _cookieSize/2, _backgroundColor);
 			}

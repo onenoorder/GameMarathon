@@ -10,6 +10,8 @@
 #define __SELECTGAMEVIEW_H__
 #include "View.h"
 #include "MainMenuView.h"
+#include "../Games/Bomberman.h"
+#include "../Games/Snake.h"
 
 class MainMenuView;
 
@@ -34,7 +36,9 @@ private:
 public:
 	virtual void Load();
 	virtual void Update();
-	SelectGameView(MI0283QT9 *LCD, InputController *inputController);
+	void drawMenu();
+	void drawBombermanFrame();
+	SelectGameView(MI0283QT9 *LCD, InputController *inputController, Communication * communication);
 
 	~SelectGameView();
 protected:

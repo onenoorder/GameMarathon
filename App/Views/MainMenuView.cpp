@@ -10,7 +10,7 @@
 
 // x 360 y 240
 // default constructor
-MainMenuView::MainMenuView(MI0283QT9 *LCD, InputController *inputController) :View(LCD, inputController)
+MainMenuView::MainMenuView(MI0283QT9 *LCD, InputController *inputController, Communication * communication) :View(LCD, inputController,  communication)
 {
 	_buttonIndex = 0;
 	_arrowMoved = 1;
@@ -45,7 +45,7 @@ void MainMenuView::Update(){
 		_pageSelected = 1;
 		switch(_buttonIndex){
 			case SelectGame:
-				CurrentView = new SelectGameView(LCD,Input);
+				CurrentView = new SelectGameView(LCD,Input, CommunicationHandler);
 			break;
 			case HighScore:
 					_pageSelected = 0;

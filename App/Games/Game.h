@@ -23,12 +23,8 @@ enum DirectionEnum {
 class Game : public View
 {
 public:
-
-	unsigned char NewFrame;
 	unsigned char PlayerID;
 	unsigned char PlayerCount;
-protected:
-	Communication *_communication;
 
 //functions
 public:

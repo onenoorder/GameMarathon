@@ -17,7 +17,7 @@ Bomberman::Bomberman(unsigned char ID, unsigned char playerCount, MI0283QT9 *LCD
 	OffsetY = 8;
 	MaxX = 9;
 	MaxY = 9;
-
+	
 	_bombs = new Queue<BombermanBomb*>(20);
 
 	// Colors
@@ -77,6 +77,7 @@ void Bomberman::Load()
 }
 
 void Bomberman::Update(){
+	if(PlayerID == 0 && NewFrame == 0) return;
 	Game::Update();
 	
 	this->UpdatePlayerInput();
@@ -86,15 +87,15 @@ void Bomberman::Update(){
 
 void Bomberman::UpdatePlayers(){
 	if(PlayerID == 0){
-		_communication->Send(GetOutputData());
+		CommunicationHandler->Send(GetOutputData());
 
 		if(PlayerCount > 1)
-			DoInputData(_communication->Receive());
+			DoInputData(CommunicationHandler->Receive());
 	} else {
 		if(PlayerCount > 1)
-			DoInputData(_communication->Receive());
+			DoInputData(CommunicationHandler->Receive());
 
-		_communication->Send(GetOutputData());
+		CommunicationHandler->Send(GetOutputData());
 	}
 }
 

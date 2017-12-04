@@ -14,12 +14,12 @@ MI0283QT9 *LCD;
 Game * games[2];
 InputController *inputController;
 Game * CurrentGame;
-char gameStarted; //hotfix
+
 
 ISR(TIMER2_OVF_vect) {
 	CurrentView->Timer++;
-	if(gameStarted && CurrentView->Timer % 5 == 0 ){
-		CurrentGame->NewFrame = 1;
+	if(CurrentView->IsGame && CurrentView->Timer % 5 == 0 ){
+		CurrentView->NewFrame = 1;		
 	}
 	if (CurrentView->Timer % 10 == 0) {
 		CurrentView->GameFastTime++;
@@ -33,8 +33,7 @@ ISR(TIMER2_OVF_vect) {
 int main(void)
 {
 	init();
-	gameStarted = 0;
-	
+
 	SerialCommunication *communication = new SerialCommunication();
 	communication->Begin();
 
@@ -43,7 +42,7 @@ int main(void)
 	
 	inputController = new InputController();
 
-	CurrentView = new MainMenuView(LCD,inputController);
+	CurrentView = new MainMenuView(LCD,inputController,communication);
 
 	// set timer interrupt
 	TCCR2B |= (1 << CS22) | (1<<CS21) | (1<<CS20);	//zet de klok op prescaler 1024
@@ -51,8 +50,7 @@ int main(void)
 	TCNT2 = 0;// zet count op 0
 	sei();
 
-	games[0] = new Bomberman(0, 1, LCD, inputController, communication);
-	games[1] = new Snake(1, 2, LCD, inputController, communication);
+
 
 	CurrentGame = games[0];
 	CurrentGame->NewFrame = 1;

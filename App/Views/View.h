@@ -11,14 +11,18 @@
 
 #include "../lib/MI0283QT9/MI0283QT9.h"
 #include "../Helpers/InputController.h"
+#include "../Communication/Communication.h"
 class View
 {
 public:
+	unsigned char NewFrame;
 	unsigned char Timer = 0;
 	unsigned int GameFastTime = 0;
 	unsigned int GameSeconds = 0;
+	unsigned char IsGame = 0;
 	MI0283QT9 * LCD;
 	InputController * Input;
+	Communication *CommunicationHandler;
 	char Loaded;
 //functions
 public:
@@ -26,7 +30,7 @@ public:
 	virtual void Load() = 0;
 	virtual void Update() = 0;
 protected:
-	View(MI0283QT9 *LCD, InputController *inputController);
+	View(MI0283QT9 *LCD, InputController *inputController, Communication * communication);
 }; //View
 
 extern View * CurrentView;

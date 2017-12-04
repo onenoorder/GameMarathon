@@ -23,6 +23,7 @@ public:
 	char PlayerUpdated;
 	DirectionEnum Direction;
 	uint16_t Color;
+	uint16_t ShadowColor;
 	unsigned char PlaceBomb;
 protected:
 private:

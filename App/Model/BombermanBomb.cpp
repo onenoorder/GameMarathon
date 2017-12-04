@@ -38,12 +38,23 @@ void BombermanBomb::Explode(MI0283QT9 * LCD){
 					
 	for (int blast = 0; blast < this->Player->Blastpower; blast++)
 	{
+		unsigned char explotion = 0;
+
+		if(blast == 0)
+			explotion = _game->Explotion_1;
+		else if(blast == 1)
+			explotion = _game->Explotion_2;
+		else if(blast == 2)
+			explotion = _game->Explotion_3;
+		else
+			explotion = _game->Explotion;
+
 		if( !(directions & 0x01) && this->Y+blast+1 < _game->MaxY && _game->Grid[this->X][this->Y+blast+1]  != _game->Wall ){
 			if(_game->Grid[this->X][this->Y+blast+1]  == _game->Rock ){
 				directions |= 0x01;
 			}
-			_game->Grid[this->X][this->Y+blast+1] = _game->Explotion;
-			LCD->fillRect(_game->OffsetX + this->X * _game->GridBlockSize, _game->OffsetY + (this->Y+blast+1) * _game->GridBlockSize, _game->GridBlockSize, _game->GridBlockSize, RGB(255,0,0));		
+			_game->Grid[this->X][this->Y+blast+1] = explotion;
+			_game->DrawGridCell(this->X, this->Y+blast+1);
 		}else{
 			directions |= 0x01;
 		}
@@ -52,8 +63,8 @@ void BombermanBomb::Explode(MI0283QT9 * LCD){
 			if(_game->Grid[this->X][this->Y-blast-1]  == _game->Rock ){
 				directions |= 0x02;
 			}
-			_game->Grid[this->X][this->Y-blast-1] = _game->Explotion;
-			LCD->fillRect(_game->OffsetX + this->X * _game->GridBlockSize, _game->OffsetY + (this->Y-blast-1) * _game->GridBlockSize, _game->GridBlockSize, _game->GridBlockSize, RGB(255,0,0));		
+			_game->Grid[this->X][this->Y-blast-1] = explotion;
+			_game->DrawGridCell(this->X, this->Y-blast-1);
 		}else{
 			directions |= 0x02;
 		}
@@ -62,9 +73,8 @@ void BombermanBomb::Explode(MI0283QT9 * LCD){
 			if(_game->Grid[this->X+blast+1][this->Y]  == _game->Rock ){
 				directions |= 0x04;
 			}
-			_game->Grid[this->X+blast+1][this->Y] = _game->Explotion;
-				LCD->fillRect(_game->OffsetX + (this->X+blast+1) * _game->GridBlockSize, _game->OffsetY + (this->Y) * _game->GridBlockSize, _game->GridBlockSize, _game->GridBlockSize, RGB(255,0,0));
-
+			_game->Grid[this->X+blast+1][this->Y] = explotion;
+			_game->DrawGridCell(this->X+blast+1, this->Y);
 		}else{
 			directions |= 0x04;
 		}
@@ -73,9 +83,8 @@ void BombermanBomb::Explode(MI0283QT9 * LCD){
 			if(_game->Grid[this->X-blast-1][this->Y]  == _game->Rock ){
 				directions |= 0x08;
 			}
-			_game->Grid[this->X-blast-1][this->Y] = _game->Explotion;
-			LCD->fillRect(_game->OffsetX + (this->X-blast-1) * _game->GridBlockSize, _game->OffsetY + (this->Y) * _game->GridBlockSize, _game->GridBlockSize, _game->GridBlockSize, RGB(255,0,0));
-
+			_game->Grid[this->X-blast-1][this->Y] = explotion;
+			_game->DrawGridCell(this->X-blast-1, this->Y);
 		}else{
 			directions |= 0x08;
 		}

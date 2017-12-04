@@ -57,20 +57,25 @@ int main(void)
 	CurrentGame = games[0];
 	CurrentGame->NewFrame = 1;
 
-	//CurrentGame->Load();
+	CurrentGame->Load();
 	while (1)
 	{	
-		if(CurrentView->Loaded)
+		/*if(CurrentView->Loaded)
 			CurrentView->Update();
 		else
-			CurrentView->Load();
+			CurrentView->Load();*/
 		
 		/*if(CurrentGame->PlayerID == 0){
 			if(CurrentGame->NewFrame == 1){
 				CurrentGame->Update();
 			}
-		} else {
+		} else {*/
 			CurrentGame->Update();
-		}*/
+			CurrentGame->Timer++;
+			CurrentGame->GameFastTime++;
+			CurrentGame->GameSeconds++;
+			delay(200);
+
+		//}
 	}
 }

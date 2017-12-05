@@ -27,6 +27,8 @@ public:
 	char OffsetY;
 	uint16_t RockColor;
 	uint16_t RockGlowColor;
+	uint16_t ExplotionColor;
+	uint16_t ExplotionTextColor;
 	uint16_t WallColor;
 	uint16_t BackgroundColor;
 	enum GridCell{

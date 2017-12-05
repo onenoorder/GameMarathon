@@ -2,7 +2,7 @@
 * BombermanPlayer.h
 *
 * Created: 17-11-2017 12:42:19
-* Author: Mikena
+* Author: Mikena & Gerhard
 */
 
 #ifndef __BOMBERMANPLAYER_H__

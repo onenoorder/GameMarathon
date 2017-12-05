@@ -2,7 +2,7 @@
 * BombermanPlayer.cpp
 *
 * Created: 17-11-2017 12:42:19
-* Author: Mikena
+* Author: Mikena & Gerhard
 */
 
 #include "BombermanPlayer.h"
@@ -25,7 +25,7 @@ BombermanPlayer::BombermanPlayer(char X,char Y, uint16_t color, Bomberman * game
 
 void BombermanPlayer::Move(){
 	if(Direction == Right){
-		if(this->X+1 < _game->MaxX &&_game->Grid[this->X+1][this->Y] == _game->Walkable){
+		if(this->X+1 < _game->MaxX &&_game->Grid[this->X+1][this->Y] < _game->Bomb){
 			if(_game->Grid[this->X][this->Y] != _game->Bomb)
 				_game->Grid[this->X][this->Y] = _game->Walkable;	
 			
@@ -33,7 +33,7 @@ void BombermanPlayer::Move(){
 				_game->Grid[this->X][this->Y] = 1;
 			}
 	}else if(Direction == Up){
-		if(this->Y-1 >= 0 && _game->Grid[this->X][this->Y-1] == _game->Walkable){
+		if(this->Y-1 >= 0 && _game->Grid[this->X][this->Y-1] < _game->Bomb){
 			if(_game->Grid[this->X][this->Y] != _game->Bomb)
 				_game->Grid[this->X][this->Y] = _game->Walkable;
 		
@@ -42,7 +42,7 @@ void BombermanPlayer::Move(){
 		}
 	}
 	else if(Direction == Left){
-		if(this->X-1 >= 0 &&_game->Grid[this->X-1][this->Y] == _game->Walkable){
+		if(this->X-1 >= 0 &&_game->Grid[this->X-1][this->Y] < _game->Bomb){
 			if(_game->Grid[this->X][this->Y] != _game->Bomb)
 			_game->Grid[this->X][this->Y] = _game->Walkable;		
 
@@ -51,7 +51,7 @@ void BombermanPlayer::Move(){
 		}
 	}
 	else if(Direction == Down){
-		if(this->Y+1 < _game->MaxY &&_game->Grid[this->X][this->Y+1] == _game->Walkable){
+		if(this->Y+1 < _game->MaxY &&_game->Grid[this->X][this->Y+1] < _game->Bomb){
 			if(_game->Grid[this->X][this->Y] != _game->Bomb)
 			_game->Grid[this->X][this->Y] = _game->Walkable;		
 		

@@ -286,10 +286,10 @@ void SelectGameView::Update(){
 		_pageSelected = 1;
 		switch(_buttonIndex){
 			case BombermanGame:
-				CurrentView = new Bomberman(0,1,LCD,Input, CommunicationHandler);
+				CurrentView = new Bomberman(GLBL_Role,GLBL_Players,LCD,Input, CommunicationHandler);
 			break;
 			case SnakeGame:
-				CurrentView = new Snake(0,1,LCD,Input, CommunicationHandler);
+				CurrentView = new Snake(GLBL_Role,GLBL_Players,LCD,Input, CommunicationHandler);
 			break;
 			case Back:
 				CurrentView = new MainMenuView(LCD,Input, CommunicationHandler);

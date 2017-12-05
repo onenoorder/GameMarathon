@@ -51,15 +51,15 @@ void Snake::Update(){
 
 void Snake::UpdatePlayers(){
 	if(PlayerID == 0){
-		_communication->Send(GetOutputData());
+		CommunicationHandler->Send(GetOutputData());
 
 		if(PlayerCount > 1)
-			DoInputData(_communication->Receive());
+			DoInputData(CommunicationHandler->Receive());
 	} else {
 		if(PlayerCount > 1)
-			DoInputData(_communication->Receive());
+			DoInputData(CommunicationHandler->Receive());
 
-		_communication->Send(GetOutputData());
+		CommunicationHandler->Send(GetOutputData());
 	}
 }
 
@@ -88,7 +88,7 @@ void Snake::UpdatePlayerInput(){
 }
 
 void Snake::CookieTime(){
-	if(GameTime >= _cookieTime && _cookies->Length() < _maxCookies){
+	if(GameSeconds >= _cookieTime && _cookies->Length() < _maxCookies){
 		while(1){
 			short x = rand() % (32);
 			short y = rand() % (24);
@@ -98,14 +98,14 @@ void Snake::CookieTime(){
 				break;
 			}	
 		}
-		_cookieTime = GameTime + _cookieDelay;
+		_cookieTime = GameSeconds + _cookieDelay;
 	}
 }
 
 void Snake::PlaceCookie(short x, short y){
 	if(_cookies->Length() < _maxCookies*5){
-		SnakeCookie cookie = {x, y, GameTime + (_cookieDelay*_maxCookies)};
-		_LCD->fillCircle(cookie.X+_cookieSize, cookie.Y+_cookieSize, _cookieSize/2, _cookieColor);
+		SnakeCookie cookie = {x, y, GameSeconds + (_cookieDelay*_maxCookies)};
+		LCD->fillCircle(cookie.X+_cookieSize, cookie.Y+_cookieSize, _cookieSize/2, _cookieColor);
 		_cookies->Enqueue(cookie);
 	}
 }
@@ -115,9 +115,9 @@ void Snake::UpdateCookies(){
 		for(int i = 0; i < _cookies->Length(); i++){
 			SnakeCookie cookie = _cookies->Peek(i);
 			
-			if(cookie.Time <= GameTime){
+			if(cookie.Time <= GameSeconds){
 				_cookies->Dequeue();
-				_LCD->fillCircle(cookie.X+_cookieSize, cookie.Y+_cookieSize, _cookieSize/2, _backgroundColor);
+				LCD->fillCircle(cookie.X+_cookieSize, cookie.Y+_cookieSize, _cookieSize/2, _backgroundColor);
 			}
 		}
 	}
@@ -146,7 +146,7 @@ unsigned char Snake::GetOutputData(){
 		_currentPlayer->Size--;
 		_currentPlayer->MaxSize--;
 
-		_LCD->fillCircle(back.X, back.Y, _currentPlayer->SnakeSize/2, _backgroundColor);
+		LCD->fillCircle(back.X, back.Y, _currentPlayer->SnakeSize/2, _backgroundColor);
 		PlaceCookie(back.X-_currentPlayer->SnakeSize/2, back.Y-_currentPlayer->SnakeSize/2);
 		_currentPlayer->PlaceCookie = 0;
 	}
@@ -174,7 +174,7 @@ void Snake::DoInputData(unsigned char data){
 					break;
 			};
 			player->Move();
-			player->Draw(_LCD);
+			player->Draw(LCD);
 		}
 	}
 }

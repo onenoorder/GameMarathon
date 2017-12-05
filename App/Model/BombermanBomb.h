@@ -2,7 +2,7 @@
 * BombermanBomb.h
 *
 * Created: 20-11-2017 15:54:40
-* Author: Mikena
+* Author: Mikena & Gerhard
 */
 
 
@@ -29,7 +29,7 @@ private:
 public:
 	BombermanBomb(char X, char Y,int TimePlaced, BombermanPlayer * Player , Bomberman * game);
 	void Tick(MI0283QT9 * LCD);
-	void Explode(MI0283QT9 * LCD);
+	void Explode(MI0283QT9 * LCD, unsigned char explotionTime);
 	~BombermanBomb();
 protected:
 private:

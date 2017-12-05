@@ -145,7 +145,7 @@
     <VisualMicroSettings>
       <VisualMicroSettings>
         <ValidatedAS7>1</ValidatedAS7>
-        <arduino.upload.port>COM4</arduino.upload.port>
+        <arduino.upload.port>COM3</arduino.upload.port>
       </VisualMicroSettings>
     </VisualMicroSettings>
   </PropertyGroup>
@@ -254,7 +254,7 @@
     <VisualMicroSettings>
       <VisualMicroSettings>
         <ValidatedAS7>1</ValidatedAS7>
-        <arduino.upload.port>COM4</arduino.upload.port>
+        <arduino.upload.port>COM3</arduino.upload.port>
       </VisualMicroSettings>
     </VisualMicroSettings>
   </PropertyGroup>
@@ -391,12 +391,6 @@
     <Compile Include="Lib\Queue\Queue.h">
       <SubType>compile</SubType>
     </Compile>
-    <Compile Include="Communication\Master.cpp">
-      <SubType>compile</SubType>
-    </Compile>
-    <Compile Include="Communication\Master.h">
-      <SubType>compile</SubType>
-    </Compile>
     <Compile Include="Model\BombermanBomb.cpp">
       <SubType>compile</SubType>
     </Compile>
@@ -415,10 +409,22 @@
     <Compile Include="Model\SnakePlayer.h">
       <SubType>compile</SubType>
     </Compile>
-    <Compile Include="Communication\Slave.cpp">
+    <Compile Include="Views\MainMenuView.cpp">
       <SubType>compile</SubType>
     </Compile>
-    <Compile Include="Communication\Slave.h">
+    <Compile Include="Views\MainMenuView.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="Views\SelectGameView.cpp">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="Views\SelectGameView.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="Views\View.cpp">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="Views\View.h">
       <SubType>compile</SubType>
     </Compile>
     <Compile Include="__vm\.App.vsarduino.h">
@@ -439,6 +445,7 @@
     <Folder Include="Lib\ArduinoNunchuk" />
     <Folder Include="Lib\Queue" />
     <Folder Include="Model" />
+    <Folder Include="Views" />
     <Folder Include="__vm\" />
   </ItemGroup>
   <Import Project="$(AVRSTUDIO_EXE_PATH)\\Vs\\Compiler.targets" />

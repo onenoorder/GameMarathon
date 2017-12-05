@@ -26,14 +26,20 @@ public:
 	char OffsetX;
 	char OffsetY;
 	uint16_t RockColor;
+	uint16_t RockGlowColor;
+	uint16_t ExplotionColor;
+	uint16_t ExplotionTextColor;
 	uint16_t WallColor;
 	uint16_t BackgroundColor;
 	enum GridCell{
 		 Walkable = 0,
-		 Wall = 32,
-		 Rock = 64,
 		 Explotion = 16,
-		 Bomb = 128		
+		 Explotion_1 = 20,
+		 Explotion_2 = 24,
+		 Explotion_3 = 28,
+		 Bomb = 32,
+		 Rock = 64,
+		 Wall = 128
 	};
 protected:
 private:
@@ -62,11 +68,10 @@ public:
 	Bomberman(unsigned char ID, unsigned char playerCount, MI0283QT9 *LCD, InputController *inputController, Communication *communication);
 	virtual void Load();
 	virtual void Update();
-
+	void DrawGridCell(char x, char y);
 	~Bomberman();
 protected:
 private:
-	void drawGridCell(char x, char y);
 	unsigned char GetOutputData();
 	void DoInputData(unsigned char data);
 	void UpdatePlayerInput();

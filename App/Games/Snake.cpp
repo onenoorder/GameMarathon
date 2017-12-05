@@ -17,7 +17,7 @@ Snake::Snake(unsigned char ID, unsigned char playerCount, MI0283QT9 *LCD, InputC
 void Snake::Load()
 {
 	// Background
-	_LCD->fillScreen(_backgroundColor);
+	LCD->fillScreen(_backgroundColor);
 
 	_players[0] = new SnakePlayer(5,5, RGB(255,0,0));
 	_players[0]->Direction = Right;
@@ -26,29 +26,31 @@ void Snake::Load()
 	_players[1]->Direction = Left;
 	_playerCount++;
 	_currentPlayer = _players[0];
+
+	Loaded = 1;
 }
 
 void Snake::Update(){
 	Game::Update();
-	_InputController->UpdateInput();
+	Input->UpdateInput();
 
-	if(_InputController->NunchuckAnalogX > 200){
+	if(Input->NunchuckAnalogX > 200){
 		if(_currentPlayer->Direction != Left)
 			_currentPlayer->Direction = Right;
-	} else if(_InputController->NunchuckAnalogY > 200){
+	} else if(Input->NunchuckAnalogY > 200){
 		if(_currentPlayer->Direction != Down)
 			_currentPlayer->Direction = Up;
-	} else if(_InputController->NunchuckAnalogX < 50){
+	} else if(Input->NunchuckAnalogX < 50){
 		if(_currentPlayer->Direction != Right)
 			_currentPlayer->Direction = Left;
-	} else if(_InputController->NunchuckAnalogY < 50){
+	} else if(Input->NunchuckAnalogY < 50){
 		if(_currentPlayer->Direction != Up)
 			_currentPlayer->Direction = Down;
 	}
 	_currentPlayer->Move();
-	_currentPlayer->Draw(_LCD);
+	_currentPlayer->Draw(LCD);
 	_players[1]->Move();
-	_players[1]->Draw(_LCD);
+	_players[1]->Draw(LCD);
 	_delay_ms(100);
 }
 

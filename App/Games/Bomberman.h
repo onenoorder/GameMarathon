@@ -12,6 +12,7 @@
 #include "../Model/BombermanPlayer.h"
 #include "../Model/BombermanBomb.h"
 #include "../Lib/Queue/Queue.h"
+#include "../Views/SelectGameView.h"
 class BombermanPlayer;
 class BombermanBomb;
 
@@ -32,15 +33,15 @@ public:
 		 Walkable = 0,
 		 Wall = 32,
 		 Rock = 64,
-		 Explotion = 16,
-		 Bomb = 128		
+		 Explotion = 8,
+		 Bomb = 128,
+		 Grave = 16,
 	};
 protected:
 private:
 	BombermanPlayer *_players[4];
 	Queue<BombermanBomb*> * _bombs;
 	BombermanPlayer *_currentPlayer;
-
 	enum BombermanData{
 		BOMBERMAN_PLAYER0 = 0,
 		BOMBERMAN_PLAYER1 = 1,
@@ -56,7 +57,6 @@ private:
 		BOMBERMAN_ACTIONS = 28,
 		BOMBERMAN_PLACE_BOM = 32
 	};
-
 //functions
 public:
 	Bomberman(unsigned char ID, unsigned char playerCount, MI0283QT9 *LCD, InputController *inputController, Communication *communication);

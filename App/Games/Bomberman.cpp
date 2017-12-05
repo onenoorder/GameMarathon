@@ -79,7 +79,17 @@ void Bomberman::Load()
 void Bomberman::Update(){
 	if(PlayerID == 0 && NewFrame == 0) return;
 	Game::Update();
-	
+	if(_currentPlayer->Alive == 1 && Grid[_currentPlayer->X][_currentPlayer->Y] == Explotion){
+		_currentPlayer->Alive = 0;
+		_currentPlayer->DeathTime = GameSeconds;
+		Grid[_currentPlayer->X][_currentPlayer->Y] = Grave;
+		drawGridCell(_currentPlayer->X,_currentPlayer->Y);
+	}
+
+	if(_currentPlayer->Alive == 0 && _currentPlayer->DeathTime+4 < GameSeconds){
+		CurrentView = new SelectGameView(LCD, Input, CommunicationHandler);
+		return;
+	}
 	this->UpdatePlayerInput();
 	this->UpdatePlayers();
 	this->UpdateBombs();
@@ -101,11 +111,14 @@ void Bomberman::UpdatePlayers(){
 
 void Bomberman::UpdatePlayerInput(){
 	Input->UpdateInput();
+
+	if(_currentPlayer->Alive == 0) return;
+	
 	_currentPlayer->PlayerUpdated = 0;
 	if(Input->NunchuckAnalogX > 200){
 		_currentPlayer->Direction = Right;
 		_currentPlayer->PlayerUpdated = 1;
-		}else if(Input->NunchuckAnalogY > 200 ){
+	}else if(Input->NunchuckAnalogY > 200 ){
 		_currentPlayer->Direction = Up;
 		_currentPlayer->PlayerUpdated = 1;
 	}
@@ -257,9 +270,12 @@ void Bomberman::drawGridCell(char x, char y){
 		LCD->fillRect(OffsetX + x * GridBlockSize, OffsetY + y * GridBlockSize, GridBlockSize, GridBlockSize, RGB(255,0,0));
 	else if(Grid[x][y] == Walkable)
 		LCD->fillRect(OffsetX + x * GridBlockSize, OffsetY + y * GridBlockSize, GridBlockSize, GridBlockSize, BackgroundColor);
-	else if(Grid[x][y] == Bomb){
+	else if(Grid[x][y] == Bomb)
 		LCD->fillEllipse(OffsetX + x * GridBlockSize + (GridBlockSize/2), OffsetY + y * GridBlockSize + (GridBlockSize/2), GridBlockSize/2, GridBlockSize/2, RGB(0,0,0));
-	}	
+	else if(Grid[x][y] == Grave)
+		LCD->fillEllipse(OffsetX + x * GridBlockSize + (GridBlockSize/2), OffsetY + y * GridBlockSize + (GridBlockSize/2), GridBlockSize/2, GridBlockSize/2, RGB(255,255,255));
+	
+
 
 }
 

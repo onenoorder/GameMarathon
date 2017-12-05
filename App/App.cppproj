@@ -145,7 +145,7 @@
     <VisualMicroSettings>
       <VisualMicroSettings>
         <ValidatedAS7>1</ValidatedAS7>
-        <arduino.upload.port>COM3</arduino.upload.port>
+        <arduino.upload.port>COM5</arduino.upload.port>
       </VisualMicroSettings>
     </VisualMicroSettings>
   </PropertyGroup>
@@ -254,8 +254,7 @@
     <VisualMicroSettings>
       <VisualMicroSettings>
         <ValidatedAS7>1</ValidatedAS7>
-        <arduino.upload.port>COM3</arduino.upload.port>
-
+        <arduino.upload.port>COM5</arduino.upload.port>
       </VisualMicroSettings>
     </VisualMicroSettings>
   </PropertyGroup>
@@ -410,7 +409,6 @@
     <Compile Include="Model\SnakePlayer.h">
       <SubType>compile</SubType>
     </Compile>
-
     <Compile Include="Views\MainMenuView.cpp">
       <SubType>compile</SubType>
     </Compile>
@@ -429,7 +427,6 @@
     <Compile Include="Views\View.h">
       <SubType>compile</SubType>
     </Compile>
-
     <Compile Include="__vm\.App.vsarduino.h">
       <SubType>compile</SubType>
     </Compile>

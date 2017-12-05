@@ -24,6 +24,7 @@ void SelectGameView::Load(){
 	drawMenu();
 	drawBombermanFrame();
 	LCD->drawText(80,220, "Back to main", RGB(255,0,0),RGB(0,0,0),2);
+
 	Loaded = 1;
 }
 
@@ -39,18 +40,34 @@ void SelectGameView::drawMenu(){
 	LCD->fillRect(125+170,20,5,80,RGB(255,0,0));
 	LCD->fillRect(170,20,130,5,RGB(255,0,0));
 	LCD->fillRect(170,95,130,5,RGB(255,0,0));
+	LCD->fillRect(175,25,120,70,RGB(255,255,255));
+	LCD->drawText(180,60, "Snake", RGB(0,0,255),RGB(255,255,255),1);
+
+	LCD->fillCircle(190+60 , 49 ,3,RGB(244,176,66));
+	
+	LCD->fillRect(190 , 40 ,3,12,RGB(255,0,0));
+	LCD->fillRect(192 , 49 ,14,3,RGB(255,0,0));
+
+	LCD->fillRect(60+190 , 63 ,3,16,RGB(0,0,255));
+	LCD->fillRect(60+190+3 , 60+16 ,14,3,RGB(0,0,255));
+	LCD->fillRect(60+190+14 , 63+16 ,3,10,RGB(0,0,255));
 
 	//bottomleft
 	LCD->fillRect(20,120,5,80,RGB(255,0,0));
 	LCD->fillRect(145,120,5,80,RGB(255,0,0));
 	LCD->fillRect(20,120,130,5,RGB(255,0,0));
 	LCD->fillRect(20,120+75,130,5,RGB(255,0,0));
-
+	LCD->fillRect(25,125,120,70,RGB(255,255,255));		
+	
+	LCD->drawText(54,147, "???", RGB(0,0,255),RGB(255,255,255),3);
 	//bottomright
 	LCD->fillRect(170,120,5,80,RGB(255,0,0));
 	LCD->fillRect(125+170,120,5,80,RGB(255,0,0));
 	LCD->fillRect(170,120,130,5,RGB(255,0,0));
 	LCD->fillRect(170,120+75,130,5,RGB(255,0,0));
+	LCD->fillRect(175,125,120,70,RGB(255,255,255));		
+
+	LCD->drawText(200,147, "???", RGB(0,0,255),RGB(255,255,255),3);
 }
 
 void SelectGameView::drawBombermanFrame(){
@@ -234,15 +251,35 @@ void SelectGameView::Update(){
 	}	
 
 	if(Timer % 15 == 0){
+		LCD->fillRect(25 +(2*2), 30 + (7*2),2*7,2*4,RGB(255,255,255));
+		LCD->fillRect(25 +(5*2), 30 + (10*2),2,2,RGB(181,181,181));
 		LCD->fillRect(25 +(4*2), 30 + (10*2),2,2,RGB(255,0,0));
 		LCD->fillRect(25 +(5*2), 30 + (9*2),2,2,RGB(255,0,0));
 		LCD->fillRect(25 +(3*2), 30 + (10*2),2,2,RGB(255,147,28));
 		LCD->fillRect(25 +(4*2), 30 + (9*2),2,2,RGB(255,147,28));
 		LCD->fillRect(25 +(5*2), 30 + (8*2),2,2,RGB(255,147,28));
 		LCD->fillRect(25 +(3*2), 30 + (8*2),2,2,RGB(255,147,28));
-
-		
-
+		LCD->fillRect(25 +(2*2), 30 + (10*2),2,2,RGB(238,243,12));
+		LCD->fillRect(25 +(3*2), 30 + (9*2),2,2,RGB(238,243,12));
+		LCD->fillRect(25 +(4*2), 30 + (8*2),2,2,RGB(238,243,12));
+		LCD->fillRect(25 +(5*2), 30 + (7*2),2,2,RGB(238,243,12));
+		LCD->fillRect(25 +(2*2), 30 + (8*2),2,2,RGB(238,243,12));
+		LCD->fillRect(25 +(3*2), 30 + (7*2),2,2,RGB(238,243,12));
+	}else if(Timer % 15 == 7){
+		LCD->fillRect(25 +(2*2), 30 + (7*2),2*7,2*4,RGB(255,255,255));
+		LCD->fillRect(25 +(5*2), 30 + (10*2),2,2,RGB(181,181,181));
+		LCD->fillRect(25 +(6*2), 30 + (10*2),2,2,RGB(255,0,0));
+		LCD->fillRect(25 +(5*2), 30 + (9*2),2,2,RGB(255,0,0));
+		LCD->fillRect(25 +(7*2), 30 + (10*2),2,2,RGB(255,147,28));
+		LCD->fillRect(25 +(6*2), 30 + (9*2),2,2,RGB(255,147,28));
+		LCD->fillRect(25 +(5*2), 30 + (8*2),2,2,RGB(255,147,28));
+		LCD->fillRect(25 +(7*2), 30 + (8*2),2,2,RGB(255,147,28));
+		LCD->fillRect(25 +(8*2), 30 + (10*2),2,2,RGB(238,243,12));
+		LCD->fillRect(25 +(7*2), 30 + (9*2),2,2,RGB(238,243,12));
+		LCD->fillRect(25 +(6*2), 30 + (8*2),2,2,RGB(238,243,12));
+		LCD->fillRect(25 +(5*2), 30 + (7*2),2,2,RGB(238,243,12));
+		LCD->fillRect(25 +(8*2), 30 + (8*2),2,2,RGB(238,243,12));
+		LCD->fillRect(25 +(7*2), 30 + (7*2),2,2,RGB(238,243,12));
 	}
 
 	if(Input->NunchuckZButton && _pageSelected == 0){

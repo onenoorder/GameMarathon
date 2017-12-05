@@ -11,6 +11,7 @@
 #include "../Lib/MI0283QT9/MI0283QT9.h"
 #include "../Helpers/InputController.h"
 #include "../Communication/SerialCommunication.h"
+#include "../Views/View.h"
 
 enum DirectionEnum {
 	Left = 1,
@@ -19,26 +20,20 @@ enum DirectionEnum {
 	Down = 4
 };
 
-class Game
+class Game : public View
 {
 public:
-	unsigned char Timer = 0;
-	unsigned int GameTime = 0;
-	unsigned char NewFrame;
 	unsigned char PlayerID;
 	unsigned char PlayerCount;
-protected:
-	Communication *_communication;
-	MI0283QT9 *_LCD;
-	InputController * _InputController;
+
 //functions
 public:
 	virtual void Load() = 0;
 	virtual void Update();
-
 	virtual ~Game();
 protected:
-	Game(unsigned char ID, unsigned char playerCount, MI0283QT9 *LCD, InputController *inputController,Communication *communication);
+		Game(unsigned char ID, unsigned char playerCount, MI0283QT9 *LCD, InputController *inputController,Communication *communication);
+
 }; //Game
 
 #endif //__GAME_H__

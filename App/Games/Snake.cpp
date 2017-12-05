@@ -24,7 +24,7 @@ Snake::Snake(unsigned char ID, unsigned char playerCount, MI0283QT9 *LCD, InputC
 void Snake::Load()
 {
 	// Background
-	_LCD->fillScreen(_backgroundColor);
+	LCD->fillScreen(_backgroundColor);
 
 	_players[0] = new SnakePlayer(5,5, RGB(255,0,0), this);
 	_players[0]->Direction = Right;
@@ -32,11 +32,16 @@ void Snake::Load()
 	_players[1] = new SnakePlayer(315,235, RGB(0,0,255), this);
 	_players[1]->Direction = Left;
 	_playerCount++;
+
 	_currentPlayer = _players[PlayerID];
+
+	Loaded = 1;
+
 }
 
 void Snake::Update(){
 	Game::Update();
+
 	
 	this->CookieTime();
 	this->UpdatePlayerInput();
@@ -59,23 +64,25 @@ void Snake::UpdatePlayers(){
 }
 
 void Snake::UpdatePlayerInput(){
-	_InputController->UpdateInput();
 
-	if(_InputController->NunchuckAnalogX > 200){
+	Input->UpdateInput();
+
+
+	if(Input->NunchuckAnalogX > 200){
 		if(_currentPlayer->Direction != Left)
 			_currentPlayer->Direction = Right;
-	} else if(_InputController->NunchuckAnalogY > 200){
+	} else if(Input->NunchuckAnalogY > 200){
 		if(_currentPlayer->Direction != Down)
 			_currentPlayer->Direction = Up;
-	} else if(_InputController->NunchuckAnalogX < 50){
+	} else if(Input->NunchuckAnalogX < 50){
 		if(_currentPlayer->Direction != Right)
 			_currentPlayer->Direction = Left;
-	} else if(_InputController->NunchuckAnalogY < 50){
+	} else if(Input->NunchuckAnalogY < 50){
 		if(_currentPlayer->Direction != Up)
 			_currentPlayer->Direction = Down;
 	}
 
-	if(_InputController->NunchuckZButton && _currentPlayer->SnakeQueue->Length() != 2){
+	if(Input->NunchuckZButton && _currentPlayer->SnakeQueue->Length() != 2){
 		_currentPlayer->PlaceCookie = 1;
 	}
 }
@@ -194,6 +201,13 @@ unsigned char Snake::CheckLocation(short x, short y){
 	}
 
 	return 0;
+
+	_currentPlayer->Move();
+	_currentPlayer->Draw(LCD);
+	_players[1]->Move();
+	_players[1]->Draw(LCD);
+	_delay_ms(100);
+
 }
 
 // default destructor

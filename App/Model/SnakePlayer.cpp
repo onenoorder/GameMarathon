@@ -46,6 +46,8 @@ void SnakePlayer::CheckNewLocation(){
 	if(element == 2){
 		if(MaxSize < SnakeSize)
 			MaxSize++;
+
+		_game->EatCookie(X-SnakeSize/2, Y-SnakeSize/2);
 	}
 }
 

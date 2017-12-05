@@ -18,7 +18,7 @@ Snake::Snake(unsigned char ID, unsigned char playerCount, MI0283QT9 *LCD, InputC
 	_cookieColor = RGB(244,176,66);
 	_maxCookies = 10;
 	_cookieDelay = 5;
-	_cookies = new Queue<SnakeCookie>(_maxCookies*5);
+	_cookies = new Queue<SnakeCookie*>(_maxCookies*5);
 } //Snake
 
 void Snake::Load()
@@ -99,18 +99,31 @@ void Snake::PlaceCookie(short x, short y){
 	if(_cookies->Length() < _maxCookies*5){
 		SnakeCookie cookie = {x, y, GameTime + (_cookieDelay*_maxCookies)};
 		_LCD->fillCircle(cookie.X+_cookieSize, cookie.Y+_cookieSize, _cookieSize/2, _cookieColor);
-		_cookies->Enqueue(cookie);
+		_cookies->Enqueue(&cookie);
+	}
+}
+
+void Snake::EatCookie(short x, short y){
+	if(_cookies->Length()){
+		for(int i = 0; i < _cookies->Length(); i++){
+			SnakeCookie *cookie = _cookies->Peek(i);
+			
+			if(cookie->X == x && cookie->Y == y){
+				cookie->Time = 0;
+			}
+		}
 	}
 }
 
 void Snake::UpdateCookies(){
 	if(_cookies->Length()){
 		for(int i = 0; i < _cookies->Length(); i++){
-			SnakeCookie cookie = _cookies->Peek(i);
+			SnakeCookie *cookie = _cookies->Peek(i);
 			
-			if(cookie.Time <= GameTime){
+			if(cookie->Time <= GameTime){
 				_cookies->Dequeue();
-				_LCD->fillCircle(cookie.X+_cookieSize, cookie.Y+_cookieSize, _cookieSize/2, _backgroundColor);
+				_LCD->fillCircle(cookie->X+_cookieSize, cookie->Y+_cookieSize, _cookieSize/2, _backgroundColor);
+				delete cookie;
 			}
 		}
 	}
@@ -186,9 +199,9 @@ unsigned char Snake::CheckLocation(short x, short y){
 
 	if(_cookies->Length()){
 		for(int i = 0; i < _cookies->Length(); i++){
-			SnakeCookie cookie = _cookies->Peek(i);
+			SnakeCookie *cookie = _cookies->Peek(i);
 			
-			if(cookie.X == x && cookie.Y == y)
+			if(cookie->X == x && cookie->Y == y && cookie->Time != 0)
 				return 2;
 		}
 	}

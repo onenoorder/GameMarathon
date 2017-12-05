@@ -29,7 +29,7 @@ private:
 	uint16_t _cookieColor;
 	unsigned char _cookieSize;
 	unsigned char _maxCookies;
-	Queue<SnakeCookie> *_cookies;
+	Queue<SnakeCookie*> * _cookies;
 
 	enum SnakeData{
 		SNAKE_PLAYER0 = 0,
@@ -53,6 +53,7 @@ public:
 	Snake(unsigned char ID, unsigned char playerCount, MI0283QT9 *LCD, InputController *inputController, Communication *communication);
 	virtual void Load();
 	virtual void Update();
+	void EatCookie(short x, short y);
 	unsigned char CheckLocation(short x, short y);
 	~Snake();
 protected:

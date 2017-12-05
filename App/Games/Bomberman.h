@@ -38,7 +38,7 @@ public:
 protected:
 private:
 	BombermanPlayer *_players[4];
-	Queue<BombermanBomb*> * _bombs;
+	Queue<BombermanBomb*> *_bombs;
 	BombermanPlayer *_currentPlayer;
 
 	enum BombermanData{

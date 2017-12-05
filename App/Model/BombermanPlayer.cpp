@@ -20,6 +20,7 @@ BombermanPlayer::BombermanPlayer(char X,char Y, uint16_t color, Bomberman * game
 	this->_game = game;
 	this->PlayerUpdated = 0;
 	this->BombTime = 0;
+	this->Alive = 1;
 } //BombermanPlayer
 
 void BombermanPlayer::Move(){

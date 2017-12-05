@@ -201,6 +201,9 @@ unsigned char Bomberman::GetOutputData(){
 			data |= BOMBERMAN_PLACE_BOM;
 			_currentPlayer->PlaceBomb = 0;
 		}
+		if(_currentPlayer->Alive == 0){
+			data |= BOMBERMAN_LOSE;		
+		}
 		DoInputData(data);
 	}
 	return data;

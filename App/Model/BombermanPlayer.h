@@ -21,6 +21,7 @@ public:
 	char Bombs;
 	char MaxBombs;
 	char PlayerUpdated;
+	char Alive;
 	DirectionEnum Direction;
 	uint16_t Color;
 	unsigned char PlaceBomb;

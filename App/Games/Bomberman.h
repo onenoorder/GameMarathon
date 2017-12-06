@@ -26,6 +26,7 @@ public:
 	char MaxY;
 	char OffsetX;
 	char OffsetY;
+	int EndTime;
 	uint16_t RockColor;
 	uint16_t WallColor;
 	uint16_t BackgroundColor;

@@ -35,7 +35,7 @@ void BombermanBomb::Explode(MI0283QT9 * LCD){
 	char directions = 0x00;
 
 	LCD->fillRect(_game->OffsetX + this->X * _game->GridBlockSize, _game->OffsetY + (this->Y) * _game->GridBlockSize, _game->GridBlockSize, _game->GridBlockSize, RGB(255,0,0));
-					
+	_game->Grid[this->X][this->Y] = _game->Explotion;	
 	for (int blast = 0; blast < this->Player->Blastpower; blast++)
 	{
 		if( !(directions & 0x01) && this->Y+blast+1 < _game->MaxY && _game->Grid[this->X][this->Y+blast+1]  != _game->Wall ){

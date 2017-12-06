@@ -15,7 +15,6 @@ class BombermanPlayer
 //variables
 public:
 	int BombTime;
-	int DeathTime;
 	char X;
 	char Y;
 	char Blastpower;

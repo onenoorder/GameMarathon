@@ -14,8 +14,8 @@ BombermanPlayer::BombermanPlayer(char X,char Y, uint16_t color, Bomberman * game
 	this->Y = Y;
 	this->Direction = Up;
 	this->Color = color;
-	this->Blastpower = 1;
-	this->Bombs = 0;
+	this->Blastpower = 3;
+	this->Bombs = 3;
 	this->MaxBombs = 1;
 	this->_game = game;
 	this->PlayerUpdated = 0;

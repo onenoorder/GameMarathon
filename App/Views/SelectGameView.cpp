@@ -24,7 +24,11 @@ void SelectGameView::Load(){
 	drawMenu();
 	drawBombermanFrame();
 	LCD->drawText(80,220, "Back to main", RGB(255,0,0),RGB(0,0,0),2);
-
+	if(GLBL_Role == RL_SLAVE){
+		LCD->drawText(10,230, "Slave", RGB(255,255,255),RGB(0,0,0),1);
+	}else{
+		LCD->drawText(10,230, "Master", RGB(255,255,255),RGB(0,0,0),1);
+	}
 	Loaded = 1;
 }
 

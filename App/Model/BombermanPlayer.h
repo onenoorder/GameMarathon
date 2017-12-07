@@ -9,8 +9,9 @@
 #define __BOMBERMANPLAYER_H__
 
 #include "../Games/Bomberman.h"
+#include "Player.h"
 class Bomberman;
-class BombermanPlayer
+class BombermanPlayer : public Player
 {
 //variables
 public:

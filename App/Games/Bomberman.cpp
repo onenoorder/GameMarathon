@@ -15,11 +15,11 @@ Bomberman::Bomberman(unsigned char ID, unsigned char playerCount, MI0283QT9 *LCD
 	GridBlockSize = 25;
 	OffsetX = 16;
 	OffsetY = 8;
-	MaxX = 9;
+	MaxX = 12;
 	MaxY = 9;
 	EndTime = 0;
 	_bombs = new Queue<BombermanBomb*>(20);
-
+	TransitionCounter=0;
 	// Colors
 	WallColor = RGB(24,24,24);
 	BackgroundColor = RGB(31, 145, 39);
@@ -80,9 +80,9 @@ void Bomberman::Update(){
 	if(PlayerID == 0 && NewFrame == 0) return;
 	Game::Update();
 
-	if(EndTime != 0 && EndTime+4 < GameSeconds){
+	if(EndTime != 0 && EndTime+10 < GameFastTime){
 		// TODO remove pointers
-		CurrentView = new SelectGameView(LCD, Input, CommunicationHandler);
+		EndGame();
 		return;
 	}
 	this->UpdatePlayerInput();
@@ -90,10 +90,19 @@ void Bomberman::Update(){
 	this->UpdateBombs();
 }
 
-void Bomberman::UpdatePlayers(){
-	// stop send/recieve 1 second before end of game
-	if((EndTime != 0 && EndTime+3 < GameSeconds)) return;
+void Bomberman::EndGame(){
+	if(TransitionCounter != 8 && GameFastTime % 2 == 0){
+		LCD->fillRect( 20*TransitionCounter,0 ,20,240,RGB(0,0,0));
+		LCD->fillRect( 300 - (20 *TransitionCounter),0 ,20,240,RGB(0,0,0));
 
+		TransitionCounter++;
+	}else if(TransitionCounter >= 8){
+		delete _bombs , Grid;
+		CurrentView = new GameEndView(LCD, Input, CommunicationHandler,_currentPlayer);
+	}
+}
+
+void Bomberman::UpdatePlayers(){
 	if(PlayerID == 0){
 		CommunicationHandler->Send(GetOutputData());
 
@@ -110,16 +119,19 @@ void Bomberman::UpdatePlayers(){
 void Bomberman::UpdatePlayerInput(){
 	Input->UpdateInput();
 
-	if(_currentPlayer->Alive == 1 && Grid[_currentPlayer->X][_currentPlayer->Y] == Explotion){
+	if(_currentPlayer->Alive == 1 && Grid[_currentPlayer->X][_currentPlayer->Y] == Explotion && EndTime == 0){
 		_currentPlayer->Alive = 0;
-		EndTime = GameSeconds;
+		PlayerCount--;
+		EndTime = GameFastTime;
 		Grid[_currentPlayer->X][_currentPlayer->Y] = Grave;
+		_currentPlayer->WinState = PL_LOSE;
 		drawGridCell(_currentPlayer->X,_currentPlayer->Y);
 	}
 
 	if(_currentPlayer->Alive == 0) return;
 	
 	_currentPlayer->PlayerUpdated = 0;
+
 	if(Input->NunchuckAnalogX > 200){
 		_currentPlayer->Direction = Right;
 		_currentPlayer->PlayerUpdated = 1;
@@ -230,7 +242,7 @@ unsigned char Bomberman::GetOutputData(){
 			data |= BOMBERMAN_PLACE_BOM;
 			_currentPlayer->PlaceBomb = 0;
 		}
-		if(_currentPlayer->Alive == 0){
+		if(_currentPlayer->Alive == 0 ){
 			data |= BOMBERMAN_LOSE;
 		}
 		DoInputData(data);
@@ -242,11 +254,16 @@ void Bomberman::DoInputData(unsigned char data){
 	if(data != 0){
 		BombermanPlayer *player = _players[data & BOMBERMAN_PLAYERS];
 
-		if((data & BOMBERMAN_LOSE) == BOMBERMAN_LOSE ){
+		if((data & BOMBERMAN_LOSE) == BOMBERMAN_LOSE && EndTime==0 ){
 			player->Alive = 0;
-			EndTime = GameSeconds;
+			PlayerCount--;
+			player->PlayerUpdated = 0;
+			EndTime = GameFastTime;
 			Grid[player->X][player->Y] = Grave;
+			_currentPlayer->WinState = PL_WIN;
+
 			drawGridCell(player->X,player->Y);
+			return;
 		}
 
 		if((data & BOMBERMAN_ACTIONS) > 0){
@@ -297,9 +314,6 @@ void Bomberman::drawGridCell(char x, char y){
 	LCD->fillEllipse(OffsetX + x * GridBlockSize + (GridBlockSize/2), OffsetY + y * GridBlockSize + (GridBlockSize/2), GridBlockSize/2, GridBlockSize/2, RGB(0,0,0));
 	else if(Grid[x][y] == Grave)
 	LCD->fillEllipse(OffsetX + x * GridBlockSize + (GridBlockSize/2), OffsetY + y * GridBlockSize + (GridBlockSize/2), GridBlockSize/2, GridBlockSize/2, RGB(255,255,255));
-	
-
-
 }
 
 

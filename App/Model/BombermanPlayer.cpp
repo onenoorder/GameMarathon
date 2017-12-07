@@ -8,7 +8,7 @@
 #include "BombermanPlayer.h"
 
 // default constructor
-BombermanPlayer::BombermanPlayer(char X,char Y, uint16_t color, Bomberman * game)
+BombermanPlayer::BombermanPlayer(char X,char Y, uint16_t color, Bomberman * game) : Player()
 {
 	this->X = X;
 	this->Y = Y;

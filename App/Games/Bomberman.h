@@ -12,7 +12,7 @@
 #include "../Model/BombermanPlayer.h"
 #include "../Model/BombermanBomb.h"
 #include "../Lib/Queue/Queue.h"
-#include "../Views/SelectGameView.h"
+#include "../Views/GameEndView.h"
 class BombermanPlayer;
 class BombermanBomb;
 
@@ -26,6 +26,7 @@ public:
 	char MaxY;
 	char OffsetX;
 	char OffsetY;
+	char TransitionCounter;
 	int EndTime;
 	uint16_t RockColor;
 	uint16_t WallColor;
@@ -73,6 +74,7 @@ private:
 	void UpdatePlayerInput();
 	void UpdateBombs();
 	void UpdatePlayers();
+	void EndGame();
 
 }; //Bomberman
 

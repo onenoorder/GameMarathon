@@ -11,19 +11,21 @@
 // default constructor
 Bomberman::Bomberman(unsigned char ID, unsigned char playerCount, MI0283QT9 *LCD, InputController *inputController, Communication *communication) : Game(ID, playerCount, LCD, inputController, communication)
 {
-
 	GridBlockSize = 25;
-	OffsetX = 16;
+	OffsetX = 22;
 	OffsetY = 8;
-	MaxX = 9;
+	MaxX = 11;
 	MaxY = 9;
 	EndTime = 0;
 	_bombs = new Queue<BombermanBomb*>(20);
 	TransitionCounter=0;
 	// Colors
-	WallColor = RGB(24,24,24);
-	BackgroundColor = RGB(31, 145, 39);
+	WallColor = RGB(65,65,65);
+	BackgroundColor = RGB(12, 103, 37);
 	RockColor = RGB(85,85,85);
+	RockGlowColor = RGB(105, 105, 105);
+	ExplotionColor = RGB(240, 50, 1);
+	ExplotionTextColor = RGB(204, 24, 27);
 
 	// Make grid
 	Grid = new char*[MaxX];
@@ -42,24 +44,24 @@ void Bomberman::Load()
 		for(char y = 0; y < MaxY; y++){
 			// Player 1 location
 			if(x == 0 && y < 3 || y == 0 && x < 3)
-			Grid[x][y] = Walkable;
+				Grid[x][y] = Walkable;
 			// Player 3 location
 			else if(x == MaxX - 1 && y < 3 || y == 0 && x > MaxX-4)
-			Grid[x][y] = Walkable;
+				Grid[x][y] = Walkable;
 			// Player 4 location
 			else if(y == MaxY - 1 && x < 3 || x == 0 && y > MaxY-4)
-			Grid[x][y] = Walkable;
+				Grid[x][y] = Walkable;
 			// Player 2 location
 			else if(y == MaxY - 1 && x > MaxX - 4 || x == MaxX-1 && y > MaxY-4)
-			Grid[x][y] = Walkable;
+				Grid[x][y] = Walkable;
 			// Wall
 			else if(x % 2 == 1 && y % 2 == 1)
-			Grid[x][y] = Wall;
+				Grid[x][y] = Wall;
 			// Rock
 			else
-			Grid[x][y] = Rock;
-			
-			drawGridCell(x,y);
+				Grid[x][y] = Rock;
+				
+			DrawGridCell(x,y);
 		}
 	}
 
@@ -98,7 +100,7 @@ void Bomberman::EndGame(){
 		TransitionCounter++;
 	}else if(TransitionCounter >= 8){
 		delete _bombs , Grid;
-		CurrentView = new GameEndView(LCD, Input, CommunicationHandler,_currentPlayer);
+		CurrentView = new GameEndView(LCD, Input, CommunicationHandler, _currentPlayer);
 	}
 }
 
@@ -119,13 +121,13 @@ void Bomberman::UpdatePlayers(){
 void Bomberman::UpdatePlayerInput(){
 	Input->UpdateInput();
 
-	if(_currentPlayer->Alive == 1 && Grid[_currentPlayer->X][_currentPlayer->Y] == Explotion && EndTime == 0){
+	if(_currentPlayer->Alive == 1 && Grid[_currentPlayer->X][_currentPlayer->Y] >= Explotion && Grid[_currentPlayer->X][_currentPlayer->Y] <= Explotion_3+2 && EndTime == 0){
 		_currentPlayer->Alive = 0;
 		PlayerCount--;
 		EndTime = GameFastTime;
 		Grid[_currentPlayer->X][_currentPlayer->Y] = Grave;
 		_currentPlayer->WinState = PL_LOSE;
-		drawGridCell(_currentPlayer->X,_currentPlayer->Y);
+		DrawGridCell(_currentPlayer->X,_currentPlayer->Y);
 	}
 
 	if(_currentPlayer->Alive == 0) return;
@@ -164,52 +166,56 @@ void Bomberman::UpdateBombs(){
 				bomb->Tick(LCD);
 				} else if(bomb->TimePlaced+3 == GameSeconds && bomb->Ticks == 2){
 				bomb->Tick(LCD);
-				} else if(bomb->TimePlaced+4 <= GameSeconds && !bomb->Exploding ){
-				bomb->Explode(LCD);
+			} else if(bomb->TimePlaced+4 == GameSeconds && !bomb->Exploding){
+				bomb->Explode(LCD, 0);
+			} else if(bomb->TimePlaced+5 == GameSeconds){
+				bomb->Explode(LCD, 1);
+			} else if(bomb->TimePlaced+6 == GameSeconds){
+				bomb->Explode(LCD, 2);
 			}
 		}
 
 		// clear bombs
 		for(int x = 0; x < _bombs->Length(); x++){
 			BombermanBomb * bomb = _bombs->Peek(x);
-			if( bomb->TimePlaced+5 <= GameSeconds ){
+			if(bomb->TimePlaced+7 <= GameSeconds){
 				_bombs->Dequeue();
 				bomb->Player->Bombs--;
 
 				//clear bomb
 				if(Grid[bomb->X][bomb->Y] != Grave){
 					Grid[bomb->X][bomb->Y] = Walkable;
-					drawGridCell(bomb->X,bomb->Y);
+					DrawGridCell(bomb->X,bomb->Y);
 				}
 
 				char directions = 0x00;
 				for (int blast = 0; blast < bomb->Player->Blastpower; blast++)
 				{
-					if(bomb->Y+blast+1 < MaxY && Grid[bomb->X][bomb->Y+blast+1]  == Explotion   ){
+					if(bomb->Y+blast+1 < MaxY && Grid[bomb->X][bomb->Y+blast+1] >= Explotion && Grid[bomb->X][bomb->Y+blast+1] <= Explotion_3+2){
 						if(Grid[bomb->X][bomb->Y+blast+1] != Grave){
 							Grid[bomb->X][bomb->Y+blast+1] = Walkable;
-							drawGridCell(bomb->X,bomb->Y+blast+1);
+							DrawGridCell(bomb->X,bomb->Y+blast+1);
 						}
 					}
 
-					if(bomb->Y-blast-1 >= 0 && Grid[bomb->X][bomb->Y-blast-1]  == Explotion  ){
-						if(Grid[bomb->X][bomb->Y+blast-1] != Grave){
+					if(bomb->Y-blast-1 >= 0 && Grid[bomb->X][bomb->Y-blast-1] >= Explotion && Grid[bomb->X][bomb->Y-blast-1] <= Explotion_3+2){
+						if(Grid[bomb->X][bomb->Y-blast-1] != Grave){
 							Grid[bomb->X][bomb->Y-blast-1] = Walkable;
-							drawGridCell(bomb->X,bomb->Y-blast-1);
+							DrawGridCell(bomb->X,bomb->Y-blast-1);
 						}
 					}
 
-					if(bomb->X+blast+1 < MaxX && Grid[bomb->X+blast+1][bomb->Y] == Explotion ){
+					if(bomb->X+blast+1 < MaxX && Grid[bomb->X+blast+1][bomb->Y] >= Explotion && Grid[bomb->X+blast+1][bomb->Y] <= Explotion_3+2){
 						if(Grid[bomb->X+blast+1][bomb->Y] != Grave){
 							Grid[bomb->X+blast+1][bomb->Y] = Walkable;
-							drawGridCell(bomb->X+blast+1,bomb->Y);
+							DrawGridCell(bomb->X+blast+1,bomb->Y);
 						}
 					}
 
-					if(bomb->X-blast-1 >= 0 && Grid[bomb->X-blast-1][bomb->Y] == Explotion  ){
-						if(Grid[bomb->X+blast-1][bomb->Y] != Grave){
+					if(bomb->X-blast-1 >= 0 && Grid[bomb->X-blast-1][bomb->Y] >= Explotion && Grid[bomb->X-blast-1][bomb->Y] <= Explotion_3+2){
+						if(Grid[bomb->X-blast-1][bomb->Y] != Grave){
 							Grid[bomb->X-blast-1][bomb->Y] = Walkable;
-							drawGridCell(bomb->X-blast-1,bomb->Y);
+							DrawGridCell(bomb->X-blast-1,bomb->Y);
 						}
 					}
 				}
@@ -262,7 +268,7 @@ void Bomberman::DoInputData(unsigned char data){
 			Grid[player->X][player->Y] = Grave;
 			_currentPlayer->WinState = PL_WIN;
 
-			drawGridCell(player->X,player->Y);
+			DrawGridCell(player->X,player->Y);
 			return;
 		}
 
@@ -281,7 +287,7 @@ void Bomberman::DoInputData(unsigned char data){
 				player->Direction = Down;
 				break;
 			};
-			drawGridCell(player->X, player->Y);
+			DrawGridCell(player->X, player->Y);
 			player->Move();
 			player->DrawPlayer(LCD);
 		}
@@ -289,33 +295,97 @@ void Bomberman::DoInputData(unsigned char data){
 		if(data >= BOMBERMAN_PLACE_BOM){
 			_bombs->Enqueue(new  BombermanBomb(player->X,player->Y,GameSeconds, player, this));
 			Grid[player->X][player->Y] = Bomb;
-			drawGridCell(player->X,player->Y);
+			DrawGridCell(player->X,player->Y);		
 			player->Bombs++;
 			player->BombTime = GameSeconds;
 
-			drawGridCell(player->X, player->Y);
+			DrawGridCell(player->X, player->Y);
 			player->DrawPlayer(LCD);
 		}	
 	}
 }
 
-void Bomberman::drawGridCell(char x, char y){
+void Bomberman::DrawGridCell(char x, char y){
 	LCD->fillRect(OffsetX + x * GridBlockSize, OffsetY + y * GridBlockSize, GridBlockSize, GridBlockSize, BackgroundColor);
 
-	if(Grid[x][y] == Wall)
-	LCD->fillRect(OffsetX + x * GridBlockSize, OffsetY + y * GridBlockSize, GridBlockSize, GridBlockSize, WallColor);
-	else if(Grid[x][y] == Rock)
-	LCD->fillRect(OffsetX + x * GridBlockSize, OffsetY + y * GridBlockSize, GridBlockSize, GridBlockSize, RockColor);
-	else if(Grid[x][y] == Explotion)
-	LCD->fillRect(OffsetX + x * GridBlockSize, OffsetY + y * GridBlockSize, GridBlockSize, GridBlockSize, RGB(255,0,0));
-	else if(Grid[x][y] == Walkable)
-	LCD->fillRect(OffsetX + x * GridBlockSize, OffsetY + y * GridBlockSize, GridBlockSize, GridBlockSize, BackgroundColor);
-	else if(Grid[x][y] == Bomb)
-	LCD->fillEllipse(OffsetX + x * GridBlockSize + (GridBlockSize/2), OffsetY + y * GridBlockSize + (GridBlockSize/2), GridBlockSize/2, GridBlockSize/2, RGB(0,0,0));
+	if(Grid[x][y] == Wall) {
+		LCD->fillRect(OffsetX + x * GridBlockSize, OffsetY + y * GridBlockSize, GridBlockSize, GridBlockSize, WallColor);
+
+		// Outerlines
+		LCD->drawLine(OffsetX + x * GridBlockSize, OffsetY + y * GridBlockSize, OffsetX + x * GridBlockSize + GridBlockSize-1, OffsetY + y * GridBlockSize, RockGlowColor);
+		LCD->drawLine(OffsetX + x * GridBlockSize, OffsetY + y * GridBlockSize + GridBlockSize-1, OffsetX + x * GridBlockSize + GridBlockSize-1, OffsetY + y * GridBlockSize + GridBlockSize-1, RockGlowColor);
+		LCD->drawLine(OffsetX + x * GridBlockSize, OffsetY + y * GridBlockSize, OffsetX + x * GridBlockSize, OffsetY + y * GridBlockSize + GridBlockSize-1, RockGlowColor);
+		LCD->drawLine(OffsetX + x * GridBlockSize + GridBlockSize-1, OffsetY + y * GridBlockSize, OffsetX + x * GridBlockSize + GridBlockSize-1, OffsetY + y * GridBlockSize + GridBlockSize-1, RockGlowColor);
+	} else if(Grid[x][y] == Rock) {
+		LCD->fillRect(OffsetX + x * GridBlockSize, OffsetY + y * GridBlockSize, GridBlockSize, GridBlockSize, RockColor);
+
+		// Outerlines
+		LCD->drawLine(OffsetX + x * GridBlockSize, OffsetY + y * GridBlockSize, OffsetX + x * GridBlockSize + GridBlockSize-1, OffsetY + y * GridBlockSize, WallColor);
+		LCD->drawLine(OffsetX + x * GridBlockSize, OffsetY + y * GridBlockSize + GridBlockSize-1, OffsetX + x * GridBlockSize + GridBlockSize-1, OffsetY + y * GridBlockSize + GridBlockSize-1, WallColor);
+		LCD->drawLine(OffsetX + x * GridBlockSize, OffsetY + y * GridBlockSize, OffsetX + x * GridBlockSize, OffsetY + y * GridBlockSize + GridBlockSize-1, WallColor);
+		LCD->drawLine(OffsetX + x * GridBlockSize + GridBlockSize-1, OffsetY + y * GridBlockSize, OffsetX + x * GridBlockSize + GridBlockSize-1, OffsetY + y * GridBlockSize + GridBlockSize-1, WallColor);
+
+		// Innerlines
+		LCD->drawLine(OffsetX + x * GridBlockSize, OffsetY + y * GridBlockSize + (GridBlockSize/3), OffsetX + x * GridBlockSize + GridBlockSize-1, OffsetY + y * GridBlockSize + (GridBlockSize/3), WallColor);
+		LCD->drawLine(OffsetX + x * GridBlockSize, OffsetY + y * GridBlockSize + (GridBlockSize/3)*2, OffsetX + x * GridBlockSize + GridBlockSize-1, OffsetY + y * GridBlockSize + (GridBlockSize/3)*2, WallColor);
+
+		LCD->drawLine(OffsetX + x * GridBlockSize, OffsetY + y * GridBlockSize + 1, OffsetX + x * GridBlockSize + GridBlockSize-1, OffsetY + y * GridBlockSize + 1, RockGlowColor);
+		LCD->drawLine(OffsetX + x * GridBlockSize, OffsetY + y * GridBlockSize + (GridBlockSize/3)+1, OffsetX + x * GridBlockSize + GridBlockSize-1, OffsetY + y * GridBlockSize + (GridBlockSize/3)+1, RockGlowColor);
+		LCD->drawLine(OffsetX + x * GridBlockSize, OffsetY + y * GridBlockSize + (GridBlockSize/3)*2+1, OffsetX + x * GridBlockSize + GridBlockSize-1, OffsetY + y * GridBlockSize + (GridBlockSize/3)*2+1, RockGlowColor);
+
+		// Stones
+		LCD->drawLine(OffsetX + x * GridBlockSize + (GridBlockSize/4), OffsetY + y * GridBlockSize, OffsetX + x * GridBlockSize + (GridBlockSize/4), OffsetY + y * GridBlockSize + (GridBlockSize/3), WallColor);
+		LCD->drawLine(OffsetX + x * GridBlockSize + (GridBlockSize/4)*2, OffsetY + y * GridBlockSize + (GridBlockSize/3), OffsetX + x * GridBlockSize + (GridBlockSize/4)*2, OffsetY + y * GridBlockSize + (GridBlockSize/3)*2, WallColor);
+		LCD->drawLine(OffsetX + x * GridBlockSize + (GridBlockSize/4)*3, OffsetY + y * GridBlockSize + (GridBlockSize/3)*2, OffsetX + x * GridBlockSize + (GridBlockSize/4)*3, OffsetY + y * GridBlockSize + GridBlockSize-1, WallColor);
+	} else if(Grid[x][y] >= Explotion_1 && Grid[x][y] <= Explotion_1+2) {
+		if((Grid[x][y] & 3) == 0){
+			LCD->fillRect(OffsetX + x * GridBlockSize, OffsetY + y * GridBlockSize, GridBlockSize, GridBlockSize, ExplotionTextColor);
+		} else if((Grid[x][y] & 1) == 1){
+			LCD->fillRect(OffsetX + x * GridBlockSize, OffsetY + y * GridBlockSize, GridBlockSize, GridBlockSize, ExplotionColor);
+			LCD->drawText(OffsetX + x * GridBlockSize, OffsetY + y * GridBlockSize, "B", ExplotionTextColor, ExplotionColor, GridBlockSize/7);
+		} else {
+			LCD->fillRect(OffsetX + x * GridBlockSize, OffsetY + y * GridBlockSize, GridBlockSize, GridBlockSize, BackgroundColor);
+			LCD->drawText(OffsetX + x * GridBlockSize, OffsetY + y * GridBlockSize, "B", ExplotionColor, BackgroundColor, GridBlockSize/7);
+		}
+	} else if(Grid[x][y] >= Explotion_2 && Grid[x][y] <= Explotion_2+2) {
+		if((Grid[x][y] & 3) == 0){
+			LCD->fillRect(OffsetX + x * GridBlockSize, OffsetY + y * GridBlockSize, GridBlockSize, GridBlockSize, ExplotionTextColor);
+		} else if((Grid[x][y] & 1) == 1){
+			LCD->fillRect(OffsetX + x * GridBlockSize, OffsetY + y * GridBlockSize, GridBlockSize, GridBlockSize, ExplotionColor);
+			LCD->drawText(OffsetX + x * GridBlockSize, OffsetY + y * GridBlockSize, "I", ExplotionTextColor, ExplotionColor, GridBlockSize/7);
+		} else {
+			LCD->fillRect(OffsetX + x * GridBlockSize, OffsetY + y * GridBlockSize, GridBlockSize, GridBlockSize, BackgroundColor);
+			LCD->drawText(OffsetX + x * GridBlockSize, OffsetY + y * GridBlockSize, "I", ExplotionColor, BackgroundColor, GridBlockSize/7);
+		}
+	} else if(Grid[x][y] >= Explotion_3 && Grid[x][y] <= Explotion_3+2) {
+		if(Grid[x][y] == Explotion_3){
+			LCD->fillRect(OffsetX + x * GridBlockSize, OffsetY + y * GridBlockSize, GridBlockSize, GridBlockSize, ExplotionTextColor);
+		} else if((Grid[x][y] & 1) == 1){
+			LCD->fillRect(OffsetX + x * GridBlockSize, OffsetY + y * GridBlockSize, GridBlockSize, GridBlockSize, ExplotionColor);
+			LCD->drawText(OffsetX + x * GridBlockSize, OffsetY + y * GridBlockSize, "E", ExplotionTextColor, ExplotionColor, GridBlockSize/7);
+		} else {
+			LCD->fillRect(OffsetX + x * GridBlockSize, OffsetY + y * GridBlockSize, GridBlockSize, GridBlockSize, BackgroundColor);
+			LCD->drawText(OffsetX + x * GridBlockSize, OffsetY + y * GridBlockSize, "E", ExplotionColor, BackgroundColor, GridBlockSize/7);
+		}
+	} else if(Grid[x][y] >= Explotion && Grid[x][y] <= Explotion+2) {
+		if((Grid[x][y] & 3) == 0){
+			LCD->fillRect(OffsetX + x * GridBlockSize, OffsetY + y * GridBlockSize, GridBlockSize, GridBlockSize, ExplotionTextColor);
+		} else if((Grid[x][y] & 1) == 1){
+			LCD->fillRect(OffsetX + x * GridBlockSize, OffsetY + y * GridBlockSize, GridBlockSize, GridBlockSize, ExplotionColor);
+			LCD->drawText(OffsetX + x * GridBlockSize, OffsetY + y * GridBlockSize, "M", ExplotionTextColor, ExplotionColor, GridBlockSize/7);
+		} else {
+			LCD->fillRect(OffsetX + x * GridBlockSize, OffsetY + y * GridBlockSize, GridBlockSize, GridBlockSize, BackgroundColor);
+			LCD->drawText(OffsetX + x * GridBlockSize, OffsetY + y * GridBlockSize, "M", ExplotionColor, BackgroundColor, GridBlockSize/7);
+		}
+	} else if(Grid[x][y] == Walkable)
+		LCD->fillRect(OffsetX + x * GridBlockSize, OffsetY + y * GridBlockSize, GridBlockSize, GridBlockSize, BackgroundColor);
+	else if(Grid[x][y] == Bomb){
+		LCD->fillEllipse(OffsetX + x * GridBlockSize + (GridBlockSize/2), OffsetY + y * GridBlockSize + (GridBlockSize/2), GridBlockSize/2, GridBlockSize/2, RGB(0,0,0));
+		LCD->fillEllipse(OffsetX + x * GridBlockSize + (GridBlockSize/2), OffsetY + y * GridBlockSize + (GridBlockSize/4), GridBlockSize/4, GridBlockSize/4, RockColor);
+	}
 	else if(Grid[x][y] == Grave)
-	LCD->fillEllipse(OffsetX + x * GridBlockSize + (GridBlockSize/2), OffsetY + y * GridBlockSize + (GridBlockSize/2), GridBlockSize/2, GridBlockSize/2, RGB(255,255,255));
+		LCD->fillEllipse(OffsetX + x * GridBlockSize + (GridBlockSize/2), OffsetY + y * GridBlockSize + (GridBlockSize/2), GridBlockSize/2, GridBlockSize/2, RGB(255,255,255));
 }
-
 
 // default destructor
 Bomberman::~Bomberman()

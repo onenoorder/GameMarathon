@@ -48,13 +48,12 @@ int main(void)
 	TIMSK2 |= (1<<TOIE0); // zet interupt aan
 	TCNT2 = 0;// zet count op 0
 	sei();
-
+	
 	while (1)
 	{	
 		if(CurrentView->Loaded)
 			CurrentView->Update();
 		else
 			CurrentView->Load();
-		
 	}
 }

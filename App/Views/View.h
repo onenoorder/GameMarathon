@@ -5,7 +5,6 @@
 * Author: Mikena
 */
 
-
 #ifndef __VIEW_H__
 #define __VIEW_H__
 
@@ -16,8 +15,8 @@
 #define RL_MASTER 0
 #define RL_SLAVE 1
 
-#define GLBL_Players 1
-#define GLBL_Role RL_MASTER
+#define GLBL_Players 2
+#define GLBL_Role RL_SLAVE
 
 class View
 {

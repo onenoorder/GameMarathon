@@ -24,7 +24,7 @@ Snake::Snake(unsigned char ID, unsigned char playerCount, MI0283QT9 *LCD, InputC
 void Snake::Load()
 {
 	// Background
-	_LCD->fillScreen(_backgroundColor);
+	LCD->fillScreen(_backgroundColor);
 
 	_players[0] = new SnakePlayer(5,5, RGB(255,0,0), this);
 	_players[0]->Direction = Right;
@@ -32,11 +32,16 @@ void Snake::Load()
 	_players[1] = new SnakePlayer(315,235, RGB(0,0,255), this);
 	_players[1]->Direction = Left;
 	_playerCount++;
+
 	_currentPlayer = _players[PlayerID];
+
+	Loaded = 1;
+
 }
 
 void Snake::Update(){
 	Game::Update();
+
 	
 	this->CookieTime();
 	this->UpdatePlayerInput();
@@ -46,42 +51,44 @@ void Snake::Update(){
 
 void Snake::UpdatePlayers(){
 	if(PlayerID == 0){
-		_communication->Send(GetOutputData());
+		CommunicationHandler->Send(GetOutputData());
 
 		if(PlayerCount > 1)
-			DoInputData(_communication->Receive());
+			DoInputData(CommunicationHandler->Receive());
 	} else {
 		if(PlayerCount > 1)
-			DoInputData(_communication->Receive());
+			DoInputData(CommunicationHandler->Receive());
 
-		_communication->Send(GetOutputData());
+		CommunicationHandler->Send(GetOutputData());
 	}
 }
 
 void Snake::UpdatePlayerInput(){
-	_InputController->UpdateInput();
 
-	if(_InputController->NunchuckAnalogX > 200){
+	Input->UpdateInput();
+
+
+	if(Input->NunchuckAnalogX > 200){
 		if(_currentPlayer->Direction != Left)
 			_currentPlayer->Direction = Right;
-	} else if(_InputController->NunchuckAnalogY > 200){
+	} else if(Input->NunchuckAnalogY > 200){
 		if(_currentPlayer->Direction != Down)
 			_currentPlayer->Direction = Up;
-	} else if(_InputController->NunchuckAnalogX < 50){
+	} else if(Input->NunchuckAnalogX < 50){
 		if(_currentPlayer->Direction != Right)
 			_currentPlayer->Direction = Left;
-	} else if(_InputController->NunchuckAnalogY < 50){
+	} else if(Input->NunchuckAnalogY < 50){
 		if(_currentPlayer->Direction != Up)
 			_currentPlayer->Direction = Down;
 	}
 
-	if(_InputController->NunchuckZButton && _currentPlayer->SnakeQueue->Length() != 2){
+	if(Input->NunchuckZButton && _currentPlayer->SnakeQueue->Length() != 2){
 		_currentPlayer->PlaceCookie = 1;
 	}
 }
 
 void Snake::CookieTime(){
-	if(GameTime >= _cookieTime && _cookies->Length() < _maxCookies){
+	if(GameSeconds >= _cookieTime && _cookies->Length() < _maxCookies){
 		while(1){
 			short x = rand() % (32);
 			short y = rand() % (24);
@@ -91,14 +98,14 @@ void Snake::CookieTime(){
 				break;
 			}	
 		}
-		_cookieTime = GameTime + _cookieDelay;
+		_cookieTime = GameSeconds + _cookieDelay;
 	}
 }
 
 void Snake::PlaceCookie(short x, short y){
 	if(_cookies->Length() < _maxCookies*5){
 		SnakeCookie cookie = {x, y, GameTime + (_cookieDelay*_maxCookies)};
-		_LCD->fillCircle(cookie.X+_cookieSize, cookie.Y+_cookieSize, _cookieSize/2, _cookieColor);
+		LCD->fillCircle(cookie.X+_cookieSize, cookie.Y+_cookieSize, _cookieSize/2, _cookieColor);
 		_cookies->Enqueue(&cookie);
 	}
 }
@@ -122,7 +129,7 @@ void Snake::UpdateCookies(){
 			
 			if(cookie->Time <= GameTime){
 				_cookies->Dequeue();
-				_LCD->fillCircle(cookie->X+_cookieSize, cookie->Y+_cookieSize, _cookieSize/2, _backgroundColor);
+				LCD->fillCircle(cookie->X+_cookieSize, cookie->Y+_cookieSize, _cookieSize/2, _backgroundColor);
 				delete cookie;
 			}
 		}
@@ -152,7 +159,7 @@ unsigned char Snake::GetOutputData(){
 		_currentPlayer->Size--;
 		_currentPlayer->MaxSize--;
 
-		_LCD->fillCircle(back.X, back.Y, _currentPlayer->SnakeSize/2, _backgroundColor);
+		LCD->fillCircle(back.X, back.Y, _currentPlayer->SnakeSize/2, _backgroundColor);
 		PlaceCookie(back.X-_currentPlayer->SnakeSize/2, back.Y-_currentPlayer->SnakeSize/2);
 		_currentPlayer->PlaceCookie = 0;
 	}
@@ -180,7 +187,7 @@ void Snake::DoInputData(unsigned char data){
 					break;
 			};
 			player->Move();
-			player->Draw(_LCD);
+			player->Draw(LCD);
 		}
 	}
 }
@@ -207,6 +214,13 @@ unsigned char Snake::CheckLocation(short x, short y){
 	}
 
 	return 0;
+
+	_currentPlayer->Move();
+	_currentPlayer->Draw(LCD);
+	_players[1]->Move();
+	_players[1]->Draw(LCD);
+	_delay_ms(100);
+
 }
 
 // default destructor

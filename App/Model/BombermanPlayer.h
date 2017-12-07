@@ -2,15 +2,16 @@
 * BombermanPlayer.h
 *
 * Created: 17-11-2017 12:42:19
-* Author: Mikena
+* Author: Mikena & Gerhard
 */
 
 #ifndef __BOMBERMANPLAYER_H__
 #define __BOMBERMANPLAYER_H__
 
 #include "../Games/Bomberman.h"
+#include "Player.h"
 class Bomberman;
-class BombermanPlayer
+class BombermanPlayer : public Player
 {
 //variables
 public:
@@ -21,8 +22,10 @@ public:
 	char Bombs;
 	char MaxBombs;
 	char PlayerUpdated;
+	char Alive;
 	DirectionEnum Direction;
 	uint16_t Color;
+	uint16_t ShadowColor;
 	unsigned char PlaceBomb;
 protected:
 private:

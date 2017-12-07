@@ -1,4 +1,4 @@
-/* 
+/*
 * Bomberman.cpp
 *
 * Created: 14-11-2017 14:05:47
@@ -16,9 +16,9 @@ Bomberman::Bomberman(unsigned char ID, unsigned char playerCount, MI0283QT9 *LCD
 	OffsetY = 8;
 	MaxX = 11;
 	MaxY = 9;
-
+	EndTime = 0;
 	_bombs = new Queue<BombermanBomb*>(20);
-
+	TransitionCounter=0;
 	// Colors
 	WallColor = RGB(65,65,65);
 	BackgroundColor = RGB(12, 103, 37);
@@ -30,7 +30,7 @@ Bomberman::Bomberman(unsigned char ID, unsigned char playerCount, MI0283QT9 *LCD
 	// Make grid
 	Grid = new char*[MaxX];
 	for(char x = 0; x < MaxX; x++)
-		Grid[x] = new char[MaxY];
+	Grid[x] = new char[MaxY];
 } //Bomberman
 
 void Bomberman::Load()
@@ -79,30 +79,61 @@ void Bomberman::Load()
 }
 
 void Bomberman::Update(){
+	if(PlayerID == 0 && NewFrame == 0) return;
 	Game::Update();
-	
+
+	if(EndTime != 0 && EndTime+10 < GameFastTime){
+		// TODO remove pointers
+		EndGame();
+		return;
+	}
 	this->UpdatePlayerInput();
 	this->UpdatePlayers();
 	this->UpdateBombs();
 }
 
+void Bomberman::EndGame(){
+	if(TransitionCounter != 8 && GameFastTime % 2 == 0){
+		LCD->fillRect( 20*TransitionCounter,0 ,20,240,RGB(0,0,0));
+		LCD->fillRect( 300 - (20 *TransitionCounter),0 ,20,240,RGB(0,0,0));
+
+		TransitionCounter++;
+	}else if(TransitionCounter >= 8){
+		delete _bombs , Grid;
+		CurrentView = new GameEndView(LCD, Input, CommunicationHandler, _currentPlayer);
+	}
+}
+
 void Bomberman::UpdatePlayers(){
 	if(PlayerID == 0){
-		_communication->Send(GetOutputData());
+		CommunicationHandler->Send(GetOutputData());
 
 		if(PlayerCount > 1)
-			DoInputData(_communication->Receive());
+			DoInputData(CommunicationHandler->Receive());
 	} else {
-		if(PlayerCount > 1)
-			DoInputData(_communication->Receive());
+		if(PlayerCount > 1  )
+			DoInputData(CommunicationHandler->Receive());
 
-		_communication->Send(GetOutputData());
+		CommunicationHandler->Send(GetOutputData());
 	}
 }
 
 void Bomberman::UpdatePlayerInput(){
 	Input->UpdateInput();
+
+	if(_currentPlayer->Alive == 1 && Grid[_currentPlayer->X][_currentPlayer->Y] >= Explotion && Grid[_currentPlayer->X][_currentPlayer->Y] <= Explotion_3+2 && EndTime == 0){
+		_currentPlayer->Alive = 0;
+		PlayerCount--;
+		EndTime = GameFastTime;
+		Grid[_currentPlayer->X][_currentPlayer->Y] = Grave;
+		_currentPlayer->WinState = PL_LOSE;
+		DrawGridCell(_currentPlayer->X,_currentPlayer->Y);
+	}
+
+	if(_currentPlayer->Alive == 0) return;
+	
 	_currentPlayer->PlayerUpdated = 0;
+
 	if(Input->NunchuckAnalogX > 200){
 		_currentPlayer->Direction = Right;
 		_currentPlayer->PlayerUpdated = 1;
@@ -131,9 +162,9 @@ void Bomberman::UpdateBombs(){
 
 			if(bomb->TimePlaced+1 == GameSeconds  && bomb->Ticks == 0 ){
 				bomb->Tick(LCD);
-			} else if(bomb->TimePlaced+2 == GameSeconds && bomb->Ticks == 1){
+				} else if(bomb->TimePlaced+2 == GameSeconds && bomb->Ticks == 1){
 				bomb->Tick(LCD);
-			} else if(bomb->TimePlaced+3 == GameSeconds && bomb->Ticks == 2){
+				} else if(bomb->TimePlaced+3 == GameSeconds && bomb->Ticks == 2){
 				bomb->Tick(LCD);
 			} else if(bomb->TimePlaced+4 == GameSeconds && !bomb->Exploding){
 				bomb->Explode(LCD, 0);
@@ -150,31 +181,42 @@ void Bomberman::UpdateBombs(){
 			if(bomb->TimePlaced+7 <= GameSeconds){
 				_bombs->Dequeue();
 				bomb->Player->Bombs--;
+
 				//clear bomb
-				Grid[bomb->X][bomb->Y] = Walkable;
-				DrawGridCell(bomb->X,bomb->Y);
+				if(Grid[bomb->X][bomb->Y] != Grave){
+					Grid[bomb->X][bomb->Y] = Walkable;
+					DrawGridCell(bomb->X,bomb->Y);
+				}
 
 				char directions = 0x00;
 				for (int blast = 0; blast < bomb->Player->Blastpower; blast++)
 				{
 					if(bomb->Y+blast+1 < MaxY && Grid[bomb->X][bomb->Y+blast+1] >= Explotion && Grid[bomb->X][bomb->Y+blast+1] <= Explotion_3+2){
-						Grid[bomb->X][bomb->Y+blast+1] = Walkable;
-						DrawGridCell(bomb->X,bomb->Y+blast+1);
+						if(Grid[bomb->X][bomb->Y+blast+1] != Grave){
+							Grid[bomb->X][bomb->Y+blast+1] = Walkable;
+							DrawGridCell(bomb->X,bomb->Y+blast+1);
+						}
 					}
 
 					if(bomb->Y-blast-1 >= 0 && Grid[bomb->X][bomb->Y-blast-1] >= Explotion && Grid[bomb->X][bomb->Y-blast-1] <= Explotion_3+2){
-						Grid[bomb->X][bomb->Y-blast-1] = Walkable;
-						DrawGridCell(bomb->X,bomb->Y-blast-1);
+						if(Grid[bomb->X][bomb->Y-blast-1] != Grave){
+							Grid[bomb->X][bomb->Y-blast-1] = Walkable;
+							DrawGridCell(bomb->X,bomb->Y-blast-1);
+						}
 					}
 
 					if(bomb->X+blast+1 < MaxX && Grid[bomb->X+blast+1][bomb->Y] >= Explotion && Grid[bomb->X+blast+1][bomb->Y] <= Explotion_3+2){
-						Grid[bomb->X+blast+1][bomb->Y] = Walkable;
-						DrawGridCell(bomb->X+blast+1,bomb->Y);
+						if(Grid[bomb->X+blast+1][bomb->Y] != Grave){
+							Grid[bomb->X+blast+1][bomb->Y] = Walkable;
+							DrawGridCell(bomb->X+blast+1,bomb->Y);
+						}
 					}
 
 					if(bomb->X-blast-1 >= 0 && Grid[bomb->X-blast-1][bomb->Y] >= Explotion && Grid[bomb->X-blast-1][bomb->Y] <= Explotion_3+2){
-						Grid[bomb->X-blast-1][bomb->Y] = Walkable;
-						DrawGridCell(bomb->X-blast-1,bomb->Y);
+						if(Grid[bomb->X-blast-1][bomb->Y] != Grave){
+							Grid[bomb->X-blast-1][bomb->Y] = Walkable;
+							DrawGridCell(bomb->X-blast-1,bomb->Y);
+						}
 					}
 				}
 			}
@@ -184,27 +226,30 @@ void Bomberman::UpdateBombs(){
 
 unsigned char Bomberman::GetOutputData(){
 	unsigned char data = 0;
-	if(_currentPlayer->PlayerUpdated == 1 || _currentPlayer->PlaceBomb == 1){
+	if(_currentPlayer->PlayerUpdated == 1 || _currentPlayer->PlaceBomb == 1|| _currentPlayer->Alive == 0){
 		data = PlayerID;
 		if(_currentPlayer->PlayerUpdated == 1){
 			switch(_currentPlayer->Direction){
 				case Up:
-					data |= BOMBERMAN_MOVE_UP;
-					break;
+				data |= BOMBERMAN_MOVE_UP;
+				break;
 				case Left:
-					data |= BOMBERMAN_MOVE_LEFT;
-					break;
+				data |= BOMBERMAN_MOVE_LEFT;
+				break;
 				case Right:
-					data |= BOMBERMAN_MOVE_RIGHT;
-					break;
+				data |= BOMBERMAN_MOVE_RIGHT;
+				break;
 				case Down:
-					data |= BOMBERMAN_MOVE_DOWN;
-					break;
+				data |= BOMBERMAN_MOVE_DOWN;
+				break;
 			};
 		}
 		if(_currentPlayer->PlaceBomb == 1){
 			data |= BOMBERMAN_PLACE_BOM;
 			_currentPlayer->PlaceBomb = 0;
+		}
+		if(_currentPlayer->Alive == 0 ){
+			data |= BOMBERMAN_LOSE;
 		}
 		DoInputData(data);
 	}
@@ -215,20 +260,32 @@ void Bomberman::DoInputData(unsigned char data){
 	if(data != 0){
 		BombermanPlayer *player = _players[data & BOMBERMAN_PLAYERS];
 
+		if((data & BOMBERMAN_LOSE) == BOMBERMAN_LOSE && EndTime==0 ){
+			player->Alive = 0;
+			PlayerCount--;
+			player->PlayerUpdated = 0;
+			EndTime = GameFastTime;
+			Grid[player->X][player->Y] = Grave;
+			_currentPlayer->WinState = PL_WIN;
+
+			DrawGridCell(player->X,player->Y);
+			return;
+		}
+
 		if((data & BOMBERMAN_ACTIONS) > 0){
 			switch(data & BOMBERMAN_ACTIONS){
 				case BOMBERMAN_MOVE_UP:
-					player->Direction = Up;
-					break;
+				player->Direction = Up;
+				break;
 				case BOMBERMAN_MOVE_LEFT:
-					player->Direction = Left;
-					break;
+				player->Direction = Left;
+				break;
 				case BOMBERMAN_MOVE_RIGHT:
-					player->Direction = Right;
-					break;
+				player->Direction = Right;
+				break;
 				case BOMBERMAN_MOVE_DOWN:
-					player->Direction = Down;
-					break;
+				player->Direction = Down;
+				break;
 			};
 			DrawGridCell(player->X, player->Y);
 			player->Move();
@@ -239,12 +296,12 @@ void Bomberman::DoInputData(unsigned char data){
 			_bombs->Enqueue(new  BombermanBomb(player->X,player->Y,GameSeconds, player, this));
 			Grid[player->X][player->Y] = Bomb;
 			DrawGridCell(player->X,player->Y);		
-			player->Bombs++;	
+			player->Bombs++;
 			player->BombTime = GameSeconds;
 
 			DrawGridCell(player->X, player->Y);
 			player->DrawPlayer(LCD);
-		}
+		}	
 	}
 }
 
@@ -326,7 +383,8 @@ void Bomberman::DrawGridCell(char x, char y){
 		LCD->fillEllipse(OffsetX + x * GridBlockSize + (GridBlockSize/2), OffsetY + y * GridBlockSize + (GridBlockSize/2), GridBlockSize/2, GridBlockSize/2, RGB(0,0,0));
 		LCD->fillEllipse(OffsetX + x * GridBlockSize + (GridBlockSize/2), OffsetY + y * GridBlockSize + (GridBlockSize/4), GridBlockSize/4, GridBlockSize/4, RockColor);
 	}
-
+	else if(Grid[x][y] == Grave)
+		LCD->fillEllipse(OffsetX + x * GridBlockSize + (GridBlockSize/2), OffsetY + y * GridBlockSize + (GridBlockSize/2), GridBlockSize/2, GridBlockSize/2, RGB(255,255,255));
 }
 
 // default destructor

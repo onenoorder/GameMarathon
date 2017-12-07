@@ -12,6 +12,7 @@
 #include "../Model/BombermanPlayer.h"
 #include "../Model/BombermanBomb.h"
 #include "../Lib/Queue/Queue.h"
+#include "../Views/GameEndView.h"
 class BombermanPlayer;
 class BombermanBomb;
 
@@ -25,6 +26,8 @@ public:
 	char MaxY;
 	char OffsetX;
 	char OffsetY;
+	char TransitionCounter;
+	int EndTime;
 	uint16_t RockColor;
 	uint16_t RockGlowColor;
 	uint16_t ExplotionColor;
@@ -33,6 +36,7 @@ public:
 	uint16_t BackgroundColor;
 	enum GridCell{
 		 Walkable = 0,
+		 Grave = 8,
 		 Explotion = 16,
 		 Explotion_1 = 20,
 		 Explotion_2 = 24,
@@ -46,7 +50,6 @@ private:
 	BombermanPlayer *_players[4];
 	Queue<BombermanBomb*> * _bombs;
 	BombermanPlayer *_currentPlayer;
-
 	enum BombermanData{
 		BOMBERMAN_PLAYER0 = 0,
 		BOMBERMAN_PLAYER1 = 1,
@@ -61,8 +64,7 @@ private:
 		BOMBERMAN_LOSE = 24,
 		BOMBERMAN_ACTIONS = 28,
 		BOMBERMAN_PLACE_BOM = 32
-	};	
-
+	};
 //functions
 public:
 	Bomberman(unsigned char ID, unsigned char playerCount, MI0283QT9 *LCD, InputController *inputController, Communication *communication);
@@ -77,6 +79,7 @@ private:
 	void UpdatePlayerInput();
 	void UpdateBombs();
 	void UpdatePlayers();
+	void EndGame();
 
 }; //Bomberman
 

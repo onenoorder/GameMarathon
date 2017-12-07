@@ -10,7 +10,7 @@
 
 // x 360 y 240
 // default constructor
-MainMenuView::MainMenuView(MI0283QT9 *LCD, InputController *inputController) :View(LCD, inputController)
+MainMenuView::MainMenuView(MI0283QT9 *LCD, InputController *inputController, Communication * communication) :View(LCD, inputController,  communication)
 {
 	_buttonIndex = 0;
 	_arrowMoved = 1;
@@ -25,6 +25,13 @@ void MainMenuView::Load(){
 	
 	LCD->drawText(80,120, "Select Game", RGB(255,0,0),RGB(0,0,0),2);
 	LCD->drawText(80,160, "High score", RGB(255,0,0),RGB(0,0,0),2);
+
+	if(GLBL_Role == RL_SLAVE){	
+		LCD->drawText(10,230, "Slave", RGB(255,255,255),RGB(0,0,0),1);
+	}else{
+		LCD->drawText(10,230, "Master", RGB(255,255,255),RGB(0,0,0),1);
+
+	}
 	Loaded = 1;
 }
 
@@ -45,7 +52,7 @@ void MainMenuView::Update(){
 		_pageSelected = 1;
 		switch(_buttonIndex){
 			case SelectGame:
-				CurrentView = new SelectGameView(LCD,Input);
+				CurrentView = new SelectGameView(LCD,Input, CommunicationHandler);
 			break;
 			case HighScore:
 					_pageSelected = 0;

@@ -8,12 +8,12 @@
 
 #include "Game.h"
 
-Game::Game( unsigned char ID, unsigned char playerCount, MI0283QT9 *LCD, InputController *inputController, Communication *communication) :View(LCD,inputController)  {
-
+Game::Game( unsigned char ID, unsigned char playerCount, MI0283QT9 *LCD, InputController *inputController, Communication *communication) :View(LCD,inputController, communication)  {
+	IsGame = 1;
 	NewFrame = 0;
 	PlayerID = ID;
 	PlayerCount = playerCount;
-	_communication = communication;
+
 }
 
 void Game::Update(){

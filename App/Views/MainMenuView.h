@@ -29,7 +29,7 @@ private:
 public:
 	virtual void Load();
 	virtual void Update();
-	MainMenuView(MI0283QT9 *LCD, InputController *inputController);
+	MainMenuView(MI0283QT9 *LCD, InputController *inputController, Communication * communication);
 	~MainMenuView();
 protected:
 private:

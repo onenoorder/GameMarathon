@@ -403,10 +403,22 @@
     <Compile Include="Model\BombermanPlayer.h">
       <SubType>compile</SubType>
     </Compile>
+    <Compile Include="Model\Player.cpp">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="Model\Player.h">
+      <SubType>compile</SubType>
+    </Compile>
     <Compile Include="Model\SnakePlayer.cpp">
       <SubType>compile</SubType>
     </Compile>
     <Compile Include="Model\SnakePlayer.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="Views\GameEndView.cpp">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="Views\GameEndView.h">
       <SubType>compile</SubType>
     </Compile>
     <Compile Include="Views\MainMenuView.cpp">

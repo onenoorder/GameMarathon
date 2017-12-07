@@ -9,8 +9,9 @@
  
  View * CurrentView = nullptr;
 
- View::View( MI0283QT9 *LCD, InputController *inputController){
+ View::View( MI0283QT9 *LCD, InputController *inputController, Communication * communication){
 	this->Loaded = 0;
 	this->LCD = LCD;
 	this->Input = inputController;
+	this->CommunicationHandler = communication;
  }

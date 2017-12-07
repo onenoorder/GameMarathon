@@ -42,7 +42,8 @@ void BombermanBomb::Explode(MI0283QT9 * LCD, unsigned char explotionTime){
 	char directions = 0x00;
 
 	LCD->fillRect(_game->OffsetX + this->X * _game->GridBlockSize, _game->OffsetY + (this->Y) * _game->GridBlockSize, _game->GridBlockSize, _game->GridBlockSize, _game->ExplotionTextColor);
-					
+	_game->Grid[this->X][this->Y] = _game->Explotion;	
+
 	for (int blast = 0; blast < this->Player->Blastpower; blast++)
 	{
 		unsigned char explotion = 0;
@@ -59,7 +60,7 @@ void BombermanBomb::Explode(MI0283QT9 * LCD, unsigned char explotionTime){
 		explotion += explotionTime;
 
 		if( !(directions & 0x01) && this->Y+blast+1 < _game->MaxY && _game->Grid[this->X][this->Y+blast+1]  != _game->Wall){
-			if(_game->Grid[this->X][this->Y+blast+1]  == _game->Rock ){
+			if(_game->Grid[this->X][this->Y+blast+1]  == _game->Rock || (explotionTime > 0 && _game->Grid[this->X][this->Y+blast+1]  == _game->Walkable)){
 				directions |= 0x01;
 			}
 
@@ -72,7 +73,7 @@ void BombermanBomb::Explode(MI0283QT9 * LCD, unsigned char explotionTime){
 		}
 
 		if(!(directions & 0x02) && this->Y-blast-1 >= 0 && _game->Grid[this->X][this->Y-blast-1]  != _game->Wall){
-			if(_game->Grid[this->X][this->Y-blast-1]  == _game->Rock ){
+			if(_game->Grid[this->X][this->Y-blast-1]  == _game->Rock || (explotionTime > 0 && _game->Grid[this->X][this->Y-blast-1]  == _game->Walkable)){
 				directions |= 0x02;
 			}
 
@@ -85,7 +86,7 @@ void BombermanBomb::Explode(MI0283QT9 * LCD, unsigned char explotionTime){
 		}
 
 		if(!(directions & 0x04) && this->X+blast+1 < _game->MaxX && _game->Grid[this->X+blast+1][this->Y] != _game->Wall){
-			if(_game->Grid[this->X+blast+1][this->Y]  == _game->Rock){
+			if(_game->Grid[this->X+blast+1][this->Y]  == _game->Rock || (explotionTime > 0 && _game->Grid[this->X+blast+1][this->Y]  == _game->Walkable)){
 				directions |= 0x04;
 			}
 
@@ -98,7 +99,7 @@ void BombermanBomb::Explode(MI0283QT9 * LCD, unsigned char explotionTime){
 		}
 
 		if(!(directions & 0x08) && this->X-blast-1 >= 0 && _game->Grid[this->X-blast-1][this->Y] != _game->Wall){
-			if(_game->Grid[this->X-blast-1][this->Y]  == _game->Rock ){
+			if(_game->Grid[this->X-blast-1][this->Y]  == _game->Rock || (explotionTime > 0 && _game->Grid[this->X-blast-1][this->Y]  == _game->Walkable)){
 				directions |= 0x08;
 			}
 

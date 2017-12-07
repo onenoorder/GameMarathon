@@ -16,7 +16,7 @@ SnakePlayer::SnakePlayer(short x, short y, uint16_t color, Snake *game)
 	MaxSize = 2;
 	Size = 0;
 	SnakeSize = 10;
-	SnakeQueue = new Queue<SnakeQueueData>(30);
+	SnakeQueue = new Queue<SnakeQueueData>(12);
 	this->_game = game;
 } //SnakePlayer
 

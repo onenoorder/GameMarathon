@@ -201,7 +201,7 @@ unsigned char Snake::CheckLocation(short x, short y){
 		for(int i = 0; i < _cookies->Length(); i++){
 			SnakeCookie *cookie = _cookies->Peek(i);
 			
-			if(cookie->X == x && cookie->Y == y && cookie->Time != 0)
+			if(cookie->X == x && cookie->Y == y && cookie->Time > 0)
 				return 2;
 		}
 	}

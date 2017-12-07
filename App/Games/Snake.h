@@ -29,7 +29,7 @@ private:
 	uint16_t _cookieColor;
 	unsigned char _cookieSize;
 	unsigned char _maxCookies;
-	Queue<SnakeCookie*> * _cookies;
+	Queue<SnakeCookie> * _cookies;
 
 	enum SnakeData{
 		SNAKE_PLAYER0 = 0,

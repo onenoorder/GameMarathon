@@ -8,7 +8,7 @@
 #include "Queue.h"
 
 template class Queue<SnakeQueueData>;
-template class Queue<SnakeCookie*>;
+template class Queue<SnakeCookie>;
 template class Queue<BombermanBomb*>;
 template<typename T>
 Queue<T>::Queue()
@@ -74,6 +74,16 @@ T Queue<T>::Peek(int index){
 
 	T result = _array[id];
 	return result;
+}
+
+template<typename T>
+void Queue<T>::Set(int index, T data){
+	int id = _front+index;
+
+	if(id >= _size)
+	id -= _size;
+
+	_array[id] = data;
 }
 
 template<typename T>

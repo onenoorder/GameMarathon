@@ -6,6 +6,7 @@
 */
 
 #include "Snake.h"
+#include "arduino.h"
 
 // default constructor
 Snake::Snake(unsigned char ID, unsigned char playerCount, MI0283QT9 *LCD, InputController *inputController, Communication *communication) : Game(ID, playerCount, LCD, inputController, communication)
@@ -18,7 +19,7 @@ Snake::Snake(unsigned char ID, unsigned char playerCount, MI0283QT9 *LCD, InputC
 	_cookieColor = RGB(244,176,66);
 	_maxCookies = 10;
 	_cookieDelay = 5;
-	_cookies = new Queue<SnakeCookie*>(_maxCookies*5);
+	_cookies = new Queue<SnakeCookie>(_maxCookies*3);
 } //Snake
 
 void Snake::Load()
@@ -36,12 +37,11 @@ void Snake::Load()
 	_currentPlayer = _players[PlayerID];
 
 	Loaded = 1;
-
 }
 
 void Snake::Update(){
+	if(PlayerID == 0 && NewFrame == 0) return;
 	Game::Update();
-
 	
 	this->CookieTime();
 	this->UpdatePlayerInput();
@@ -64,9 +64,7 @@ void Snake::UpdatePlayers(){
 }
 
 void Snake::UpdatePlayerInput(){
-
 	Input->UpdateInput();
-
 
 	if(Input->NunchuckAnalogX > 200){
 		if(_currentPlayer->Direction != Left)
@@ -88,7 +86,7 @@ void Snake::UpdatePlayerInput(){
 }
 
 void Snake::CookieTime(){
-	if(GameSeconds >= _cookieTime && _cookies->Length() < _maxCookies){
+	if(PlayerID == 0 && GameSeconds >= _cookieTime && _cookies->Length() < _maxCookies){
 		while(1){
 			short x = rand() % (32);
 			short y = rand() % (24);
@@ -104,19 +102,20 @@ void Snake::CookieTime(){
 
 void Snake::PlaceCookie(short x, short y){
 	if(_cookies->Length() < _maxCookies*5){
-		SnakeCookie cookie = {x, y, GameTime + (_cookieDelay*_maxCookies)};
+		SnakeCookie cookie = {x, y, GameSeconds + (_cookieDelay*_maxCookies)};
 		LCD->fillCircle(cookie.X+_cookieSize, cookie.Y+_cookieSize, _cookieSize/2, _cookieColor);
-		_cookies->Enqueue(&cookie);
+		_cookies->Enqueue(cookie);
 	}
 }
 
 void Snake::EatCookie(short x, short y){
 	if(_cookies->Length()){
 		for(int i = 0; i < _cookies->Length(); i++){
-			SnakeCookie *cookie = _cookies->Peek(i);
+			SnakeCookie cookie = _cookies->Peek(i);
 			
-			if(cookie->X == x && cookie->Y == y){
-				cookie->Time = 0;
+			if(cookie.X == x && cookie.Y == y){
+				cookie.Time = 0;
+				_cookies->Set(i, cookie);
 			}
 		}
 	}
@@ -125,12 +124,12 @@ void Snake::EatCookie(short x, short y){
 void Snake::UpdateCookies(){
 	if(_cookies->Length()){
 		for(int i = 0; i < _cookies->Length(); i++){
-			SnakeCookie *cookie = _cookies->Peek(i);
+			SnakeCookie cookie = _cookies->Peek(i);
 			
-			if(cookie->Time <= GameTime){
+			if(cookie.Time <= GameSeconds){
 				_cookies->Dequeue();
-				LCD->fillCircle(cookie->X+_cookieSize, cookie->Y+_cookieSize, _cookieSize/2, _backgroundColor);
-				delete cookie;
+				if(CheckLocation(cookie.X, cookie.Y) == 2)
+					LCD->fillCircle(cookie.X+_cookieSize, cookie.Y+_cookieSize, _cookieSize/2, _backgroundColor);
 			}
 		}
 	}
@@ -154,15 +153,9 @@ unsigned char Snake::GetOutputData(){
 			break;
 	};
 
-	if(_currentPlayer->PlaceCookie){
-		SnakeQueueData back = _currentPlayer->SnakeQueue->Dequeue();
-		_currentPlayer->Size--;
-		_currentPlayer->MaxSize--;
-
-		LCD->fillCircle(back.X, back.Y, _currentPlayer->SnakeSize/2, _backgroundColor);
-		PlaceCookie(back.X-_currentPlayer->SnakeSize/2, back.Y-_currentPlayer->SnakeSize/2);
-		_currentPlayer->PlaceCookie = 0;
-	}
+	if(_currentPlayer->PlaceCookie)
+		data |= SNAKE_COOKIE;
+	
 	DoInputData(data);
 	return data;
 }
@@ -186,6 +179,16 @@ void Snake::DoInputData(unsigned char data){
 					player->Direction = Down;
 					break;
 			};
+
+			if(data & SNAKE_COOKIE && player->Size > player->MinSize){
+				SnakeQueueData back = player->SnakeQueue->Dequeue();
+				player->Size--;
+				player->MaxSize--;
+
+				LCD->fillCircle(back.X, back.Y, player->SnakeSize/2, _backgroundColor);
+				PlaceCookie(back.X-player->SnakeSize/2, back.Y-player->SnakeSize/2);
+				player->PlaceCookie = 0;
+			}
 			player->Move();
 			player->Draw(LCD);
 		}
@@ -206,21 +209,14 @@ unsigned char Snake::CheckLocation(short x, short y){
 
 	if(_cookies->Length()){
 		for(int i = 0; i < _cookies->Length(); i++){
-			SnakeCookie *cookie = _cookies->Peek(i);
+			SnakeCookie cookie = _cookies->Peek(i);
 			
-			if(cookie->X == x && cookie->Y == y && cookie->Time > 0)
+			if(cookie.X == x && cookie.Y == y && cookie.Time > 0)
 				return 2;
 		}
 	}
 
 	return 0;
-
-	_currentPlayer->Move();
-	_currentPlayer->Draw(LCD);
-	_players[1]->Move();
-	_players[1]->Draw(LCD);
-	_delay_ms(100);
-
 }
 
 // default destructor

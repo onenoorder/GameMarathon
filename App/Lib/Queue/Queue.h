@@ -42,6 +42,7 @@ public:
 	T Dequeue();
 	T Peek();
 	T Peek(int index);
+	void Set(int index, T data);
 	~Queue();
 protected:
 private:

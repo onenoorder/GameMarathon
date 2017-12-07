@@ -20,6 +20,7 @@ public:
 	short Y;
 	unsigned char Size;
 	unsigned char MaxSize;
+	unsigned char MinSize;
 	unsigned char SnakeSize;
 	uint16_t Color;
 	DirectionEnum Direction;

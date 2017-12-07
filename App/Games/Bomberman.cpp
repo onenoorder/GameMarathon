@@ -15,7 +15,7 @@ Bomberman::Bomberman(unsigned char ID, unsigned char playerCount, MI0283QT9 *LCD
 	GridBlockSize = 25;
 	OffsetX = 16;
 	OffsetY = 8;
-	MaxX = 12;
+	MaxX = 9;
 	MaxY = 9;
 	EndTime = 0;
 	_bombs = new Queue<BombermanBomb*>(20);

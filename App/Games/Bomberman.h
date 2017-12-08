@@ -13,6 +13,7 @@
 #include "../Model/BombermanBomb.h"
 #include "../Lib/Queue/Queue.h"
 #include "../Views/GameEndView.h"
+
 class BombermanPlayer;
 class BombermanBomb;
 
@@ -26,8 +27,6 @@ public:
 	char MaxY;
 	char OffsetX;
 	char OffsetY;
-	char TransitionCounter;
-	int EndTime;
 	uint16_t RockColor;
 	uint16_t RockGlowColor;
 	uint16_t ExplotionColor;
@@ -73,13 +72,13 @@ public:
 	void DrawGridCell(char x, char y);
 	~Bomberman();
 protected:
+	virtual void EndGame();
 private:
 	unsigned char GetOutputData();
 	void DoInputData(unsigned char data);
 	void UpdatePlayerInput();
 	void UpdateBombs();
 	void UpdatePlayers();
-	void EndGame();
 
 }; //Bomberman
 

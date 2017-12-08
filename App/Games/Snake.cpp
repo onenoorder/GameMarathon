@@ -43,22 +43,55 @@ void Snake::Update(){
 	if(PlayerID == 0 && NewFrame == 0) return;
 	Game::Update();
 	
+	if(EndTime != 0 && EndTime+10 < GameFastTime){
+		EndGame();
+		return;
+	} else if(EndTime != 0){
+		return;
+	}
+
 	this->CookieTime();
 	this->UpdatePlayerInput();
 	this->UpdatePlayers();
 	this->UpdateCookies();
 }
 
+void Snake::EndGame(){
+	if(TransitionCounter != 8 && GameFastTime % 2 == 0){
+		LCD->fillRect( 20*TransitionCounter,0 ,20,240,RGB(0,0,0));
+		LCD->fillRect( 300 - (20 *TransitionCounter),0 ,20,240,RGB(0,0,0));
+
+		TransitionCounter++;
+	}else if(TransitionCounter >= 8){
+		delete _cookies;
+		CurrentView = new GameEndView(LCD, Input, CommunicationHandler, _currentPlayer);
+	}
+}
+
 void Snake::UpdatePlayers(){
 	if(PlayerID == 0){
 		CommunicationHandler->Send(GetOutputData());
 
-		if(PlayerCount > 1)
-			DoInputData(CommunicationHandler->Receive());
-	} else {
-		if(PlayerCount > 1)
-			DoInputData(CommunicationHandler->Receive());
+		if(_syncCookie == 1){
+			CommunicationHandler->Send((unsigned char)(_cookie.X/_cookieSize));
+			CommunicationHandler->Send((unsigned char)(_cookie.Y/_cookieSize));
+			_syncCookie = 0;
+		}
 
+		/*if(PlayerCount > 1)
+			DoInputData(CommunicationHandler->Receive());*/
+		DoInputData(13);
+	} else {
+		if(PlayerCount > 1){
+			unsigned char receiveData = CommunicationHandler->Receive();
+			DoInputData(receiveData);
+			
+			if((receiveData & SNAKE_SET_COOKIE) == SNAKE_SET_COOKIE){
+				unsigned char x = CommunicationHandler->Receive();
+				unsigned char y = CommunicationHandler->Receive();
+				PlaceCookie((short)x*_cookieSize, (short)y*_cookieSize);
+			}
+		}
 		CommunicationHandler->Send(GetOutputData());
 	}
 }
@@ -96,6 +129,8 @@ void Snake::CookieTime(){
 				break;
 			}	
 		}
+		_syncCookie = 1;
+		_cookie = _cookies->Peek();
 		_cookieTime = GameSeconds + _cookieDelay;
 	}
 }
@@ -127,9 +162,9 @@ void Snake::UpdateCookies(){
 			SnakeCookie cookie = _cookies->Peek(i);
 			
 			if(cookie.Time <= GameSeconds){
-				_cookies->Dequeue();
 				if(CheckLocation(cookie.X, cookie.Y) == 2)
 					LCD->fillCircle(cookie.X+_cookieSize, cookie.Y+_cookieSize, _cookieSize/2, _backgroundColor);
+				_cookies->Dequeue();
 			}
 		}
 	}
@@ -156,6 +191,12 @@ unsigned char Snake::GetOutputData(){
 	if(_currentPlayer->PlaceCookie)
 		data |= SNAKE_COOKIE;
 	
+	if(_currentPlayer->Alive == 0)
+		data |= SNAKE_LOSE;
+
+	if(_syncCookie == 1)
+		data |= SNAKE_SET_COOKIE;
+	
 	DoInputData(data);
 	return data;
 }
@@ -163,6 +204,15 @@ unsigned char Snake::GetOutputData(){
 void Snake::DoInputData(unsigned char data){
 	if(data != 0){
 		SnakePlayer *player = _players[data & SNAKE_PLAYERS];
+
+		if((data & SNAKE_LOSE) == SNAKE_LOSE && EndTime == 0){
+			player->Alive = 0;
+			PlayerCount--;
+			EndTime = GameFastTime;
+			_currentPlayer->WinState = PL_WIN;
+
+			return;
+		}
 
 		if((data & SNAKE_ACTIONS) > 0){
 			switch(data & SNAKE_ACTIONS){
@@ -201,7 +251,7 @@ unsigned char Snake::CheckLocation(short x, short y){
 			for(int i = 0; i < _players[p]->SnakeQueue->Length(); i++){
 				SnakeQueueData snakeQueueData = _players[p]->SnakeQueue->Peek(i);
 				
-				if(snakeQueueData.X == x && snakeQueueData.Y == y)
+				if(snakeQueueData.X-(_players[p]->SnakeSize/2) == x && snakeQueueData.Y-(_players[p]->SnakeSize/2) == y)
 					return 1;
 			}
 		}

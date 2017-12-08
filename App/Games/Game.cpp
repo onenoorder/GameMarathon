@@ -13,11 +13,10 @@ Game::Game( unsigned char ID, unsigned char playerCount, MI0283QT9 *LCD, InputCo
 	NewFrame = 0;
 	PlayerID = ID;
 	PlayerCount = playerCount;
-
+	EndTime = 0;
 }
 
 void Game::Update(){
-
 	NewFrame = 0;
 }
 

@@ -11,6 +11,7 @@
 // functions
 Player::Player(){
 	Score = 0;
+	this->Alive = 1;
 	WinState = PL_WIN;
 }
 

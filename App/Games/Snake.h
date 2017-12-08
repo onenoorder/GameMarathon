@@ -11,6 +11,7 @@
 #include "Game.h"
 #include "../Lib/Queue/Queue.h"
 #include "../Model/SnakePlayer.h"
+#include "../Views/GameEndView.h"
 
 class SnakePlayer;
 class Snake : public Game
@@ -30,6 +31,8 @@ private:
 	unsigned char _cookieSize;
 	unsigned char _maxCookies;
 	Queue<SnakeCookie> * _cookies;
+	unsigned char _syncCookie;
+	SnakeCookie _cookie;
 
 	enum SnakeData{
 		SNAKE_PLAYER0 = 0,
@@ -57,6 +60,7 @@ public:
 	unsigned char CheckLocation(short x, short y);
 	~Snake();
 protected:
+	virtual void EndGame();
 private:
 	unsigned char GetOutputData();
 	void DoInputData(unsigned char data);

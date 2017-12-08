@@ -6,9 +6,10 @@
 */
 
 #include "SnakePlayer.h"
+#include "arduino.h"
 
 // default constructor
-SnakePlayer::SnakePlayer(short x, short y, uint16_t color, Snake *game)
+SnakePlayer::SnakePlayer(short x, short y, uint16_t color, Snake *game) : Player()
 {
 	this->X = x;
 	this->Y = y;
@@ -49,6 +50,8 @@ void SnakePlayer::CheckNewLocation(){
 			MaxSize++;
 
 		_game->EatCookie(X-SnakeSize/2, Y-SnakeSize/2);
+	} else if(element == 1 && X-SnakeSize/2 > 0 && Y-SnakeSize/2 > 0){
+		this->Alive = 0;
 	}
 }
 

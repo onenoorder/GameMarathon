@@ -10,9 +10,10 @@
 
 #include "../Games/Snake.h"
 #include "../Lib/Queue/Queue.h"
+#include "Player.h"
 
 class Snake;
-class SnakePlayer
+class SnakePlayer : public Player
 {
 //variables
 public:

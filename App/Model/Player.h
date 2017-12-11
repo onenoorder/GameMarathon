@@ -15,8 +15,9 @@ enum WinningState{
 class Player
 {
 public:
-int Score;
-unsigned char WinState;
+	int Score;
+	char Alive;
+	unsigned char WinState;
 
 //functions
 public:

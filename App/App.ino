@@ -5,8 +5,7 @@
  * Author: Gerhard
  */ 
 #include "Communication/SerialCommunication.h"
-#include "Games/Bomberman.h"
-#include "Games/Snake.h"
+#include "Games/Game.h"
 #include "Views/View.h"
 #include "Views/MainMenuView.h"
 

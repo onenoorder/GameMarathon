@@ -25,7 +25,6 @@ public:
 	unsigned char SnakeSize;
 	uint16_t Color;
 	DirectionEnum Direction;
-	unsigned char PlaceCookie;
 	Queue<SnakeQueueData> *SnakeQueue;
 protected:
 private:

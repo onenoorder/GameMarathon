@@ -6,7 +6,6 @@
 */
 
 #include "SnakePlayer.h"
-#include "arduino.h"
 
 // default constructor
 SnakePlayer::SnakePlayer(short x, short y, uint16_t color, Snake *game) : Player()

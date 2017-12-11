@@ -5,7 +5,6 @@
 * Author: Gerhard
 */
 
-
 #include "Game.h"
 
 Game::Game( unsigned char ID, unsigned char playerCount, MI0283QT9 *LCD, InputController *inputController, Communication *communication) :View(LCD,inputController, communication)  {

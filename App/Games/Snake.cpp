@@ -6,7 +6,6 @@
 */
 
 #include "Snake.h"
-#include "arduino.h"
 
 // default constructor
 Snake::Snake(unsigned char ID, unsigned char playerCount, MI0283QT9 *LCD, InputController *inputController, Communication *communication) : Game(ID, playerCount, LCD, inputController, communication)
@@ -19,6 +18,7 @@ Snake::Snake(unsigned char ID, unsigned char playerCount, MI0283QT9 *LCD, InputC
 	_cookieColor = RGB(244,176,66);
 	_maxCookies = 10;
 	_cookieDelay = 5;
+	_syncCookie = 0;
 	_cookies = new Queue<SnakeCookie>(_maxCookies*3);
 } //Snake
 
@@ -78,15 +78,14 @@ void Snake::UpdatePlayers(){
 			_syncCookie = 0;
 		}
 
-		/*if(PlayerCount > 1)
-			DoInputData(CommunicationHandler->Receive());*/
-		DoInputData(13);
+		if(PlayerCount > 1)
+			DoInputData(CommunicationHandler->Receive());
 	} else {
 		if(PlayerCount > 1){
 			unsigned char receiveData = CommunicationHandler->Receive();
 			DoInputData(receiveData);
 			
-			if((receiveData & SNAKE_SET_COOKIE) == SNAKE_SET_COOKIE){
+			if((receiveData & SNAKE_SET_COOKIE) > 0){
 				unsigned char x = CommunicationHandler->Receive();
 				unsigned char y = CommunicationHandler->Receive();
 				PlaceCookie((short)x*_cookieSize, (short)y*_cookieSize);
@@ -210,6 +209,7 @@ void Snake::DoInputData(unsigned char data){
 			PlayerCount--;
 			EndTime = GameFastTime;
 			_currentPlayer->WinState = PL_WIN;
+			player->WinState = PL_LOSE;
 
 			return;
 		}

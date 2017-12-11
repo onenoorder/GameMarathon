@@ -25,6 +25,9 @@ class Game : public View
 public:
 	unsigned char PlayerID;
 	unsigned char PlayerCount;
+protected:
+	char TransitionCounter;
+	int EndTime;
 
 //functions
 public:
@@ -32,7 +35,8 @@ public:
 	virtual void Update();
 	virtual ~Game();
 protected:
-		Game(unsigned char ID, unsigned char playerCount, MI0283QT9 *LCD, InputController *inputController,Communication *communication);
+	Game(unsigned char ID, unsigned char playerCount, MI0283QT9 *LCD, InputController *inputController,Communication *communication);
+	virtual void EndGame() = 0;
 
 }; //Game
 

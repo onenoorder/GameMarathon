@@ -16,7 +16,6 @@ Bomberman::Bomberman(unsigned char ID, unsigned char playerCount, MI0283QT9 *LCD
 	OffsetY = 8;
 	MaxX = 11;
 	MaxY = 9;
-	EndTime = 0;
 	_bombs = new Queue<BombermanBomb*>(20);
 	TransitionCounter=0;
 	// Colors
@@ -83,7 +82,6 @@ void Bomberman::Update(){
 	Game::Update();
 
 	if(EndTime != 0 && EndTime+10 < GameFastTime){
-		// TODO remove pointers
 		EndGame();
 		return;
 	}
@@ -99,7 +97,8 @@ void Bomberman::EndGame(){
 
 		TransitionCounter++;
 	}else if(TransitionCounter >= 8){
-		delete _bombs , Grid;
+		delete[] Grid;
+		delete _bombs;
 		CurrentView = new GameEndView(LCD, Input, CommunicationHandler, _currentPlayer);
 	}
 }

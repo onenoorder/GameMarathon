@@ -13,6 +13,7 @@
 #include "../Model/BombermanBomb.h"
 #include "../Lib/Queue/Queue.h"
 #include "../Views/GameEndView.h"
+
 class BombermanPlayer;
 class BombermanBomb;
 
@@ -26,8 +27,6 @@ public:
 	char MaxY;
 	char OffsetX;
 	char OffsetY;
-	char TransitionCounter;
-	int EndTime;
 	uint16_t RockColor;
 	uint16_t RockGlowColor;
 	uint16_t ExplotionColor;
@@ -48,22 +47,20 @@ public:
 protected:
 private:
 	BombermanPlayer *_players[4];
-	Queue<BombermanBomb*> * _bombs;
+	Queue<BombermanBomb*> *_bombs;
 	BombermanPlayer *_currentPlayer;
 	enum BombermanData{
 		BOMBERMAN_PLAYER0 = 0,
 		BOMBERMAN_PLAYER1 = 1,
-		BOMBERMAN_PLAYER2 = 2,
-		BOMBERMAN_PLAYER3 = 3,
-		BOMBERMAN_PLAYERS = 3,
-		BOMBERMAN_MOVE_UP = 4,
-		BOMBERMAN_MOVE_DOWN = 8,
-		BOMBERMAN_MOVE_LEFT = 12,
-		BOMBERMAN_MOVE_RIGHT = 16,
-		BOMBERMAN_WIN = 20,
-		BOMBERMAN_LOSE = 24,
-		BOMBERMAN_ACTIONS = 28,
-		BOMBERMAN_PLACE_BOM = 32
+		BOMBERMAN_PLAYERS = 1,
+		BOMBERMAN_MOVE_UP = 2,
+		BOMBERMAN_MOVE_DOWN = 4,
+		BOMBERMAN_MOVE_LEFT = 6,
+		BOMBERMAN_MOVE_RIGHT = 8,
+		BOMBERMAN_WIN = 10,
+		BOMBERMAN_LOSE = 12,
+		BOMBERMAN_ACTIONS = 14,
+		BOMBERMAN_PLACE_BOM = 16
 	};
 //functions
 public:
@@ -73,13 +70,13 @@ public:
 	void DrawGridCell(char x, char y);
 	~Bomberman();
 protected:
+	virtual void EndGame();
 private:
 	unsigned char GetOutputData();
 	void DoInputData(unsigned char data);
 	void UpdatePlayerInput();
 	void UpdateBombs();
 	void UpdatePlayers();
-	void EndGame();
 
 }; //Bomberman
 

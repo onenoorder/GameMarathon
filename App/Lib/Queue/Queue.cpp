@@ -77,6 +77,16 @@ T Queue<T>::Peek(int index){
 }
 
 template<typename T>
+void Queue<T>::Set(int index, T data){
+	int id = _front+index;
+
+	if(id >= _size)
+	id -= _size;
+
+	_array[id] = data;
+}
+
+template<typename T>
 T Queue<T>::Peek(){
 	return _array[_front];
 }

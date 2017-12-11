@@ -8,15 +8,16 @@
 #include "SnakePlayer.h"
 
 // default constructor
-SnakePlayer::SnakePlayer(short x, short y, uint16_t color, Snake *game)
+SnakePlayer::SnakePlayer(short x, short y, uint16_t color, Snake *game) : Player()
 {
 	this->X = x;
 	this->Y = y;
 	this->Color = color;
 	MaxSize = 2;
+	MinSize = 2;
 	Size = 0;
 	SnakeSize = 10;
-	SnakeQueue = new Queue<SnakeQueueData>(30);
+	SnakeQueue = new Queue<SnakeQueueData>(12);
 	this->_game = game;
 } //SnakePlayer
 
@@ -46,6 +47,10 @@ void SnakePlayer::CheckNewLocation(){
 	if(element == 2){
 		if(MaxSize < SnakeSize)
 			MaxSize++;
+
+		_game->EatCookie(X-SnakeSize/2, Y-SnakeSize/2);
+	} else if(element == 1 && X-SnakeSize/2 > 0 && Y-SnakeSize/2 > 0){
+		this->Alive = 0;
 	}
 }
 

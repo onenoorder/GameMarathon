@@ -13,11 +13,6 @@ struct SnakeQueueData{
 	short X;
 	short Y;
 };
-struct SnakeCookie{
-	short X;
-	short Y;
-	int Time;
-};
 
 template <typename T>
 class Queue

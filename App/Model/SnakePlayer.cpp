@@ -44,12 +44,7 @@ void SnakePlayer::Move(){
 
 void SnakePlayer::CheckNewLocation(){
 	unsigned char element = _game->CheckLocation(X-SnakeSize/2, Y-SnakeSize/2);
-	if(element == 2){
-		if(MaxSize < SnakeSize)
-			MaxSize++;
-
-		_game->EatCookie(X-SnakeSize/2, Y-SnakeSize/2);
-	} else if(element == 1 && X-SnakeSize/2 > 0 && Y-SnakeSize/2 > 0){
+	if(element == 1 && X-SnakeSize/2 > 0 && Y-SnakeSize/2 > 0){
 		this->Alive = 0;
 	}
 }

@@ -29,28 +29,6 @@ void InputController::UpdateInput(){
 	_delay_ms(10);
 	//_printInput();
 }
-void InputController::_printInput(){
-	Serial.print("Nunchuck c : ");
-	Serial.println(NunchuckCButton);
-
-	Serial.print("Nunchuck z : ");
-	Serial.println(NunchuckZButton);
-
-	Serial.print("Nunchuck accel X : ");
-	Serial.println(NunchuckAccelX);
-
-	Serial.print("Nunchuck accel y : ");
-	Serial.println(NunchuckAccelY);
-
-	Serial.print("Nunchuck accel Z : ");
-	Serial.println(NunchuckAccelZ);
-
-	Serial.print("Nunchuck analog X : ");
-	Serial.println(NunchuckAnalogX);
-
-	Serial.print("Nunchuck analog Y : ");
-	Serial.println(NunchuckAnalogY);
-}
 
 // default destructor
 InputController::~InputController()

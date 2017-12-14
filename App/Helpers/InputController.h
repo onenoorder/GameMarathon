@@ -33,7 +33,6 @@ public:
 	void UpdateInput();
 protected:
 private:
-	void _printInput();
 }; //InputController
 
 #endif //__INPUTCONTROLLER_H__

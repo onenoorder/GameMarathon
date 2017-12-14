@@ -10,13 +10,15 @@ unsigned char InputData = 0;
 unsigned char OutputData = 0;
 unsigned char ReceivedData = 0;
 
-void ReceiveData(int count) {
+
+void ReceiveData() {
 	while (Wire.available() > 0) {
 		InputData = Wire.read();
 	}
 	ReceivedData = 1;
 }
 
-void RequestData(int count) {
+void RequestData() {
 	Wire.write(OutputData);
 }
+

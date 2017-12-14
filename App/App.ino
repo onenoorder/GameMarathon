@@ -31,15 +31,18 @@ ISR(TIMER2_OVF_vect) {
 int main(void)
 {
 	init();
-
+    // initieer nieuwe seriele verbinding
 	SerialCommunication *communication = new SerialCommunication();
 	communication->Begin();
 
+    // maak nieuw scherm aan
 	LCD = new MI0283QT9();
 	LCD->begin();
-	
+
+    // maak een object van het type inputcontroller aan en daarmee connectie met het inputapparaat.
 	inputController = new InputController();
 
+    // maak een nieuwe 'mainmenuview' aan, het startupscherm.
 	CurrentView = new MainMenuView(LCD,inputController,communication);
 
 	// set timer interrupt
@@ -49,7 +52,8 @@ int main(void)
 	sei();
 	
 	while (1)
-	{	
+	{
+            // als de currentview al geladen is, hoeft er alleen nog geupdate te worden
 		if(CurrentView->Loaded)
 			CurrentView->Update();
 		else

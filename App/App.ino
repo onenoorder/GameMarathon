@@ -12,7 +12,6 @@
 MI0283QT9 *LCD;
 Game * games[2];
 InputController *inputController;
-Game * CurrentGame;
 
 ISR(TIMER2_OVF_vect) {
 	CurrentView->Timer++;
@@ -40,10 +39,10 @@ int main(void)
 	LCD->begin();
 
     // maak een object van het type inputcontroller aan en daarmee connectie met het inputapparaat.
-	inputController = new InputController();
+	inputController = new InputController(LCD);
 
     // maak een nieuwe 'mainmenuview' aan, het startupscherm.
-	CurrentView = new MainMenuView(LCD,inputController,communication);
+	CurrentView = new MainMenuView(LCD, inputController, communication);
 
 	// set timer interrupt
 	TCCR2B |= (1 << CS22) | (1<<CS21) | (1<<CS20);	//zet de klok op prescaler 1024

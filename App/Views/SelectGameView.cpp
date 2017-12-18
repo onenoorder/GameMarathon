@@ -5,15 +5,16 @@
 * Author: Mikena
 */
 
-
 #include "SelectGameView.h"
+#include "Arduino.h"
+
 // x 360 y 240
 // default constructor
 SelectGameView::SelectGameView(MI0283QT9 *LCD, InputController *inputController, Communication * communication):View(LCD, inputController,  communication)
 {
 	_buttonIndex = 0;
 	_arrowMoved = 1;
-	_pageSelected = 0;
+	_pageSelected = 1;
 	_timeMoved = GameFastTime;
 
 } //SelectGameView
@@ -259,8 +260,23 @@ void SelectGameView::Update(){
 			_arrowMoved = 1;
 			_timeMoved = GameFastTime;
 		}
-	}	
+	}
 
+	if(Input->LCDTouchY > 100 && Input->LCDTouchY < 200){
+		if(Input->LCDTouchX > 500 && Input->LCDTouchX < 750){
+			_buttonIndex = BombermanGame;
+			_pageSelected = 0;
+		} else if(Input->LCDTouchX > 750 && Input->LCDTouchX < 950){
+			_buttonIndex = SnakeGame;
+			_pageSelected = 0;
+		}
+	} else if(Input->LCDTouchY > 400){
+		_buttonIndex = Back;
+		_pageSelected = 0;
+	}
+
+	if(Input->NunchuckZButton)
+		_pageSelected = 0;
 
 	if(Timer % 10 == 0){
 		LCD->fillRect(40+(2*3), 16+ (7*3),3*7,3*4,RGB(255,255,255));
@@ -295,7 +311,7 @@ void SelectGameView::Update(){
 	}
 
 	//selecteren van spel of 'back', hiermee nieuw object aanmaken van het gekozen type spel.
-	if(Input->NunchuckZButton && _pageSelected == 0){
+  if(_pageSelected == 0){
 		_pageSelected = 1;
 		switch(_buttonIndex){
 			case BombermanGame:
@@ -310,7 +326,7 @@ void SelectGameView::Update(){
 		}
 	}
 	
-	if(_arrowMoved ){
+	if(_arrowMoved){
 		drawMenu();
 		LCD->fillTriangle(50, 215 , 70, 225, 50, 235, RGB(0,0,0));
 		switch(_buttonIndex){

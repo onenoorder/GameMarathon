@@ -5,11 +5,12 @@
 * Author: Mikena
 */
 
-
 #ifndef __MAINMENUVIEW_H__
 #define __MAINMENUVIEW_H__
+
 #include "View.h"
 #include "SelectGameView.h"
+
 class SelectGameView;
 class MainMenuView : public View
 {

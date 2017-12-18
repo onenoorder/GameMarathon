@@ -5,15 +5,25 @@
 * Author: Mikena
 */
 
-
 #include "InputController.h"
+#include "../Views/View.h"
 
 // default constructor
-InputController::InputController()
+InputController::InputController(MI0283QT9 *LCD)
 {
+	NunchuckAnalogX = 0;
+	NunchuckAnalogY = 0;
+	NunchuckAccelX = 0;
+	NunchuckAccelY = 0;
+	NunchuckAccelZ = 0;
+	NunchuckZButton = 0;
+	NunchuckCButton = 0;
+	LCDTouchX = 0;
+	LCDTouchY = 0;
+
 	_nunchuck = new ArduinoNunchuk();
 	_nunchuck->init();
-	UpdateInput();
+	_LCD = LCD;
 } //InputController
 
 void InputController::UpdateInput(){
@@ -26,7 +36,14 @@ void InputController::UpdateInput(){
 	NunchuckAccelZ = _nunchuck->accelZ;
 	NunchuckAnalogX = _nunchuck->analogX;
 	NunchuckAnalogY = _nunchuck->analogY;
-	_delay_ms(10);
+
+	_LCD->touchRead();
+	LCDTouchX = _LCD->tp_x;
+	LCDTouchY = _LCD->tp_y;
+	_LCD->tp_x = 0;
+	_LCD->tp_y = 0;
+
+	_delay_ms(20);
 	//_printInput();
 }
 

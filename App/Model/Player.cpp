@@ -8,7 +8,7 @@
 
 #include "Player.h"
 
-// functions
+// default constructor
 Player::Player(){
 	Score = 0;
 	this->Alive = 1;

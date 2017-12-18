@@ -18,6 +18,7 @@ SelectGameView::SelectGameView(MI0283QT9 *LCD, InputController *inputController,
 
 } //SelectGameView
 
+//laad SelectGame-scherm, als master --> schrijf master etc.
 
 void SelectGameView::Load(){
 	LCD->fillScreen(RGB(0,0,0));
@@ -32,6 +33,7 @@ void SelectGameView::Load(){
 	Loaded = 1;
 }
 
+//Selectgame-menu tekenen
 void SelectGameView::drawMenu(){
 	// topleft
 	LCD->fillRect(20,20,5,80,RGB(255,0,0));
@@ -74,6 +76,7 @@ void SelectGameView::drawMenu(){
 	LCD->drawText(200,147, "???", RGB(0,0,255),RGB(255,255,255),3);
 }
 
+//bombermanframe tekenen
 void SelectGameView::drawBombermanFrame(){
 	char startX = 25;
 	char startY = 30;
@@ -218,6 +221,7 @@ void SelectGameView::drawBombermanFrame(){
 
 }
 
+//selectgame-menu updaten,
 void SelectGameView::Update(){
 	Input->UpdateInput();
 
@@ -290,6 +294,7 @@ void SelectGameView::Update(){
 		LCD->fillRect(40+(7*3), 16+ (7*3),3,3,RGB(238,243,12));
 	}
 
+	//selecteren van spel of 'back', hiermee nieuw object aanmaken van het gekozen type spel.
 	if(Input->NunchuckZButton && _pageSelected == 0){
 		_pageSelected = 1;
 		switch(_buttonIndex){

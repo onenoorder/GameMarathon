@@ -17,6 +17,7 @@ GameEndView::GameEndView(MI0283QT9 *LCD, InputController *inputController, Commu
 	_pageSelected = 0;
 } //eEndView
 
+//eindscherm laden met win of verliesgegevens.
 void GameEndView::Load(){
 	LCD->fillScreen(RGB(0,0,0));
 	LCD->drawText(95,5, "GAME", RGB(255,0,0),RGB(0,0,0),4);
@@ -35,6 +36,7 @@ void GameEndView::Load(){
 }
 
 
+//updaten eindscherm.
 void GameEndView::Update(){
 	Input->UpdateInput();
 		

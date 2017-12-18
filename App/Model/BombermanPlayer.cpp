@@ -23,7 +23,7 @@ BombermanPlayer::BombermanPlayer(char X,char Y, uint16_t color, Bomberman * game
 	this->BombTime = 0;
 } //BombermanPlayer
 
-//
+//verander positie, kan de positie van de speler veranderd worden in de huidige direction? --> verander de waarders van speler hierin
 void BombermanPlayer::Move(){
 	if(Alive == 0) return;
 	if(Direction == Right){
@@ -70,6 +70,7 @@ void BombermanPlayer::Move(){
 	}
 }
 
+//teken speler (evt op nieuwe locatie)
 void BombermanPlayer::DrawPlayer(MI0283QT9 * LCD){	
 	if(Alive == 0) return;
 		if(this->Direction == Up){

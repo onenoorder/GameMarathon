@@ -9,7 +9,7 @@ x/*
 
 
 // default constructor
-Bomberman::Bomberman(unsigned char ID, unsigned char playerCount, MI0283QT9 *LCD, InputController *inputController, Communication *communication) : Game(ID, playerCount, LCD, inputController, communication)
+Bomberman::Bomberman(unsigned char ID , unsigned char playerCount, MI0283QT9 *LCD, InputController *inputController, Communication *communication) : Game(ID, playerCount, LCD, inputController, communication)
 {
 	GridBlockSize = 25;
 	OffsetX = 22;
@@ -32,6 +32,7 @@ Bomberman::Bomberman(unsigned char ID, unsigned char playerCount, MI0283QT9 *LCD
 	Grid[x] = new char[MaxY];
 } //Bomberman
 
+//laad nieuw bomberman spel
 void Bomberman::Load()
 {
 	// Border
@@ -76,7 +77,7 @@ void Bomberman::Load()
 	_currentPlayer = _players[PlayerID];
 	Loaded = 1;
 }
-
+//bomberman updaten
 void Bomberman::Update(){
 	if(PlayerID == 0 && NewFrame == 0) return;
 	Game::Update();
@@ -90,6 +91,7 @@ void Bomberman::Update(){
 	this->UpdateBombs();
 }
 
+//wanneer timer voorbij is, laad eindscherm
 void Bomberman::EndGame(){
 	if(TransitionCounter != 8 && GameFastTime % 2 == 0){
 		LCD->fillRect( 20*TransitionCounter,0 ,20,240,RGB(0,0,0));
@@ -103,6 +105,7 @@ void Bomberman::EndGame(){
 	}
 }
 
+//update spelers en verstuur data
 void Bomberman::UpdatePlayers(){
 	if(PlayerID == 0){
 		CommunicationHandler->Send(GetOutputData());
@@ -117,6 +120,7 @@ void Bomberman::UpdatePlayers(){
 	}
 }
 
+//update input
 void Bomberman::UpdatePlayerInput(){
 	Input->UpdateInput();
 
@@ -153,7 +157,7 @@ void Bomberman::UpdatePlayerInput(){
 		_currentPlayer->PlaceBomb = 1;
 	}
 }
-
+//udate de bommen
 void Bomberman::UpdateBombs(){
 	if(_bombs->Length()){
 		for(int i = 0; i < _bombs->Length(); i++){
@@ -222,7 +226,7 @@ void Bomberman::UpdateBombs(){
 		}
 	}
 }
-
+//functie voor ouptutdata, zet waarde van bepaalde actie in 'data'
 unsigned char Bomberman::GetOutputData(){
 	unsigned char data = 0;
 	if(_currentPlayer->PlayerUpdated == 1 || _currentPlayer->PlaceBomb == 1|| _currentPlayer->Alive == 0){
@@ -255,6 +259,7 @@ unsigned char Bomberman::GetOutputData(){
 	return data;
 }
 
+//verwerk input tot actie,
 void Bomberman::DoInputData(unsigned char data){
 	if(data != 0){
 		BombermanPlayer *player = _players[data & BOMBERMAN_PLAYERS];
@@ -303,7 +308,7 @@ void Bomberman::DoInputData(unsigned char data){
 		}	
 	}
 }
-
+//teken individuele cel, wordt aangeroepen in "load" op basis van locatie op map.
 void Bomberman::DrawGridCell(char x, char y){
 	LCD->fillRect(OffsetX + x * GridBlockSize, OffsetY + y * GridBlockSize, GridBlockSize, GridBlockSize, BackgroundColor);
 

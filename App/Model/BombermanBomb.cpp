@@ -6,6 +6,7 @@
 */
 #include "BombermanBomb.h"
 
+// contructor
  BombermanBomb::BombermanBomb(char X, char Y,int TimePlaced, BombermanPlayer * Player ,Bomberman * game)
 {
 	this->X = X;
@@ -19,6 +20,8 @@
 	this->_game = game;
 }
 
+
+//laat bom tikken
 void BombermanBomb::Tick(MI0283QT9 * LCD){
 	LCD->fillEllipse(_game->OffsetX + this->X * _game->GridBlockSize + (_game->GridBlockSize/2), _game->OffsetY + this->Y * _game->GridBlockSize + (_game->GridBlockSize/2), _game->GridBlockSize/2, _game->GridBlockSize/2, RGB(0,0,0));
 	LCD->fillEllipse(_game->OffsetX + this->X * _game->GridBlockSize + (_game->GridBlockSize/2), _game->OffsetY + this->Y * _game->GridBlockSize + (_game->GridBlockSize/2), _game->GridBlockSize/4, _game->GridBlockSize/4, _game->RockColor);
@@ -37,6 +40,7 @@ void BombermanBomb::Tick(MI0283QT9 * LCD){
 	Ticks++;
 }
 
+//doet bom exploderen
 void BombermanBomb::Explode(MI0283QT9 * LCD, unsigned char explotionTime){
 	this->Exploding = 1;
 	char directions = 0x00;

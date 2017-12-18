@@ -103,6 +103,7 @@ void Snake::UpdatePlayerInput(){
 	}
 }
 
+//
 void Snake::BiggerTime(){
 	if(PlayerID == 0 && GameSeconds >= _biggerTime && _currentPlayer->MaxSize < _currentPlayer->SnakeSize){
 		_bigger = 1;
@@ -110,6 +111,7 @@ void Snake::BiggerTime(){
 	}
 }
 
+//functie voor outputdata, zet waarde van bepaalde actie weg in 'data' en verwerkdit met Doinputdata
 unsigned char Snake::GetOutputData(){
 	unsigned char data = 0;
 	data = PlayerID;
@@ -139,7 +141,7 @@ unsigned char Snake::GetOutputData(){
 	DoInputData(data);
 	return data;
 }
-
+//verwerk data tot actie
 void Snake::DoInputData(unsigned char data){
 	if(data != 0){
 		SnakePlayer *player = _players[data & SNAKE_PLAYERS];
@@ -178,6 +180,8 @@ void Snake::DoInputData(unsigned char data){
 		}
 	}
 }
+
+
 
 unsigned char Snake::CheckLocation(short x, short y){
 	for(int p = 0; p < _playerCount; p++){

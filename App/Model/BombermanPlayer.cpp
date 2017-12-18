@@ -23,6 +23,7 @@ BombermanPlayer::BombermanPlayer(char X,char Y, uint16_t color, Bomberman * game
 	this->BombTime = 0;
 } //BombermanPlayer
 
+//
 void BombermanPlayer::Move(){
 	if(Alive == 0) return;
 	if(Direction == Right){

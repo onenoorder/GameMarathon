@@ -8,7 +8,7 @@
 #include "InputController.h"
 #include "../Views/View.h"
 
-// default constructor
+// default constructor, maakt nieuw object van type ArduinoNunchuck aan, initieert deze en laadt nieuwe waardes (update);
 InputController::InputController(MI0283QT9 *LCD)
 {
 	NunchuckAnalogX = 0;
@@ -26,6 +26,7 @@ InputController::InputController(MI0283QT9 *LCD)
 	_LCD = LCD;
 } //InputController
 
+//lees nieuwe waarden van controller uit(update)
 void InputController::UpdateInput(){
 	_nunchuck->update();
 

@@ -16,6 +16,7 @@ MainMenuView::MainMenuView(MI0283QT9 *LCD, InputController *inputController, Com
 	_pageSelected = 1;
 } //MainMenuView
 
+//laad mainmenu-scherm, als master --> schrijf master etc.
 void MainMenuView::Load(){
 	LCD->fillScreen(RGB(0,0,0));
 	LCD->drawText(95,5, "GAME", RGB(255,0,0),RGB(0,0,0),4);
@@ -34,6 +35,7 @@ void MainMenuView::Load(){
 	Loaded = 1;
 }
 
+// mainmenuscherm updaten op basis van input met controller.
 void MainMenuView::Update(){
 	Input->UpdateInput();
 

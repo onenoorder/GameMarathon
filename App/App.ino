@@ -53,6 +53,7 @@ int main(void)
 	while (1)
 	{
             // als de currentview al geladen is, hoeft er alleen nog geupdate te worden
+
 		if(CurrentView->Loaded)
 			CurrentView->Update();
 		else

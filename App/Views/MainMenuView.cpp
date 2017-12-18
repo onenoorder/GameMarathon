@@ -5,7 +5,6 @@
 * Author: Mikena
 */
 
-
 #include "MainMenuView.h"
 
 // x 360 y 240
@@ -14,7 +13,7 @@ MainMenuView::MainMenuView(MI0283QT9 *LCD, InputController *inputController, Com
 {
 	_buttonIndex = 0;
 	_arrowMoved = 1;
-	_pageSelected = 0;
+	_pageSelected = 1;
 } //MainMenuView
 
 //laad mainmenu-scherm, als master --> schrijf master etc.
@@ -49,7 +48,17 @@ void MainMenuView::Update(){
 		_arrowMoved = 1;
 	}
 
-	if(Input->NunchuckZButton && _pageSelected == 0){
+	if(Input->LCDTouchX > 600 && Input->LCDTouchX < 900){
+		if(Input->LCDTouchY > 220 && Input->LCDTouchY < 280){
+			_buttonIndex = SelectGame;
+			_pageSelected = 0;
+		}
+	}
+
+	if(Input->NunchuckZButton)
+		_pageSelected = 0;
+
+	if(_pageSelected == 0){
 		_pageSelected = 1;
 		switch(_buttonIndex){
 			case SelectGame:

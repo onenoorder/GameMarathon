@@ -18,11 +18,10 @@ ISR(TIMER2_COMPA_vect)
 		}
 		receiveDate();
 		
-		if(i>=0 && i<=16)
-		{
+	
 			sendData();
 			
-		}
+		
 		if(i==35)
 		{
 			

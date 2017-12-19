@@ -43,8 +43,11 @@ int main(void)
     // maak een object van het type inputcontroller aan en daarmee connectie met het inputapparaat.
 	inputController = new InputController(LCD);
 
+	Players[0] = new Player();
+	Players[1] = new Player();
+
     // maak een nieuwe 'mainmenuview' aan, het startupscherm.
-	CurrentView = new MainMenuView(LCD, inputController, communication);
+	new MainMenuView(LCD, inputController, communication);
 
 	// set timer interrupt
 	TCCR2B |= (1 << CS22) | (1<<CS21) | (1<<CS20);	//zet de klok op prescaler 1024

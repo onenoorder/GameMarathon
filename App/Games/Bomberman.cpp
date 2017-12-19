@@ -1,4 +1,4 @@
-x/*
+/*
 * Bomberman.cpp
 *
 * Created: 14-11-2017 14:05:47
@@ -29,7 +29,7 @@ Bomberman::Bomberman(unsigned char ID , unsigned char playerCount, MI0283QT9 *LC
 	// Make grid
 	Grid = new char*[MaxX];
 	for(char x = 0; x < MaxX; x++)
-	Grid[x] = new char[MaxY];
+		Grid[x] = new char[MaxY];
 } //Bomberman
 
 //laad nieuw bomberman spel

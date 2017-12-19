@@ -18,15 +18,13 @@ class Snake : public Game
 {
 //variables
 public:
+	char **Grid;
 protected:
 private:
 	uint16_t _backgroundColor;
 	SnakePlayer *_players[2];
 	SnakePlayer *_currentPlayer;
 	char _playerCount;
-	unsigned int _biggerTime;
-	unsigned char _biggerDelay;
-	unsigned char _bigger;
 
 	enum SnakeData{
 		SNAKE_PLAYER0 = 0,
@@ -38,8 +36,7 @@ private:
 		SNAKE_MOVE_RIGHT = 8,
 		SNAKE_WIN = 10,
 		SNAKE_LOSE = 12,
-		SNAKE_ACTIONS = 14,
-		SNAKE_BIGGER = 16
+		SNAKE_ACTIONS = 14
 	};
 
 //functions
@@ -47,7 +44,6 @@ public:
 	Snake(unsigned char ID, unsigned char playerCount, MI0283QT9 *LCD, InputController *inputController, Communication *communication);
 	virtual void Load();
 	virtual void Update();
-	unsigned char CheckLocation(short x, short y);
 	~Snake();
 protected:
 	virtual void EndGame();
@@ -56,7 +52,6 @@ private:
 	void DoInputData(unsigned char data);
 	void UpdatePlayerInput();
 	void UpdatePlayers();
-	void BiggerTime();
 
 }; //Snake
 

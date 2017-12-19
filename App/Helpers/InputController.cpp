@@ -29,7 +29,7 @@ InputController::InputController(MI0283QT9 *LCD)
 //lees nieuwe waarden van controller uit(update)
 void InputController::UpdateInput(){
 	_nunchuck->update();
-
+	
 	NunchuckCButton = _nunchuck->cButton;
 	NunchuckZButton = _nunchuck->zButton;
 	NunchuckAccelX = _nunchuck->accelX;

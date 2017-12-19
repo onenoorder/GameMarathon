@@ -9,10 +9,6 @@
 #define __QUEUE_H__
 
 class BombermanBomb;
-struct SnakeQueueData{
-	short X;
-	short Y;
-};
 
 template <typename T>
 class Queue

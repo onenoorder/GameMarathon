@@ -6,6 +6,7 @@
  */ 
 #include "Communication/SerialCommunication.h"
 #include "Games/Game.h"
+#include "Games/Snake.h"
 #include "Views/View.h"
 #include "Views/MainMenuView.h"
 
@@ -52,8 +53,7 @@ int main(void)
 	
 	while (1)
 	{
-            // als de currentview al geladen is, hoeft er alleen nog geupdate te worden
-
+        // als de currentview al geladen is, hoeft er alleen nog geupdate te worden
 		if(CurrentView->Loaded)
 			CurrentView->Update();
 		else

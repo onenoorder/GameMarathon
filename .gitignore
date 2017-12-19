@@ -169,6 +169,3 @@ pip-log.txt
 
 # Mac crap
 .DS_Store
-*.xml
-.idea/GameMarathon.iml
-App/Lib/MI0283QT9/MI0283QT9.cpp

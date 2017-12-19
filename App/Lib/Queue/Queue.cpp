@@ -7,7 +7,6 @@
 
 #include "Queue.h"
 
-template class Queue<SnakeQueueData>;
 template class Queue<BombermanBomb*>;
 template<typename T>
 Queue<T>::Queue()

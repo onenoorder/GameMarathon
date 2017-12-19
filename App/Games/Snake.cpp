@@ -18,6 +18,7 @@ Snake::Snake(unsigned char ID, unsigned char playerCount, MI0283QT9 *LCD, InputC
 	_biggerTime = GameSeconds + _biggerDelay;
 } //Snake
 
+//snakespel laden
 void Snake::Load()
 {
 	// Background
@@ -35,6 +36,7 @@ void Snake::Load()
 	Loaded = 1;
 }
 
+//snakespel updaten
 void Snake::Update(){
 	if(PlayerID == 0 && NewFrame == 0) return;
 	Game::Update();
@@ -51,6 +53,7 @@ void Snake::Update(){
 	this->UpdatePlayers();
 }
 
+//afgelopen spel spel eindigen
 void Snake::EndGame(){
 	if(TransitionCounter != 8 && GameFastTime % 2 == 0){
 		LCD->fillRect( 20*TransitionCounter,0 ,20,240,RGB(0,0,0));
@@ -62,6 +65,7 @@ void Snake::EndGame(){
 	}
 }
 
+//updaten speler
 void Snake::UpdatePlayers(){
 	if(PlayerID == 0){
 		CommunicationHandler->Send(GetOutputData());
@@ -80,7 +84,7 @@ void Snake::UpdatePlayers(){
 		CommunicationHandler->Send(GetOutputData());
 	}
 }
-
+//update input voor speler
 void Snake::UpdatePlayerInput(){
 	Input->UpdateInput();
 
@@ -99,6 +103,7 @@ void Snake::UpdatePlayerInput(){
 	}
 }
 
+//
 void Snake::BiggerTime(){
 	if(PlayerID == 0 && GameSeconds >= _biggerTime && _currentPlayer->MaxSize < _currentPlayer->SnakeSize){
 		_bigger = 1;
@@ -106,6 +111,7 @@ void Snake::BiggerTime(){
 	}
 }
 
+//functie voor outputdata, zet waarde van bepaalde actie weg in 'data' en verwerkdit met Doinputdata
 unsigned char Snake::GetOutputData(){
 	unsigned char data = 0;
 	data = PlayerID;
@@ -135,7 +141,7 @@ unsigned char Snake::GetOutputData(){
 	DoInputData(data);
 	return data;
 }
-
+//verwerk data tot actie
 void Snake::DoInputData(unsigned char data){
 	if(data != 0){
 		SnakePlayer *player = _players[data & SNAKE_PLAYERS];
@@ -174,6 +180,8 @@ void Snake::DoInputData(unsigned char data){
 		}
 	}
 }
+
+
 
 unsigned char Snake::CheckLocation(short x, short y){
 	for(int p = 0; p < _playerCount; p++){

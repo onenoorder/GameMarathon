@@ -23,7 +23,6 @@ private:
 	uint16_t _backgroundColor;
 	SnakePlayer *_players[2];
 	SnakePlayer *_currentPlayer;
-	SnakePlayer *_secondPlayer;
 	char _playerCount;
 	unsigned int _biggerTime;
 	unsigned char _biggerDelay;

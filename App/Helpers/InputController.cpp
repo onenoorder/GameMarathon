@@ -5,17 +5,28 @@
 * Author: Mikena
 */
 
-
 #include "InputController.h"
+#include "../Views/View.h"
 
-// default constructor
-InputController::InputController()
+// default constructor, maakt nieuw object van type ArduinoNunchuck aan, initieert deze en laadt nieuwe waardes (update);
+InputController::InputController(MI0283QT9 *LCD)
 {
+	NunchuckAnalogX = 0;
+	NunchuckAnalogY = 0;
+	NunchuckAccelX = 0;
+	NunchuckAccelY = 0;
+	NunchuckAccelZ = 0;
+	NunchuckZButton = 0;
+	NunchuckCButton = 0;
+	LCDTouchX = 0;
+	LCDTouchY = 0;
+
 	_nunchuck = new ArduinoNunchuk();
 	_nunchuck->init();
-	UpdateInput();
+	_LCD = LCD;
 } //InputController
 
+//lees nieuwe waarden van controller uit(update)
 void InputController::UpdateInput(){
 	_nunchuck->update();
 
@@ -26,30 +37,15 @@ void InputController::UpdateInput(){
 	NunchuckAccelZ = _nunchuck->accelZ;
 	NunchuckAnalogX = _nunchuck->analogX;
 	NunchuckAnalogY = _nunchuck->analogY;
-	_delay_ms(10);
+
+	_LCD->touchRead();
+	LCDTouchX = _LCD->tp_x;
+	LCDTouchY = _LCD->tp_y;
+	_LCD->tp_x = 0;
+	_LCD->tp_y = 0;
+
+	_delay_ms(20);
 	//_printInput();
-}
-void InputController::_printInput(){
-	Serial.print("Nunchuck c : ");
-	Serial.println(NunchuckCButton);
-
-	Serial.print("Nunchuck z : ");
-	Serial.println(NunchuckZButton);
-
-	Serial.print("Nunchuck accel X : ");
-	Serial.println(NunchuckAccelX);
-
-	Serial.print("Nunchuck accel y : ");
-	Serial.println(NunchuckAccelY);
-
-	Serial.print("Nunchuck accel Z : ");
-	Serial.println(NunchuckAccelZ);
-
-	Serial.print("Nunchuck analog X : ");
-	Serial.println(NunchuckAnalogX);
-
-	Serial.print("Nunchuck analog Y : ");
-	Serial.println(NunchuckAnalogY);
 }
 
 // default destructor

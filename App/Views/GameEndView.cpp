@@ -14,9 +14,10 @@ GameEndView::GameEndView(MI0283QT9 *LCD, InputController *inputController, Commu
 	GamePlayer = player;
 	_buttonIndex = 0;
 	_arrowMoved = 1;
-	_pageSelected = 0;
+	_pageSelected = 1;
 } //eEndView
 
+//eindscherm laden met win of verliesgegevens.
 void GameEndView::Load(){
 	LCD->fillScreen(RGB(0,0,0));
 	LCD->drawText(95,5, "GAME", RGB(255,0,0),RGB(0,0,0),4);
@@ -35,10 +36,19 @@ void GameEndView::Load(){
 }
 
 
+//updaten eindscherm.
 void GameEndView::Update(){
 	Input->UpdateInput();
-		
-	if(Input->NunchuckZButton && _pageSelected == 0){
+	
+	if(Input->LCDTouchY > 400){
+		_buttonIndex = MainMenu;
+		_pageSelected = 0;
+	}
+
+	if(Input->NunchuckZButton)
+		_pageSelected = 0;
+
+	if(_pageSelected == 0){
 		_pageSelected = 1;
 		switch(_buttonIndex){
 			case MainMenu:			

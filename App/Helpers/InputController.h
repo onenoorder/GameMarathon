@@ -5,11 +5,11 @@
 * Author: Mikena
 */
 
-
 #ifndef __INPUTCONTROLLER_H__
 #define __INPUTCONTROLLER_H__
 
 #include "../Lib/ArduinoNunchuk/ArduinoNunchuk.h"
+#include "../Lib/MI0283QT9/MI0283QT9.h"
 
 class InputController
 {
@@ -22,18 +22,20 @@ public:
     int NunchuckAccelZ;
     int NunchuckZButton;
     int NunchuckCButton;
+    int LCDTouchX;
+    int LCDTouchY;
 protected:
 private:
 ArduinoNunchuk * _nunchuck;
+MI0283QT9 * _LCD;
 
 //functions
 public:
-	InputController();
+	InputController(MI0283QT9 *LCD);
 	~InputController();
 	void UpdateInput();
 protected:
 private:
-	void _printInput();
 }; //InputController
 
 #endif //__INPUTCONTROLLER_H__

@@ -421,6 +421,12 @@
     <Compile Include="Views\GameEndView.h">
       <SubType>compile</SubType>
     </Compile>
+    <Compile Include="Views\HighScoreView.cpp">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="Views\HighScoreView.h">
+      <SubType>compile</SubType>
+    </Compile>
     <Compile Include="Views\MainMenuView.cpp">
       <SubType>compile</SubType>
     </Compile>

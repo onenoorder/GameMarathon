@@ -3,7 +3,8 @@
  *
  * Created: 11/14/2017 1:51:07 PM
  * Author: Gerhard
- */ 
+ */
+
 #include "Communication/SerialCommunication.h"
 #include "Games/Game.h"
 #include "Games/Snake.h"
@@ -17,7 +18,7 @@ InputController *inputController;
 ISR(TIMER2_OVF_vect) {
 	CurrentView->Timer++;
 	if(CurrentView->IsGame && CurrentView->Timer % 5 == 0 ){
-		CurrentView->NewFrame = 1;		
+		CurrentView->NewFrame = 1;
 	}
 	if (CurrentView->Timer % 10 == 0) {
 		CurrentView->GameFastTime++;

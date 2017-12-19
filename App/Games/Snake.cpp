@@ -8,10 +8,9 @@
 #include "Snake.h"
 
 // default constructor
-Snake::Snake(unsigned char ID, unsigned char playerCount, MI0283QT9 *LCD, InputController *inputController, Communication *communication) : Game(ID, playerCount, LCD, inputController, communication)
+Snake::Snake(MI0283QT9 *LCD, InputController *inputController, Communication *communication) : Game(LCD, inputController, communication)
 {
 	_backgroundColor = RGB(0, 0, 0);
-	_playerCount = playerCount;
 
 	// Make grid
 	Grid = new char*[32];
@@ -31,10 +30,8 @@ void Snake::Load()
 
 	_players[0] = new SnakePlayer(32,0, RGB(255,0,0), this);
 	_players[0]->Direction = Right;
-	_playerCount++;
 	_players[1] = new SnakePlayer(0,23, RGB(0,0,255), this);
 	_players[1]->Direction = Left;
-	_playerCount++;
 
 	_currentPlayer = _players[PlayerID];
 
@@ -137,7 +134,11 @@ void Snake::DoInputData(unsigned char data){
 			player->Alive = 0;
 			PlayerCount--;
 			EndTime = GameFastTime;
-			_currentPlayer->WinState = PL_WIN;
+
+			if(GLBL_Role != data & SNAKE_PLAYERS){
+				_currentPlayer->WinState = PL_WIN;
+				_currentPlayer->Score += 100;
+			}
 			player->WinState = PL_LOSE;
 
 			return;

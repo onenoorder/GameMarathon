@@ -7,9 +7,8 @@
 
 #include "Bomberman.h"
 
-
 // default constructor
-Bomberman::Bomberman(unsigned char ID , unsigned char playerCount, MI0283QT9 *LCD, InputController *inputController, Communication *communication) : Game(ID, playerCount, LCD, inputController, communication)
+Bomberman::Bomberman(MI0283QT9 *LCD, InputController *inputController, Communication *communication) : Game(LCD, inputController, communication)
 {
 	GridBlockSize = 25;
 	OffsetX = 22;
@@ -17,7 +16,7 @@ Bomberman::Bomberman(unsigned char ID , unsigned char playerCount, MI0283QT9 *LC
 	MaxX = 11;
 	MaxY = 9;
 	_bombs = new Queue<BombermanBomb*>(20);
-	TransitionCounter=0;
+	TransitionCounter = 0;
 	// Colors
 	WallColor = RGB(65,65,65);
 	BackgroundColor = RGB(12, 103, 37);
@@ -113,7 +112,7 @@ void Bomberman::UpdatePlayers(){
 		if(PlayerCount > 1)
 			DoInputData(CommunicationHandler->Receive());
 	} else {
-		if(PlayerCount > 1  )
+		if(PlayerCount > 1)
 			DoInputData(CommunicationHandler->Receive());
 
 		CommunicationHandler->Send(GetOutputData());
@@ -270,7 +269,11 @@ void Bomberman::DoInputData(unsigned char data){
 			player->PlayerUpdated = 0;
 			EndTime = GameFastTime;
 			Grid[player->X][player->Y] = Grave;
-			_currentPlayer->WinState = PL_WIN;
+
+			if(GLBL_Role != data & BOMBERMAN_PLAYERS){
+				_currentPlayer->WinState = PL_WIN;
+				_currentPlayer->Score += 100;
+			}
 
 			DrawGridCell(player->X,player->Y);
 			return;
@@ -305,7 +308,8 @@ void Bomberman::DoInputData(unsigned char data){
 
 			DrawGridCell(player->X, player->Y);
 			player->DrawPlayer(LCD);
-		}	
+			player->Score += 50;
+		}
 	}
 }
 //teken individuele cel, wordt aangeroepen in "load" op basis van locatie op map.

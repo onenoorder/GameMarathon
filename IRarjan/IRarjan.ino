@@ -13,14 +13,10 @@ ISR(TIMER2_COMPA_vect)
 		counter = 0;
 		i++;
 		
-		if(Receiveindx != 0){
-			
-		}
+
 		receiveDate();
+		//sendData();
 		
-	
-			sendData();
-			
 		
 		if(i==35)
 		{
@@ -47,52 +43,43 @@ void PWM()
 }
 void receiveDate()
 {
-	//hier word de startbit geregistreerd
+
 	char b = 0;
 	if((PINB & (1<<PORTB0))==0){
 		b = 1;
 	}
-	//01101000
-	//Serial.print(b,BIN );
+
 	
 	if(Receiveindx == 0 && (PINB & (1<<PORTB0))==0){
 		Receiveindx++;
-		Serial.print(b,BIN );
+
 		receiveByte = 0;
 		receiveInvertedByte = 0;
 		
 	}else if(Receiveindx >=1 && Receiveindx <=8)
 	{
-		Serial.print(b,BIN );
-		receiveInvertedByte |=  b << ( (Receiveindx-1));
+
+		receiveInvertedByte |=  b << ((Receiveindx-1));
 		
 		Receiveindx++;
 		
 	}else if(Receiveindx >=9 && Receiveindx <=16)
 	{
-		Serial.print(b,BIN );
-		receiveByte |=  b << ( (Receiveindx-9));
+	//	Serial.print(b,BIN );
+		receiveByte |=  b << ((Receiveindx-9));
 		
 		Receiveindx++;
 		
-	} else if(Receiveindx == 17){
-			Serial.println(b,BIN );
+		} else if(Receiveindx == 17){
+	//	Serial.println(b,BIN );
 
 		Receiveindx = 0;
-
-		Serial.print("Data Aquired   : ");
-		Serial.println(receiveByte&0xFF,BIN);
-		Serial.print("Datainvert Aquired   : ");
-		Serial.println(receiveInvertedByte&0xFF,BIN);
-			Serial.println();
 		if (b != 1) return;
-		if(~receiveByte == ~receiveInvertedByte && ~receiveByte != 0 ){
-		
-				Serial.print("Char  : ");
-				Serial.println((char)(~receiveByte&0xFF));
-				
+		if(receiveByte == ~receiveInvertedByte && ~receiveByte != 0 ){
+			Serial.print("Char  : ");
+			Serial.println((char)(receiveByte&0xFF));
 		}
-			
+		
 
 	}
 	
@@ -106,11 +93,11 @@ void sendData()
 			b = b >> Sendindx-1;
 		}
 		if(b || (Sendindx == 0) || (Sendindx == 17)){
-			//Serial.print("1");
+			//	Serial.print("1");
 			// hier senden
 			TCCR2A |= (1<<COM2B1);
-		}else{
-			//Serial.print("0");
+			}else{
+			//	Serial.print("0");
 			// hier uitzetten
 			TCCR2A &= ~(1<<COM2B1);
 		}
@@ -119,13 +106,14 @@ void sendData()
 	} else if (Sendindx >= 18)
 	{
 		// zet uit
-		TCCR2A &= ~(1<<COM2B1);		
+		TCCR2A &= ~(1<<COM2B1);
 	}
 }
 //hier word de startbit en stopbit toegevoegd aan de te versturen data
 void sendChar(char byt){
-	sendByte |= 0x01FF & (~(byt & 0xFF) << 0);
-	sendByte |=  0x01ffFF & ((byt & 0xFF) << 8);
+	sendByte = 0;
+	sendByte |= 0x00FF & (~(byt & 0xFF) << 0);
+	sendByte |=  0x00ffFF & ((byt & 0xFF) << 8);
 	//	Serial.println(sendByte&0x03ffff,BIN);
 	Sendindx = 0;
 }
@@ -140,15 +128,18 @@ int main(void)
 	while (1)
 	{
 		/*if(Serial.available()>0){
-			sendChar(Serial.read());
+		sendChar(Serial.read());
 		}*/
-		 		//Serial.println("k : loop");
-				/*Serial.print('m',BIN);
-		 		Serial.println(": m");
-	
-		  		sendChar('m');
+
+
 		
-		  		_delay_ms(2000);*/
+		/*sendChar('h');
+		_delay_ms(2000);
+		sendChar('o');
+		_delay_ms(2000);
+		sendChar('i');
+		_delay_ms(2000);*/
+
 	}
 }
 

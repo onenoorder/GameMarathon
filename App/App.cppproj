@@ -271,6 +271,12 @@
     <Compile Include="Communication\Data.h">
       <SubType>compile</SubType>
     </Compile>
+    <Compile Include="Communication\IRCommunication.cpp">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="Communication\IRCommunication.h">
+      <SubType>compile</SubType>
+    </Compile>
     <Compile Include="Communication\SerialCommunication.cpp">
       <SubType>compile</SubType>
     </Compile>

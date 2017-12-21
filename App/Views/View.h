@@ -16,7 +16,7 @@
 #define RL_SLAVE 1
 
 #define GLBL_Players 2
-#define GLBL_Role RL_MASTER
+#define GLBL_Role RL_SLAVE
 
 class View
 {

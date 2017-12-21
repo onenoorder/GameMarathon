@@ -35,10 +35,15 @@ void IRCommunication::Begin(){
 }
 
 void IRCommunication::Send(unsigned char data){
-	Serial.println(data);
+
 	_sendByte = 0;
+			Serial.print("d:");
+			Serial.println(data,BIN);
 	_sendByte |= 0x00FF & (~(data & 0xFF) << 0);
 	_sendByte |=  0x00ffFF & ((data & 0xFF) << 8);
+
+		Serial.print("s:");
+		Serial.println(_sendByte,BIN);
 	_sendIndex = 0;
 }
 
@@ -59,10 +64,11 @@ IRCommunication::~IRCommunication()
 void IRCommunication::ReceiveData()
 {
 	char b = 0;
-	if((PINB & (1<<PORTB0))==0)
+	if((PIND & (1<<PORTD4))==0)
 	b = 1;
 
-	if(_receiveIndex == 0 && (PINB & (1<<PORTB0))==0){
+	//Serial.print(b,DEC);
+	if(_receiveIndex == 0 && (PIND & (1<<PORTD4))==0){
 		_receiveIndex++;
 		_receiveByte = 0;
 		_receiveInvertedByte = 0;
@@ -74,6 +80,8 @@ void IRCommunication::ReceiveData()
 		_receiveIndex++;
 	} else if(_receiveIndex == 17){
 		_receiveIndex = 0;
+		Serial.print("r:");
+		Serial.println(_receiveByte,BIN);
 		if (b != 1) return;
 		if(_receiveByte == ~_receiveInvertedByte && ~_receiveByte != 0)
 			_inputData = (unsigned char)(_receiveByte&0xFF);
@@ -106,8 +114,11 @@ void IRCommunication::SendData()
 
 ISR(TIMER2_COMPA_vect)
 {
+
 	if(IRCommunicationObj->Counter == IRCommunicationObj->KHZ*2)	// dit zorgt ervoor dat er altijd 500x per second ontvangen worden en de byte verstuurd word
 	{
+		
+
 		IRCommunicationObj->Counter = 0;
 		IRCommunicationObj->SubCounter++;
 

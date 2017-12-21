@@ -104,16 +104,32 @@ void Bomberman::EndGame(){
 }
 
 void Bomberman::UpdatePlayers(){
+			Serial.print(PlayerID);
+			Serial.print(" : ");
+			Serial.println("do update");
 	if(PlayerID == 0){
-		CommunicationHandler->Send(GetOutputData());
+		unsigned char data =  GetOutputData();
 
-		if(PlayerCount > 1)
-			DoInputData(CommunicationHandler->Receive());
+		CommunicationHandler->Send(data);
+		_delay_ms(100);
+		CommunicationHandler->Send(data);
+		_delay_ms(100);
+	
+		if(PlayerCount > 1){
+			unsigned char csd = CommunicationHandler->Receive();	
+			DoInputData(csd);
+		}
 	} else {
-		if(PlayerCount > 1  )
-			DoInputData(CommunicationHandler->Receive());
+		if(PlayerCount > 1){
+			unsigned char csd = CommunicationHandler->Receive();	
+			DoInputData(csd);
+		}
+		unsigned char data =  GetOutputData();
+		CommunicationHandler->Send(data);
+		_delay_ms(50);
+		CommunicationHandler->Send(data);
+		_delay_ms(50);
 
-		CommunicationHandler->Send(GetOutputData());
 	}
 }
 

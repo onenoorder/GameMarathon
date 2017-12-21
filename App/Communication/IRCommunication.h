@@ -25,7 +25,7 @@ private:
 	long int _sendByte;
 	char _receiveByte;
 	char _receiveInvertedByte;
-	unsigned char _inputData;
+	char _hasNewInput;
 
 //functions
 public:

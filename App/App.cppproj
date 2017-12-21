@@ -65,19 +65,19 @@
   </avrgcc.compiler.symbols.DefSymbols>
   <avrgcc.compiler.directories.IncludePaths>
     <ListValues>
+      <Value>C:/Program Files (x86)/Arduino/hardware/arduino/avr/libraries/Wire/src</Value>
+      <Value>C:/Program Files (x86)/Arduino/hardware/arduino/avr/libraries/SPI/src</Value>
+      <Value>C:/Program Files (x86)/Arduino/libraries</Value>
+      <Value>C:/Program Files (x86)/Arduino/hardware/arduino/avr/libraries</Value>
+      <Value>C:/Users/Gerhard/Documents/Arduino/libraries</Value>
+      <Value>C:/Program Files (x86)/Arduino/hardware/arduino/avr/cores/arduino</Value>
+      <Value>C:/Program Files (x86)/Arduino/hardware/arduino/avr/variants/standard</Value>
       <Value>../../../App</Value>
-      <Value>D:/programmas/Arduino/hardware/arduino/avr/libraries/Wire/src</Value>
-      <Value>D:/programmas/Arduino/hardware/arduino/avr/libraries/SPI/src</Value>
-      <Value>D:/programmas/Arduino/libraries</Value>
-      <Value>D:/programmas/Arduino/hardware/arduino/avr/libraries</Value>
-      <Value>C:/Users/Mikena/Documents/Arduino/libraries</Value>
-      <Value>D:/programmas/Arduino/hardware/arduino/avr/cores/arduino</Value>
-      <Value>D:/programmas/Arduino/hardware/arduino/avr/variants/standard</Value>
-      <Value>D:/programmas/Arduino/hardware/tools/avr/avr/include/</Value>
-      <Value>D:/programmas/Arduino/hardware/tools/avr/avr/include/avr/</Value>
-      <Value>D:/programmas/Arduino/hardware/tools/avr/lib/gcc/avr/4.8.1/include</Value>
-      <Value>D:/programmas/Arduino/hardware/tools/avr/lib/gcc/avr/4.9.2/include</Value>
-      <Value>D:/programmas/Arduino/hardware/tools/avr/lib/gcc/avr/4.9.3/include</Value>
+      <Value>C:/Program Files (x86)/Arduino/hardware/tools/avr/avr/include/</Value>
+      <Value>C:/Program Files (x86)/Arduino/hardware/tools/avr/avr/include/avr/</Value>
+      <Value>C:/Program Files (x86)/Arduino/hardware/tools/avr/lib/gcc/avr/4.8.1/include</Value>
+      <Value>C:/Program Files (x86)/Arduino/hardware/tools/avr/lib/gcc/avr/4.9.2/include</Value>
+      <Value>C:/Program Files (x86)/Arduino/hardware/tools/avr/lib/gcc/avr/4.9.3/include</Value>
     </ListValues>
   </avrgcc.compiler.directories.IncludePaths>
   <avrgcc.compiler.optimization.level>Optimize (-O1)</avrgcc.compiler.optimization.level>
@@ -102,19 +102,19 @@
   </avrgcccpp.compiler.symbols.DefSymbols>
   <avrgcccpp.compiler.directories.IncludePaths>
     <ListValues>
+      <Value>C:/Program Files (x86)/Arduino/hardware/arduino/avr/libraries/Wire/src</Value>
+      <Value>C:/Program Files (x86)/Arduino/hardware/arduino/avr/libraries/SPI/src</Value>
+      <Value>C:/Program Files (x86)/Arduino/libraries</Value>
+      <Value>C:/Program Files (x86)/Arduino/hardware/arduino/avr/libraries</Value>
+      <Value>C:/Users/Gerhard/Documents/Arduino/libraries</Value>
+      <Value>C:/Program Files (x86)/Arduino/hardware/arduino/avr/cores/arduino</Value>
+      <Value>C:/Program Files (x86)/Arduino/hardware/arduino/avr/variants/standard</Value>
       <Value>../../../App</Value>
-      <Value>D:/programmas/Arduino/hardware/arduino/avr/libraries/Wire/src</Value>
-      <Value>D:/programmas/Arduino/hardware/arduino/avr/libraries/SPI/src</Value>
-      <Value>D:/programmas/Arduino/libraries</Value>
-      <Value>D:/programmas/Arduino/hardware/arduino/avr/libraries</Value>
-      <Value>C:/Users/Mikena/Documents/Arduino/libraries</Value>
-      <Value>D:/programmas/Arduino/hardware/arduino/avr/cores/arduino</Value>
-      <Value>D:/programmas/Arduino/hardware/arduino/avr/variants/standard</Value>
-      <Value>D:/programmas/Arduino/hardware/tools/avr/avr/include/</Value>
-      <Value>D:/programmas/Arduino/hardware/tools/avr/avr/include/avr/</Value>
-      <Value>D:/programmas/Arduino/hardware/tools/avr/lib/gcc/avr/4.8.1/include</Value>
-      <Value>D:/programmas/Arduino/hardware/tools/avr/lib/gcc/avr/4.9.2/include</Value>
-      <Value>D:/programmas/Arduino/hardware/tools/avr/lib/gcc/avr/4.9.3/include</Value>
+      <Value>C:/Program Files (x86)/Arduino/hardware/tools/avr/avr/include/</Value>
+      <Value>C:/Program Files (x86)/Arduino/hardware/tools/avr/avr/include/avr/</Value>
+      <Value>C:/Program Files (x86)/Arduino/hardware/tools/avr/lib/gcc/avr/4.8.1/include</Value>
+      <Value>C:/Program Files (x86)/Arduino/hardware/tools/avr/lib/gcc/avr/4.9.2/include</Value>
+      <Value>C:/Program Files (x86)/Arduino/hardware/tools/avr/lib/gcc/avr/4.9.3/include</Value>
     </ListValues>
   </avrgcccpp.compiler.directories.IncludePaths>
   <avrgcccpp.compiler.optimization.level>Optimize (-O1)</avrgcccpp.compiler.optimization.level>
@@ -145,7 +145,7 @@
     <VisualMicroSettings>
       <VisualMicroSettings>
         <ValidatedAS7>1</ValidatedAS7>
-        <arduino.upload.port>COM4</arduino.upload.port>
+        <arduino.upload.port>COM6</arduino.upload.port>
       </VisualMicroSettings>
     </VisualMicroSettings>
   </PropertyGroup>
@@ -174,19 +174,19 @@
   </avrgcc.compiler.symbols.DefSymbols>
   <avrgcc.compiler.directories.IncludePaths>
     <ListValues>
+      <Value>C:/Program Files (x86)/Arduino/hardware/arduino/avr/libraries/Wire/src</Value>
+      <Value>C:/Program Files (x86)/Arduino/hardware/arduino/avr/libraries/SPI/src</Value>
+      <Value>C:/Program Files (x86)/Arduino/libraries</Value>
+      <Value>C:/Program Files (x86)/Arduino/hardware/arduino/avr/libraries</Value>
+      <Value>C:/Users/Gerhard/Documents/Arduino/libraries</Value>
+      <Value>C:/Program Files (x86)/Arduino/hardware/arduino/avr/cores/arduino</Value>
+      <Value>C:/Program Files (x86)/Arduino/hardware/arduino/avr/variants/standard</Value>
       <Value>../../../App</Value>
-      <Value>D:/programmas/Arduino/hardware/arduino/avr/libraries/Wire/src</Value>
-      <Value>D:/programmas/Arduino/hardware/arduino/avr/libraries/SPI/src</Value>
-      <Value>D:/programmas/Arduino/libraries</Value>
-      <Value>D:/programmas/Arduino/hardware/arduino/avr/libraries</Value>
-      <Value>C:/Users/Mikena/Documents/Arduino/libraries</Value>
-      <Value>D:/programmas/Arduino/hardware/arduino/avr/cores/arduino</Value>
-      <Value>D:/programmas/Arduino/hardware/arduino/avr/variants/standard</Value>
-      <Value>D:/programmas/Arduino/hardware/tools/avr/avr/include/</Value>
-      <Value>D:/programmas/Arduino/hardware/tools/avr/avr/include/avr/</Value>
-      <Value>D:/programmas/Arduino/hardware/tools/avr/lib/gcc/avr/4.8.1/include</Value>
-      <Value>D:/programmas/Arduino/hardware/tools/avr/lib/gcc/avr/4.9.2/include</Value>
-      <Value>D:/programmas/Arduino/hardware/tools/avr/lib/gcc/avr/4.9.3/include</Value>
+      <Value>C:/Program Files (x86)/Arduino/hardware/tools/avr/avr/include/</Value>
+      <Value>C:/Program Files (x86)/Arduino/hardware/tools/avr/avr/include/avr/</Value>
+      <Value>C:/Program Files (x86)/Arduino/hardware/tools/avr/lib/gcc/avr/4.8.1/include</Value>
+      <Value>C:/Program Files (x86)/Arduino/hardware/tools/avr/lib/gcc/avr/4.9.2/include</Value>
+      <Value>C:/Program Files (x86)/Arduino/hardware/tools/avr/lib/gcc/avr/4.9.3/include</Value>
     </ListValues>
   </avrgcc.compiler.directories.IncludePaths>
   <avrgcc.compiler.optimization.level>Optimize (-O1)</avrgcc.compiler.optimization.level>
@@ -211,19 +211,19 @@
   </avrgcccpp.compiler.symbols.DefSymbols>
   <avrgcccpp.compiler.directories.IncludePaths>
     <ListValues>
+      <Value>C:/Program Files (x86)/Arduino/hardware/arduino/avr/libraries/Wire/src</Value>
+      <Value>C:/Program Files (x86)/Arduino/hardware/arduino/avr/libraries/SPI/src</Value>
+      <Value>C:/Program Files (x86)/Arduino/libraries</Value>
+      <Value>C:/Program Files (x86)/Arduino/hardware/arduino/avr/libraries</Value>
+      <Value>C:/Users/Gerhard/Documents/Arduino/libraries</Value>
+      <Value>C:/Program Files (x86)/Arduino/hardware/arduino/avr/cores/arduino</Value>
+      <Value>C:/Program Files (x86)/Arduino/hardware/arduino/avr/variants/standard</Value>
       <Value>../../../App</Value>
-      <Value>D:/programmas/Arduino/hardware/arduino/avr/libraries/Wire/src</Value>
-      <Value>D:/programmas/Arduino/hardware/arduino/avr/libraries/SPI/src</Value>
-      <Value>D:/programmas/Arduino/libraries</Value>
-      <Value>D:/programmas/Arduino/hardware/arduino/avr/libraries</Value>
-      <Value>C:/Users/Mikena/Documents/Arduino/libraries</Value>
-      <Value>D:/programmas/Arduino/hardware/arduino/avr/cores/arduino</Value>
-      <Value>D:/programmas/Arduino/hardware/arduino/avr/variants/standard</Value>
-      <Value>D:/programmas/Arduino/hardware/tools/avr/avr/include/</Value>
-      <Value>D:/programmas/Arduino/hardware/tools/avr/avr/include/avr/</Value>
-      <Value>D:/programmas/Arduino/hardware/tools/avr/lib/gcc/avr/4.8.1/include</Value>
-      <Value>D:/programmas/Arduino/hardware/tools/avr/lib/gcc/avr/4.9.2/include</Value>
-      <Value>D:/programmas/Arduino/hardware/tools/avr/lib/gcc/avr/4.9.3/include</Value>
+      <Value>C:/Program Files (x86)/Arduino/hardware/tools/avr/avr/include/</Value>
+      <Value>C:/Program Files (x86)/Arduino/hardware/tools/avr/avr/include/avr/</Value>
+      <Value>C:/Program Files (x86)/Arduino/hardware/tools/avr/lib/gcc/avr/4.8.1/include</Value>
+      <Value>C:/Program Files (x86)/Arduino/hardware/tools/avr/lib/gcc/avr/4.9.2/include</Value>
+      <Value>C:/Program Files (x86)/Arduino/hardware/tools/avr/lib/gcc/avr/4.9.3/include</Value>
     </ListValues>
   </avrgcccpp.compiler.directories.IncludePaths>
   <avrgcccpp.compiler.optimization.level>Optimize (-O1)</avrgcccpp.compiler.optimization.level>
@@ -254,7 +254,7 @@
     <VisualMicroSettings>
       <VisualMicroSettings>
         <ValidatedAS7>1</ValidatedAS7>
-        <arduino.upload.port>COM4</arduino.upload.port>
+        <arduino.upload.port>COM6</arduino.upload.port>
       </VisualMicroSettings>
     </VisualMicroSettings>
   </PropertyGroup>

@@ -44,6 +44,7 @@ int main(void)
 	init();
 	
     // initieer nieuwe seriele verbinding
+	Communication *communication = new SerialCommunication();
 	communication->Begin();
 
 	// maak nieuw scherm aan

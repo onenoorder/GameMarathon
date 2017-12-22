@@ -108,7 +108,7 @@ void Bomberman::EndGame(){
 void Bomberman::UpdatePlayers(){
 	if(PlayerID == 0){
 		CommunicationHandler->Send(GetOutputData());
-
+		
 		if(PlayerCount > 1)
 			DoInputData(CommunicationHandler->Receive());
 	} else {

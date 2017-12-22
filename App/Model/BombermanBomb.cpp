@@ -71,7 +71,6 @@ void BombermanBomb::Explode(MI0283QT9 * LCD, unsigned char explotionTime){
 			if(explotionTime == 0 || !(directions & 0x01)){
 				_game->Grid[this->X][this->Y+blast+1] = explotion;
 				_game->DrawGridCell(this->X, this->Y+blast+1);
-				Player->Score += 5;
 			}
 		}else{
 			directions |= 0x01;
@@ -85,7 +84,6 @@ void BombermanBomb::Explode(MI0283QT9 * LCD, unsigned char explotionTime){
 			if(explotionTime == 0 || !(directions & 0x02)){
 				_game->Grid[this->X][this->Y-blast-1] = explotion;
 				_game->DrawGridCell(this->X, this->Y-blast-1);
-				Player->Score += 5;
 			}
 		}else{
 			directions |= 0x02;
@@ -99,7 +97,6 @@ void BombermanBomb::Explode(MI0283QT9 * LCD, unsigned char explotionTime){
 			if(explotionTime == 0 || !(directions & 0x04)){
 				_game->Grid[this->X+blast+1][this->Y] = explotion;
 				_game->DrawGridCell(this->X+blast+1, this->Y);
-				Player->Score += 5;
 			}
 		}else{
 			directions |= 0x04;
@@ -113,7 +110,6 @@ void BombermanBomb::Explode(MI0283QT9 * LCD, unsigned char explotionTime){
 			if(explotionTime == 0 || !(directions & 0x08)){
 				_game->Grid[this->X-blast-1][this->Y] = explotion;
 				_game->DrawGridCell(this->X-blast-1, this->Y);
-				Player->Score += 5;
 			}
 		}else{
 			directions |= 0x08;

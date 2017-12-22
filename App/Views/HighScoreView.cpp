@@ -49,7 +49,7 @@ void HighScoreView::Update(){
 		_pageSelected = 1;
 		switch(_buttonIndex){
 			case MainMenu:
-			new MainMenuView(LCD,Input, CommunicationHandler);
+			new MainMenuView(LCD, Input, CommunicationHandler);
 			break;
 		}
 	}

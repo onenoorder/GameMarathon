@@ -47,6 +47,9 @@ int main(void)
 	Communication *communication = new SerialCommunication();
 	communication->Begin();
 
+	IRCommunicationObj = new IRCommunication();
+	IRCommunicationObj->Begin();
+
 	// maak nieuw scherm aan
 	LCD = new MI0283QT9();
 	LCD->begin();

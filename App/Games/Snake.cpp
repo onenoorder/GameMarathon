@@ -64,9 +64,11 @@ void Snake::EndGame(){
 		Players[0]->Score += _players[0]->Score;
 		Players[1]->Score += _players[1]->Score;
 
-		Player p;
-		p.Score = _currentPlayer->Score;
-		new GameEndView(LCD, Input, CommunicationHandler, &p);
+		Player *p = new Player();
+		p->Score = _currentPlayer->Score;
+		p->WinState = _currentPlayer->WinState;
+		p->Alive = _currentPlayer->Alive;
+		new GameEndView(LCD, Input, CommunicationHandler, p);
 	}
 }
 

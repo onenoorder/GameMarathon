@@ -5,7 +5,6 @@
 * Author: Mikena
 */
 
-
 #include "GameEndView.h"
 
 // default constructor
@@ -52,7 +51,7 @@ void GameEndView::Update(){
 		_pageSelected = 1;
 		switch(_buttonIndex){
 			case MainMenu:			
-				CurrentView = new MainMenuView(LCD,Input, CommunicationHandler);
+				new HighScoreView(LCD, Input, CommunicationHandler);
 			break;			
 		}
 	}

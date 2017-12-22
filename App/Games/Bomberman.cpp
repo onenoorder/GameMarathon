@@ -101,9 +101,9 @@ void Bomberman::EndGame(){
 		Players[0]->Score += _players[0]->Score;
 		Players[1]->Score += _players[1]->Score;
 
-		Player p;
-		p.Score = _currentPlayer->Score;
-		new GameEndView(LCD, Input, CommunicationHandler, &p);
+		Player *p = new Player();
+		p->Score = _currentPlayer->Score;
+		new GameEndView(LCD, Input, CommunicationHandler, p);
 	}
 }
 
@@ -142,11 +142,11 @@ void Bomberman::UpdatePlayerInput(){
 	if(Input->NunchuckAnalogX > 200){
 		_currentPlayer->Direction = Right;
 		_currentPlayer->PlayerUpdated = 1;
-		}else if(Input->NunchuckAnalogY > 200 ){
+		}else if(Input->NunchuckAnalogY > 200){
 		_currentPlayer->Direction = Up;
 		_currentPlayer->PlayerUpdated = 1;
 	}
-	else if(Input->NunchuckAnalogX < 50 ){
+	else if(Input->NunchuckAnalogX < 50){
 		_currentPlayer->Direction = Left;
 		_currentPlayer->PlayerUpdated = 1;
 	}
@@ -405,5 +405,5 @@ Bomberman::~Bomberman()
 		delete Grid[x];
 	delete[] Grid;
 	delete _bombs;
-	delete[] Players;
+	delete[] _players;
 } //~Bomberman

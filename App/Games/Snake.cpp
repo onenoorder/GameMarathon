@@ -176,5 +176,5 @@ Snake::~Snake()
 	for(char x = 0; x < 32; x++)
 		delete Grid[x];
 	delete[] Grid;
-	delete[] Players;
+	delete[] _players;
 } //~Snake

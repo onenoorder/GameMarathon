@@ -44,7 +44,7 @@ int main(void)
 	IRCommunication *communication = new IRCommunication();
 	communication->Begin();
 
-	communication->Send('X');
+	//communication->Send('X');
 
 
 	/*_delay_ms(100);

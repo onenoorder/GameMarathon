@@ -31,7 +31,6 @@ void IRCommunication::Begin(){
 	OCR2B = OCR2A/2;		// 50% duty cycle
 	TIMSK2 |= (1 << OCIE2A);
 	sei();					//interrupt activeren
-	Serial.begin(9600);
 }
 
 void IRCommunication::Send(unsigned char data){
@@ -39,15 +38,6 @@ void IRCommunication::Send(unsigned char data){
 	_sendByte |= 0x00FF & (~(data & 0xFF) << 0);
 	_sendByte |=  0x00ffFF & ((data & 0xFF) << 8);
 	_sendIndex = 0;
-
-	/*for (char c = 0; c < 3; c++)
-	{
-		_delay_ms(50);
-		if(_sendIndex == 18)
-			_sendIndex = 0;
-	}*/
-	Serial.print("s: ");
-	Serial.println(data);
 
 	while(_hasNewInput == 0){
 		_delay_ms(5);
@@ -92,8 +82,6 @@ void IRCommunication::ReceiveData()
 		_receiveIndex = 0;
 		if (b != 1) return;
 		if(_receiveByte == ~_receiveInvertedByte && ~_receiveByte != 0)
-			Serial.print("r: ");
-			Serial.println(_receiveByte);
 			_hasNewInput = 1;
 	}
 }

@@ -98,9 +98,12 @@ void Bomberman::EndGame(){
 
 		TransitionCounter++;
 	}else if(TransitionCounter >= 8){
-		delete[] Grid;
-		delete _bombs;
-		CurrentView = new GameEndView(LCD, Input, CommunicationHandler, _currentPlayer);
+		Players[0]->Score += _players[0]->Score;
+		Players[1]->Score += _players[1]->Score;
+
+		Player *p = new Player();
+		p->Score = _currentPlayer->Score;
+		new GameEndView(LCD, Input, CommunicationHandler, p);
 	}
 }
 
@@ -139,11 +142,11 @@ void Bomberman::UpdatePlayerInput(){
 	if(Input->NunchuckAnalogX > 200){
 		_currentPlayer->Direction = Right;
 		_currentPlayer->PlayerUpdated = 1;
-		}else if(Input->NunchuckAnalogY > 200 ){
+		}else if(Input->NunchuckAnalogY > 200){
 		_currentPlayer->Direction = Up;
 		_currentPlayer->PlayerUpdated = 1;
 	}
-	else if(Input->NunchuckAnalogX < 50 ){
+	else if(Input->NunchuckAnalogX < 50){
 		_currentPlayer->Direction = Left;
 		_currentPlayer->PlayerUpdated = 1;
 	}
@@ -398,5 +401,9 @@ void Bomberman::DrawGridCell(char x, char y){
 // default destructor
 Bomberman::~Bomberman()
 {
+	for(char x = 0; x < MaxX; x++)
+		delete Grid[x];
 	delete[] Grid;
+	delete _bombs;
+	delete[] _players;
 } //~Bomberman

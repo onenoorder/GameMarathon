@@ -49,40 +49,45 @@ void MainMenuView::Update(){
 	}
 
 	if(Input->LCDTouchX > 600 && Input->LCDTouchX < 900){
-		if(Input->LCDTouchY > 220 && Input->LCDTouchY < 280){
+		if(Input->LCDTouchY > 220 && Input->LCDTouchY < 300){
 			_buttonIndex = SelectGame;
 			_pageSelected = 0;
+			_arrowMoved = 1;
+		} else if(Input->LCDTouchY > 300){
+			_buttonIndex = HighScore;
+			_pageSelected = 0;
+			_arrowMoved = 1;
 		}
 	}
 
 	if(Input->NunchuckZButton)
 		_pageSelected = 0;
 
-	if(_pageSelected == 0){
-		_pageSelected = 1;
-		switch(_buttonIndex){
-			case SelectGame:
-				CurrentView = new SelectGameView(LCD,Input, CommunicationHandler);
-			break;
-			case HighScore:
-					_pageSelected = 0;
-			break;
-		}
-	}
-
 	if(_arrowMoved){
 		LCD->fillTriangle(50,155 , 70, 165, 50, 175, RGB(0,0,0));
 		LCD->fillTriangle(50,115 , 70, 125, 50, 135, RGB(0,0,0));
 		switch(_buttonIndex){
-			case SelectGame:		
+			case SelectGame:
 				LCD->fillTriangle(50, 115 , 70, 125, 50, 135, RGB(0,255,0));
-			break;
-			case HighScore:					
+				break;
+			case HighScore:
 				LCD->fillTriangle(50, 155 , 70, 165, 50, 175, RGB(0,255,0));
-			break;
+				break;
 			
 		}
 		_arrowMoved = 0;
+	}
+
+	if(_pageSelected == 0){
+		_pageSelected = 1;
+		switch(_buttonIndex){
+			case SelectGame:
+				new SelectGameView(LCD,Input, CommunicationHandler);
+				break;
+			case HighScore:
+				new HighScoreView(LCD,Input, CommunicationHandler);
+				break;
+		}
 	}
 }
 

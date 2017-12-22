@@ -8,13 +8,16 @@
  #include "View.h"
 
 //
- View * CurrentView = nullptr;
-
+View *CurrentView = nullptr;
+Player **Players = new Player*[2];
 
 //zet
- View::View( MI0283QT9 *LCD, InputController *inputController, Communication * communication){
+ View::View(MI0283QT9 *LCD, InputController *inputController, Communication * communication){
 	this->Loaded = 0;
 	this->LCD = LCD;
 	this->Input = inputController;
 	this->CommunicationHandler = communication;
+
+	delete CurrentView;
+	CurrentView = this;
  }

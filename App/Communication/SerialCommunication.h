@@ -8,7 +8,7 @@
 #ifndef __SERIALCOMMUNICATION_H__
 #define __SERIALCOMMUNICATION_H__
 
-#include "Communication.h"
+#include "IRCommunication.h"
 #include "Arduino.h"
 
 class SerialCommunication : public Communication

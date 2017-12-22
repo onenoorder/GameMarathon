@@ -35,9 +35,6 @@ public:
 	void DrawPlayer(MI0283QT9 * LCD);
 	void Move();
 	BombermanPlayer(char X,char Y,uint16_t color, Bomberman * game);
-	//void Input(InputController *inputController)
-	//void Move();
-	//void Draw(MI0283QT9 *LCD);
 	~BombermanPlayer();
 protected:
 private:

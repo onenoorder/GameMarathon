@@ -11,6 +11,7 @@
 #include "../Lib/MI0283QT9/MI0283QT9.h"
 #include "../Helpers/InputController.h"
 #include "../Communication/Communication.h"
+#include "../Model/Player.h"
 
 #define RL_MASTER 0
 #define RL_SLAVE 1
@@ -40,5 +41,6 @@ protected:
 }; //View
 
 extern View * CurrentView;
+extern Player **Players;
 
 #endif //__VIEW_H__

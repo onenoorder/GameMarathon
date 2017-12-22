@@ -64,7 +64,7 @@ private:
 	};
 //functions
 public:
-	Bomberman(unsigned char ID, unsigned char playerCount, MI0283QT9 *LCD, InputController *inputController, Communication *communication);
+	Bomberman(MI0283QT9 *LCD, InputController *inputController, Communication *communication);
 	virtual void Load();
 	virtual void Update();
 	void DrawGridCell(char x, char y);

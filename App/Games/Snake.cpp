@@ -8,10 +8,9 @@
 #include "Snake.h"
 
 // default constructor
-Snake::Snake(unsigned char ID, unsigned char playerCount, MI0283QT9 *LCD, InputController *inputController, Communication *communication) : Game(ID, playerCount, LCD, inputController, communication)
+Snake::Snake(MI0283QT9 *LCD, InputController *inputController, Communication *communication) : Game(LCD, inputController, communication)
 {
 	_backgroundColor = RGB(0, 0, 0);
-	_playerCount = playerCount;
 
 	// Make grid
 	Grid = new char*[32];
@@ -31,10 +30,8 @@ void Snake::Load()
 
 	_players[0] = new SnakePlayer(32,0, RGB(255,0,0), this);
 	_players[0]->Direction = Right;
-	_playerCount++;
 	_players[1] = new SnakePlayer(0,23, RGB(0,0,255), this);
 	_players[1]->Direction = Left;
-	_playerCount++;
 
 	_currentPlayer = _players[PlayerID];
 
@@ -64,8 +61,14 @@ void Snake::EndGame(){
 		LCD->fillRect(320 - (20 *TransitionCounter),0 ,20,240,RGB(0,0,0));
 		TransitionCounter++;
 	}else if(TransitionCounter >= 8){
-		delete[] Grid;
-		CurrentView = new GameEndView(LCD, Input, CommunicationHandler, _currentPlayer);
+		Players[0]->Score += _players[0]->Score;
+		Players[1]->Score += _players[1]->Score;
+
+		Player *p = new Player();
+		p->Score = _currentPlayer->Score;
+		p->WinState = _currentPlayer->WinState;
+		p->Alive = _currentPlayer->Alive;
+		new GameEndView(LCD, Input, CommunicationHandler, p);
 	}
 }
 
@@ -137,7 +140,11 @@ void Snake::DoInputData(unsigned char data){
 			player->Alive = 0;
 			PlayerCount--;
 			EndTime = GameFastTime;
-			_currentPlayer->WinState = PL_WIN;
+
+			if(GLBL_Role != data & SNAKE_PLAYERS){
+				_currentPlayer->WinState = PL_WIN;
+				_currentPlayer->Score += 100;
+			}
 			player->WinState = PL_LOSE;
 
 			return;
@@ -168,4 +175,8 @@ void Snake::DoInputData(unsigned char data){
 // default destructor
 Snake::~Snake()
 {
+	for(char x = 0; x < 32; x++)
+		delete Grid[x];
+	delete[] Grid;
+	delete[] _players;
 } //~Snake

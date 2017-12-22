@@ -5,7 +5,6 @@
 * Author: Gerhard
 */
 
-
 #include "SerialCommunication.h"
 
 // default constructor

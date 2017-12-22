@@ -61,8 +61,14 @@ void Snake::EndGame(){
 		LCD->fillRect(320 - (20 *TransitionCounter),0 ,20,240,RGB(0,0,0));
 		TransitionCounter++;
 	}else if(TransitionCounter >= 8){
-		delete[] Grid;
-		CurrentView = new GameEndView(LCD, Input, CommunicationHandler, _currentPlayer);
+		Players[0]->Score += _players[0]->Score;
+		Players[1]->Score += _players[1]->Score;
+
+		Player *p = new Player();
+		p->Score = _currentPlayer->Score;
+		p->WinState = _currentPlayer->WinState;
+		p->Alive = _currentPlayer->Alive;
+		new GameEndView(LCD, Input, CommunicationHandler, p);
 	}
 }
 
@@ -169,4 +175,8 @@ void Snake::DoInputData(unsigned char data){
 // default destructor
 Snake::~Snake()
 {
+	for(char x = 0; x < 32; x++)
+		delete Grid[x];
+	delete[] Grid;
+	delete[] _players;
 } //~Snake

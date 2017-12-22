@@ -10,6 +10,7 @@
 
 #include "View.h"
 #include "SelectGameView.h"
+#include "HighScoreView.h"
 
 class SelectGameView;
 class MainMenuView : public View

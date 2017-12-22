@@ -265,13 +265,16 @@ void SelectGameView::Update(){
 	if(Input->LCDTouchY > 100 && Input->LCDTouchY < 200){
 		if(Input->LCDTouchX > 500 && Input->LCDTouchX < 750){
 			_buttonIndex = BombermanGame;
+			_arrowMoved = 1;
 			_pageSelected = 0;
 		} else if(Input->LCDTouchX > 750 && Input->LCDTouchX < 950){
 			_buttonIndex = SnakeGame;
+			_arrowMoved = 1;
 			_pageSelected = 0;
 		}
 	} else if(Input->LCDTouchY > 400){
 		_buttonIndex = Back;
+		_arrowMoved = 1;
 		_pageSelected = 0;
 	}
 
@@ -309,22 +312,6 @@ void SelectGameView::Update(){
 		LCD->fillRect(40+(8*3), 16+ (8*3),3,3,RGB(238,243,12));
 		LCD->fillRect(40+(7*3), 16+ (7*3),3,3,RGB(238,243,12));
 	}
-
-	//selecteren van spel of 'back', hiermee nieuw object aanmaken van het gekozen type spel.
-  if(_pageSelected == 0){
-		_pageSelected = 1;
-		switch(_buttonIndex){
-			case BombermanGame:
-				CurrentView = new Bomberman(LCD, Input, CommunicationHandler);
-			break;
-			case SnakeGame:
-				CurrentView = new Snake(LCD, Input, CommunicationHandler);
-			break;
-			case Back:
-				CurrentView = new MainMenuView(LCD, Input, CommunicationHandler);
-			break;
-		}
-	}
 	
 	if(_arrowMoved){
 		drawMenu();
@@ -360,6 +347,22 @@ void SelectGameView::Update(){
 			
 		}
 		_arrowMoved = 0;
+	}
+
+	//selecteren van spel of 'back', hiermee nieuw object aanmaken van het gekozen type spel.
+	if(_pageSelected == 0){
+		_pageSelected = 1;
+		switch(_buttonIndex){
+			case BombermanGame:
+				new Bomberman(LCD, Input, CommunicationHandler);
+				break;
+			case SnakeGame:
+				new Snake(LCD, Input, CommunicationHandler);
+				break;
+			case Back:
+				new MainMenuView(LCD, Input, CommunicationHandler);
+				break;
+		}
 	}
 }
 

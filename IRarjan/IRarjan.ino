@@ -3,8 +3,9 @@ int counter = 0;
 int i = 0;
 char Sendindx;
 char Receiveindx = 0;
-short sendByte;
+long int sendByte;
 char receiveByte;
+char receiveInvertedByte;
 ISR(TIMER2_COMPA_vect)
 {
 	if(counter==KHZ*2)	// dit zorgt ervoor dat er altijd 500x per second ontvangen worden en de byte verstuurd word
@@ -12,19 +13,14 @@ ISR(TIMER2_COMPA_vect)
 		counter = 0;
 		i++;
 		
-	if(Receiveindx != 0){
-		
-	}
+
 		receiveDate();
-	
-		if(i>=10 && i<=20)
-		{
-			sendData();
-			
-		}
+		//sendData();
+		
+		
 		if(i==35)
 		{
-					
+			
 			i=0;
 		}
 	}
@@ -47,81 +43,79 @@ void PWM()
 }
 void receiveDate()
 {
-	//Serial.print(!(PINB & (1<<PORTB0)));
+
+	char b = 0;
+	if((PINB & (1<<PORTB0))==0){
+		b = 1;
+	}
+
 	
-//hier word de startbit geregistreerd
 	if(Receiveindx == 0 && (PINB & (1<<PORTB0))==0){
 		Receiveindx++;
+
 		receiveByte = 0;
-		//Serial.println("send");
-		//Serial.print(!(PINB & (1<<PORTB0)));
-	}
-//hier worden de bits in een short gezet
-	else if(Receiveindx > 0 && Receiveindx < 10){
+		receiveInvertedByte = 0;
 		
-		char b = 1;
-		if((PINB & (1<<PORTB0))){
-			b = 0;
-//als er een HIGH bit binnenkomt word deze in de short geshift
-		}else{			
-			receiveByte |=  b << ( Receiveindx-1);
+	}else if(Receiveindx >=1 && Receiveindx <=8)
+	{
+
+		receiveInvertedByte |=  b << ((Receiveindx-1));
+		
+		Receiveindx++;
+		
+	}else if(Receiveindx >=9 && Receiveindx <=16)
+	{
+	//	Serial.print(b,BIN );
+		receiveByte |=  b << ((Receiveindx-9));
+		
+		Receiveindx++;
+		
+		} else if(Receiveindx == 17){
+	//	Serial.println(b,BIN );
+
+		Receiveindx = 0;
+		if (b != 1) return;
+		if(receiveByte == ~receiveInvertedByte && ~receiveByte != 0 ){
+			Serial.print("Char  : ");
+			Serial.println((char)(receiveByte&0xFF));
 		}
 		
-		//Serial.print(Receiveindx-2, DEC);
-		//Serial.print(" : ");
-		//Serial.println(b, DEC);
-		//receiveByte |=  b << (8- Receiveindx);
-//als de startbit, 8 databits en de stopbit geweest zijn is de byte ontvangen klaar
-	Receiveindx++;
-	} else if(Receiveindx == 10){
-		Receiveindx = 0;
-		Serial.println((char)(receiveByte &0xff));
-	//	Serial.println(": ontvangen");
-		
+
 	}
 	
 }
 void sendData()
 {
-	if(Sendindx != 10 && sendByte  != 0){
-		
-		short b = sendByte & (1 << Sendindx);
-		b = b >> Sendindx;
-		
-		if(b){
-			//Serial.print("1");
+	if(Sendindx != 18 && sendByte  != 0){
+		int b = 0;
+		if(Sendindx != 0 && Sendindx != 17){
+			b = sendByte &  (1 << Sendindx-1);
+			b = b >> Sendindx-1;
+		}
+		if(b || (Sendindx == 0) || (Sendindx == 17)){
+			//	Serial.print("1");
 			// hier senden
 			TCCR2A |= (1<<COM2B1);
-			
 			}else{
-			//Serial.print("0");
+			//	Serial.print("0");
 			// hier uitzetten
 			TCCR2A &= ~(1<<COM2B1);
-			
 		}
 		Sendindx++;
 		
-	} else if (Sendindx >= 10)
+	} else if (Sendindx >= 18)
 	{
-		// zet uit		
+		// zet uit
 		TCCR2A &= ~(1<<COM2B1);
-		
 	}
 }
 //hier word de startbit en stopbit toegevoegd aan de te versturen data
 void sendChar(char byt){
-	sendByte = byt << 1;
-	sendByte |= (1<<0) ;
-	sendByte |= (1<<9);
+	sendByte = 0;
+	sendByte |= 0x00FF & (~(byt & 0xFF) << 0);
+	sendByte |=  0x00ffFF & ((byt & 0xFF) << 8);
+	//	Serial.println(sendByte&0x03ffff,BIN);
 	Sendindx = 0;
-	Serial.print(sendByte,BIN);
-	Serial.println(": sendbyte");
-
-	/*while(Sendindx != 10){
-	Serial.
-	}*/
-	
-
 }
 int main(void)
 {
@@ -133,16 +127,19 @@ int main(void)
 	
 	while (1)
 	{
-		if(Serial.available()>0){
-			sendChar(Serial.read());
-		}
-// 		//Serial.println("k : loop");
-// 		Serial.print('k',BIN);
-// 		Serial.println(": k");
-// 
-// 		sendChar('k');
-// 		
-// 		_delay_ms(4000);
+		/*if(Serial.available()>0){
+		sendChar(Serial.read());
+		}*/
+
+
+		
+		/*sendChar('h');
+		_delay_ms(2000);
+		sendChar('o');
+		_delay_ms(2000);
+		sendChar('i');
+		_delay_ms(2000);*/
+
 	}
 }
 

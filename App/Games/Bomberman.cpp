@@ -93,16 +93,25 @@ void Bomberman::Update(){
 //wanneer timer voorbij is, laad eindscherm
 void Bomberman::EndGame(){
 	if(TransitionCounter != 8 && GameFastTime % 2 == 0){
-		LCD->fillRect( 20*TransitionCounter,0 ,20,240,RGB(0,0,0));
-		LCD->fillRect( 300 - (20 *TransitionCounter),0 ,20,240,RGB(0,0,0));
+		LCD->fillRect(20*TransitionCounter,0 ,20,240,RGB(0,0,0));
+		LCD->fillRect(300 - (20 *TransitionCounter),0 ,20,240,RGB(0,0,0));
 
 		TransitionCounter++;
 	}else if(TransitionCounter >= 8){
+		if(_currentPlayer->WinState == PL_WIN){
+			_currentPlayer->Score += 100;
+		} else {
+			BombermanPlayer *otherPlayer = _players[(~GLBL_Role) & 1];
+			otherPlayer->Score += 100;
+		}
+
 		Players[0]->Score += _players[0]->Score;
 		Players[1]->Score += _players[1]->Score;
 
 		Player *p = new Player();
 		p->Score = _currentPlayer->Score;
+		p->WinState = _currentPlayer->WinState;
+		p->Alive = _currentPlayer->Alive;
 		new GameEndView(LCD, Input, CommunicationHandler, p);
 	}
 }
@@ -111,7 +120,7 @@ void Bomberman::EndGame(){
 void Bomberman::UpdatePlayers(){
 	if(PlayerID == 0){
 		CommunicationHandler->Send(GetOutputData());
-
+		
 		if(PlayerCount > 1)
 			DoInputData(CommunicationHandler->Receive());
 	} else {
@@ -253,7 +262,7 @@ unsigned char Bomberman::GetOutputData(){
 			data |= BOMBERMAN_PLACE_BOM;
 			_currentPlayer->PlaceBomb = 0;
 		}
-		if(_currentPlayer->Alive == 0 ){
+		if(_currentPlayer->Alive == 0){
 			data |= BOMBERMAN_LOSE;
 		}
 		DoInputData(data);
@@ -266,17 +275,12 @@ void Bomberman::DoInputData(unsigned char data){
 	if(data != 0){
 		BombermanPlayer *player = _players[data & BOMBERMAN_PLAYERS];
 
-		if((data & BOMBERMAN_LOSE) == BOMBERMAN_LOSE && EndTime==0 ){
+		if((data & BOMBERMAN_LOSE) == BOMBERMAN_LOSE && EndTime == 0){
 			player->Alive = 0;
 			PlayerCount--;
 			player->PlayerUpdated = 0;
 			EndTime = GameFastTime;
 			Grid[player->X][player->Y] = Grave;
-
-			if(GLBL_Role != data & BOMBERMAN_PLAYERS){
-				_currentPlayer->WinState = PL_WIN;
-				_currentPlayer->Score += 100;
-			}
 
 			DrawGridCell(player->X,player->Y);
 			return;

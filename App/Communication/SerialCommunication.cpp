@@ -5,7 +5,6 @@
 * Author: Gerhard
 */
 
-
 #include "SerialCommunication.h"
 
 // default constructor
@@ -16,6 +15,9 @@ SerialCommunication::SerialCommunication()
 //zet de baudrate van de seriele communicatie op 9600
 void SerialCommunication::Begin(){
 	Serial.begin(9600);
+
+	IRCommunicationObj = new IRCommunication();
+	IRCommunicationObj->Begin();
 }
 
 //schrijft data over seriele poort

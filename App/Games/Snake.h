@@ -49,8 +49,8 @@ public:
 protected:
 	virtual void EndGame();
 private:
-	unsigned char GetOutputData();
-	void DoInputData(unsigned char data);
+	virtual unsigned char GetOutputData();
+	virtual void DoInputData(unsigned char data);
 	void UpdatePlayerInput();
 	void UpdatePlayers();
 

@@ -295,6 +295,12 @@
     <Compile Include="Games\Game.h">
       <SubType>compile</SubType>
     </Compile>
+    <Compile Include="Games\RockPaperScissors.cpp">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="Games\RockPaperScissors.h">
+      <SubType>compile</SubType>
+    </Compile>
     <Compile Include="Games\Snake.cpp">
       <SubType>compile</SubType>
     </Compile>
@@ -413,6 +419,12 @@
       <SubType>compile</SubType>
     </Compile>
     <Compile Include="Model\Player.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="Model\RockPaperScissorsPlayer.cpp">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="Model\RockPaperScissorsPlayer.h">
       <SubType>compile</SubType>
     </Compile>
     <Compile Include="Model\SnakePlayer.cpp">

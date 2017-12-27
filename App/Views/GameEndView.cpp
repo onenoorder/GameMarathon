@@ -32,7 +32,6 @@ void GameEndView::Load(){
 		
 		LCD->drawText(80,200, "To Main Menu", RGB(255,0,0),RGB(0,0,0),2);
 	Loaded = 1;
-	CommunicationHandler->Send('L');
 }
 
 //updaten eindscherm.

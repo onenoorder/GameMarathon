@@ -5,12 +5,12 @@
 * Author: Mikena
 */
 
-
 #ifndef __GAMEENDVIEW_H__
 #define __GAMEENDVIEW_H__
+
 #include "MainMenuView.h"
 #include "View.h"
-#include "../Model/Player.h"
+
 class MainMenuView;
 
 class GameEndView: public View
@@ -32,6 +32,7 @@ public:
 	virtual void Load();
 	virtual void Update();
 	GameEndView(MI0283QT9 *LCD, InputController *inputController, Communication * communication, Player * player);
+	~GameEndView();
 protected:
 
 

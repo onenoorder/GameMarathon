@@ -7,9 +7,8 @@
 
 #include "Bomberman.h"
 
-
 // default constructor
-Bomberman::Bomberman(unsigned char ID , unsigned char playerCount, MI0283QT9 *LCD, InputController *inputController, Communication *communication) : Game(ID, playerCount, LCD, inputController, communication)
+Bomberman::Bomberman(MI0283QT9 *LCD, InputController *inputController, Communication *communication) : Game(LCD, inputController, communication)
 {
 	GridBlockSize = 25;
 	OffsetX = 22;
@@ -17,7 +16,6 @@ Bomberman::Bomberman(unsigned char ID , unsigned char playerCount, MI0283QT9 *LC
 	MaxX = 11;
 	MaxY = 9;
 	_bombs = new Queue<BombermanBomb*>(20);
-	TransitionCounter=0;
 	// Colors
 	WallColor = RGB(65,65,65);
 	BackgroundColor = RGB(12, 103, 37);
@@ -94,14 +92,26 @@ void Bomberman::Update(){
 //wanneer timer voorbij is, laad eindscherm
 void Bomberman::EndGame(){
 	if(TransitionCounter != 8 && GameFastTime % 2 == 0){
-		LCD->fillRect( 20*TransitionCounter,0 ,20,240,RGB(0,0,0));
-		LCD->fillRect( 300 - (20 *TransitionCounter),0 ,20,240,RGB(0,0,0));
+		LCD->fillRect(20*TransitionCounter,0 ,20,240,RGB(0,0,0));
+		LCD->fillRect(300 - (20 *TransitionCounter),0 ,20,240,RGB(0,0,0));
 
 		TransitionCounter++;
-	}else if(TransitionCounter >= 8){
-		delete[] Grid;
-		delete _bombs;
-		CurrentView = new GameEndView(LCD, Input, CommunicationHandler, _currentPlayer);
+	} else if(TransitionCounter >= 8){
+		if(_currentPlayer->WinState == PL_WIN){
+			_currentPlayer->Score += 100;
+		} else {
+			BombermanPlayer *otherPlayer = _players[(~GLBL_Role) & 1];
+			otherPlayer->Score += 100;
+		}
+
+		Players[0]->Score += _players[0]->Score;
+		Players[1]->Score += _players[1]->Score;
+
+		Player *p = new Player();
+		p->Score = _currentPlayer->Score;
+		p->WinState = _currentPlayer->WinState;
+		p->Alive = _currentPlayer->Alive;
+		new GameEndView(LCD, Input, CommunicationHandler, p);
 	}
 }
 
@@ -109,11 +119,11 @@ void Bomberman::EndGame(){
 void Bomberman::UpdatePlayers(){
 	if(PlayerID == 0){
 		CommunicationHandler->Send(GetOutputData());
-
+		
 		if(PlayerCount > 1)
 			DoInputData(CommunicationHandler->Receive());
 	} else {
-		if(PlayerCount > 1  )
+		if(PlayerCount > 1)
 			DoInputData(CommunicationHandler->Receive());
 
 		CommunicationHandler->Send(GetOutputData());
@@ -140,11 +150,11 @@ void Bomberman::UpdatePlayerInput(){
 	if(Input->NunchuckAnalogX > 200){
 		_currentPlayer->Direction = Right;
 		_currentPlayer->PlayerUpdated = 1;
-		}else if(Input->NunchuckAnalogY > 200 ){
+		}else if(Input->NunchuckAnalogY > 200){
 		_currentPlayer->Direction = Up;
 		_currentPlayer->PlayerUpdated = 1;
 	}
-	else if(Input->NunchuckAnalogX < 50 ){
+	else if(Input->NunchuckAnalogX < 50){
 		_currentPlayer->Direction = Left;
 		_currentPlayer->PlayerUpdated = 1;
 	}
@@ -251,7 +261,7 @@ unsigned char Bomberman::GetOutputData(){
 			data |= BOMBERMAN_PLACE_BOM;
 			_currentPlayer->PlaceBomb = 0;
 		}
-		if(_currentPlayer->Alive == 0 ){
+		if(_currentPlayer->Alive == 0){
 			data |= BOMBERMAN_LOSE;
 		}
 		DoInputData(data);
@@ -264,13 +274,12 @@ void Bomberman::DoInputData(unsigned char data){
 	if(data != 0){
 		BombermanPlayer *player = _players[data & BOMBERMAN_PLAYERS];
 
-		if((data & BOMBERMAN_LOSE) == BOMBERMAN_LOSE && EndTime==0 ){
+		if((data & BOMBERMAN_LOSE) == BOMBERMAN_LOSE && EndTime == 0){
 			player->Alive = 0;
 			PlayerCount--;
 			player->PlayerUpdated = 0;
 			EndTime = GameFastTime;
 			Grid[player->X][player->Y] = Grave;
-			_currentPlayer->WinState = PL_WIN;
 
 			DrawGridCell(player->X,player->Y);
 			return;
@@ -305,7 +314,8 @@ void Bomberman::DoInputData(unsigned char data){
 
 			DrawGridCell(player->X, player->Y);
 			player->DrawPlayer(LCD);
-		}	
+			player->Score += 50;
+		}
 	}
 }
 //teken individuele cel, wordt aangeroepen in "load" op basis van locatie op map.
@@ -394,5 +404,9 @@ void Bomberman::DrawGridCell(char x, char y){
 // default destructor
 Bomberman::~Bomberman()
 {
+	for(char x = 0; x < MaxX; x++)
+		delete[] Grid[x];
 	delete[] Grid;
+	delete _bombs;
+	delete[] _players;
 } //~Bomberman

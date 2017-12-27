@@ -19,12 +19,13 @@ class Snake : public Game
 //variables
 public:
 	char **Grid;
+	char MaxX;
+	char MaxY;
 protected:
 private:
 	uint16_t _backgroundColor;
 	SnakePlayer *_players[2];
 	SnakePlayer *_currentPlayer;
-	char _playerCount;
 
 	enum SnakeData{
 		SNAKE_PLAYER0 = 0,
@@ -41,7 +42,7 @@ private:
 
 //functions
 public:
-	Snake(unsigned char ID, unsigned char playerCount, MI0283QT9 *LCD, InputController *inputController, Communication *communication);
+	Snake(MI0283QT9 *LCD, InputController *inputController, Communication *communication);
 	virtual void Load();
 	virtual void Update();
 	~Snake();

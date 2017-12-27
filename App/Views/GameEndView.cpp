@@ -5,14 +5,13 @@
 * Author: Mikena
 */
 
-
 #include "GameEndView.h"
 
 // default constructor
-GameEndView::GameEndView(MI0283QT9 *LCD, InputController *inputController, Communication * communication, Player * player) :View(LCD, inputController,  communication)
+GameEndView::GameEndView(MI0283QT9 *LCD, InputController *inputController, Communication * communication, Player * player) : View(LCD, inputController, communication)
 {
 	GamePlayer = player;
-	_buttonIndex = 0;
+	_buttonIndex = MainMenu;
 	_arrowMoved = 1;
 	_pageSelected = 1;
 } //eEndView
@@ -33,8 +32,8 @@ void GameEndView::Load(){
 		
 		LCD->drawText(80,200, "To Main Menu", RGB(255,0,0),RGB(0,0,0),2);
 	Loaded = 1;
+	CommunicationHandler->Send('L');
 }
-
 
 //updaten eindscherm.
 void GameEndView::Update(){
@@ -52,7 +51,7 @@ void GameEndView::Update(){
 		_pageSelected = 1;
 		switch(_buttonIndex){
 			case MainMenu:			
-				CurrentView = new MainMenuView(LCD,Input, CommunicationHandler);
+				new HighScoreView(LCD, Input, CommunicationHandler);
 			break;			
 		}
 	}
@@ -66,6 +65,10 @@ void GameEndView::Update(){
 		}
 		_arrowMoved = 0;
 	}
-
 }
 
+// default destructor
+GameEndView::~GameEndView()
+{
+	delete GamePlayer;
+} //~GameEndView

@@ -8,12 +8,13 @@
 #include "Game.h"
 
 //constructor voor aanmaken object van het type game
-Game::Game( unsigned char ID, unsigned char playerCount, MI0283QT9 *LCD, InputController *inputController, Communication *communication) :View(LCD,inputController, communication)  {
+Game::Game(MI0283QT9 *LCD, InputController *inputController, Communication *communication) :View(LCD, inputController, communication) {
 	IsGame = 1;
 	NewFrame = 0;
-	PlayerID = ID;
-	PlayerCount = playerCount;
+	PlayerID = GLBL_Role;
+	PlayerCount = GLBL_Players;
 	EndTime = 0;
+	TransitionCounter = 0;
 }
 
 //updaten game, frame reset.

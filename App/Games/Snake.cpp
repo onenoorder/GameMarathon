@@ -11,11 +11,13 @@
 Snake::Snake(MI0283QT9 *LCD, InputController *inputController, Communication *communication) : Game(LCD, inputController, communication)
 {
 	_backgroundColor = RGB(0, 0, 0);
+	MaxX = 32;
+	MaxY = 24;
 
 	// Make grid
-	Grid = new char*[32];
-	for(char x = 0; x < 32; x++)
-		Grid[x] = new char[24];
+	Grid = new char*[MaxX];
+	for(char x = 0; x < MaxX; x++)
+		Grid[x] = new char[MaxY];
 } //Snake
 
 //snakespel laden
@@ -24,13 +26,13 @@ void Snake::Load()
 	// Background
 	LCD->fillScreen(_backgroundColor);
 
-	for(char x = 0; x < 32; x++)
-		for(char y = 0; y < 24; y++)
+	for(unsigned char x = 0; x < MaxX; x++)
+		for(unsigned char y = 0; y < MaxY; y++)
 			Grid[x][y] = 0;
 
-	_players[0] = new SnakePlayer(32,0, RGB(255,0,0), this);
+	_players[0] = new SnakePlayer(MaxX, 0, RGB(255,0,0), this);
 	_players[0]->Direction = Right;
-	_players[1] = new SnakePlayer(0,23, RGB(0,0,255), this);
+	_players[1] = new SnakePlayer(0, MaxY-1, RGB(0,0,255), this);
 	_players[1]->Direction = Left;
 
 	_currentPlayer = _players[PlayerID];
@@ -58,9 +60,17 @@ void Snake::Update(){
 void Snake::EndGame(){
 	if(TransitionCounter != 8 && GameFastTime % 2 == 0){
 		LCD->fillRect(20*TransitionCounter,0 ,20,240,RGB(0,0,0));
-		LCD->fillRect(320 - (20 *TransitionCounter),0 ,20,240,RGB(0,0,0));
+		LCD->fillRect(300 - (20 *TransitionCounter),0 ,20,240,RGB(0,0,0));
+
 		TransitionCounter++;
-	}else if(TransitionCounter >= 8){
+	} else if(TransitionCounter >= 8){
+		if(_currentPlayer->WinState == PL_WIN){
+			_currentPlayer->Score += 100;
+		} else {
+			SnakePlayer *otherPlayer = _players[(~GLBL_Role) & 1];
+			otherPlayer->Score += 100;
+		}
+
 		Players[0]->Score += _players[0]->Score;
 		Players[1]->Score += _players[1]->Score;
 
@@ -140,11 +150,6 @@ void Snake::DoInputData(unsigned char data){
 			player->Alive = 0;
 			PlayerCount--;
 			EndTime = GameFastTime;
-
-			if(GLBL_Role != data & SNAKE_PLAYERS){
-				_currentPlayer->WinState = PL_WIN;
-				_currentPlayer->Score += 100;
-			}
 			player->WinState = PL_LOSE;
 
 			return;
@@ -175,8 +180,8 @@ void Snake::DoInputData(unsigned char data){
 // default destructor
 Snake::~Snake()
 {
-	for(char x = 0; x < 32; x++)
-		delete Grid[x];
+	for(char x = 0; x < MaxX; x++)
+		delete[] Grid[x];
 	delete[] Grid;
 	delete[] _players;
 } //~Snake

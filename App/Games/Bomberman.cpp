@@ -16,7 +16,6 @@ Bomberman::Bomberman(MI0283QT9 *LCD, InputController *inputController, Communica
 	MaxX = 11;
 	MaxY = 9;
 	_bombs = new Queue<BombermanBomb*>(20);
-	TransitionCounter = 0;
 	// Colors
 	WallColor = RGB(65,65,65);
 	BackgroundColor = RGB(12, 103, 37);
@@ -97,7 +96,7 @@ void Bomberman::EndGame(){
 		LCD->fillRect(300 - (20 *TransitionCounter),0 ,20,240,RGB(0,0,0));
 
 		TransitionCounter++;
-	}else if(TransitionCounter >= 8){
+	} else if(TransitionCounter >= 8){
 		if(_currentPlayer->WinState == PL_WIN){
 			_currentPlayer->Score += 100;
 		} else {
@@ -406,7 +405,7 @@ void Bomberman::DrawGridCell(char x, char y){
 Bomberman::~Bomberman()
 {
 	for(char x = 0; x < MaxX; x++)
-		delete Grid[x];
+		delete[] Grid[x];
 	delete[] Grid;
 	delete _bombs;
 	delete[] _players;

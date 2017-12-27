@@ -32,6 +32,7 @@ public:
 	virtual void Load();
 	virtual void Update();
 	GameEndView(MI0283QT9 *LCD, InputController *inputController, Communication * communication, Player * player);
+	~GameEndView();
 protected:
 
 

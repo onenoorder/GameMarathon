@@ -19,6 +19,8 @@ class Snake : public Game
 //variables
 public:
 	char **Grid;
+	char MaxX;
+	char MaxY;
 protected:
 private:
 	uint16_t _backgroundColor;

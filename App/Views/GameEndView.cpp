@@ -8,7 +8,7 @@
 #include "GameEndView.h"
 
 // default constructor
-GameEndView::GameEndView(MI0283QT9 *LCD, InputController *inputController, Communication * communication, Player * player) :View(LCD, inputController,  communication)
+GameEndView::GameEndView(MI0283QT9 *LCD, InputController *inputController, Communication * communication, Player * player) : View(LCD, inputController, communication)
 {
 	GamePlayer = player;
 	_buttonIndex = MainMenu;
@@ -32,8 +32,8 @@ void GameEndView::Load(){
 		
 		LCD->drawText(80,200, "To Main Menu", RGB(255,0,0),RGB(0,0,0),2);
 	Loaded = 1;
+	CommunicationHandler->Send('L');
 }
-
 
 //updaten eindscherm.
 void GameEndView::Update(){
@@ -67,3 +67,8 @@ void GameEndView::Update(){
 	}
 }
 
+// default destructor
+GameEndView::~GameEndView()
+{
+	delete GamePlayer;
+} //~GameEndView

@@ -145,7 +145,7 @@
     <VisualMicroSettings>
       <VisualMicroSettings>
         <ValidatedAS7>1</ValidatedAS7>
-        <arduino.upload.port>COM6</arduino.upload.port>
+        <arduino.upload.port>COM5</arduino.upload.port>
       </VisualMicroSettings>
     </VisualMicroSettings>
   </PropertyGroup>
@@ -254,7 +254,7 @@
     <VisualMicroSettings>
       <VisualMicroSettings>
         <ValidatedAS7>1</ValidatedAS7>
-        <arduino.upload.port>COM6</arduino.upload.port>
+        <arduino.upload.port>COM5</arduino.upload.port>
       </VisualMicroSettings>
     </VisualMicroSettings>
   </PropertyGroup>
@@ -293,6 +293,12 @@
       <SubType>compile</SubType>
     </Compile>
     <Compile Include="Games\Game.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="Games\RockPaperScissors.cpp">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="Games\RockPaperScissors.h">
       <SubType>compile</SubType>
     </Compile>
     <Compile Include="Games\Snake.cpp">
@@ -413,6 +419,12 @@
       <SubType>compile</SubType>
     </Compile>
     <Compile Include="Model\Player.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="Model\RockPaperScissorsPlayer.cpp">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="Model\RockPaperScissorsPlayer.h">
       <SubType>compile</SubType>
     </Compile>
     <Compile Include="Model\SnakePlayer.cpp">

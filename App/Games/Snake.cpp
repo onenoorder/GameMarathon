@@ -82,20 +82,6 @@ void Snake::EndGame(){
 	}
 }
 
-//updaten speler
-void Snake::UpdatePlayers(){
-	if(PlayerID == 0){
-		CommunicationHandler->Send(GetOutputData());
-
-		if(PlayerCount > 1)
-			DoInputData(CommunicationHandler->Receive());
-	} else {
-		if(PlayerCount > 1)
-			DoInputData(CommunicationHandler->Receive());
-		
-		CommunicationHandler->Send(GetOutputData());
-	}
-}
 //update input voor speler
 void Snake::UpdatePlayerInput(){
 	Input->UpdateInput();

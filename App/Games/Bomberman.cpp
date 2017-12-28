@@ -75,6 +75,7 @@ void Bomberman::Load()
 	_currentPlayer = _players[PlayerID];
 	Loaded = 1;
 }
+
 //bomberman updaten
 void Bomberman::Update(){
 	if(PlayerID == 0 && NewFrame == 0) return;
@@ -112,21 +113,6 @@ void Bomberman::EndGame(){
 		p->WinState = _currentPlayer->WinState;
 		p->Alive = _currentPlayer->Alive;
 		new GameEndView(LCD, Input, CommunicationHandler, p);
-	}
-}
-
-//update spelers en verstuur data
-void Bomberman::UpdatePlayers(){
-	if(PlayerID == 0){
-		CommunicationHandler->Send(GetOutputData());
-		
-		if(PlayerCount > 1)
-			DoInputData(CommunicationHandler->Receive());
-	} else {
-		if(PlayerCount > 1)
-			DoInputData(CommunicationHandler->Receive());
-
-		CommunicationHandler->Send(GetOutputData());
 	}
 }
 

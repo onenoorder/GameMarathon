@@ -22,6 +22,21 @@ void Game::Update(){
 	NewFrame = 0;
 }
 
+//update spelers en verstuur data
+void Game::UpdatePlayers(){
+	if(PlayerID == 0){
+		CommunicationHandler->Send(GetOutputData());
+
+		if(PlayerCount > 1)
+			DoInputData(CommunicationHandler->Receive());
+	} else {
+		if(PlayerCount > 1)
+			DoInputData(CommunicationHandler->Receive());
+		
+		CommunicationHandler->Send(GetOutputData());
+	}
+}
+
 // virtual destructor
 Game::~Game()
 {

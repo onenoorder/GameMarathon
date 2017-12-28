@@ -50,14 +50,12 @@ void SelectGameView::drawMenu(){
 	LCD->fillRect(175,25,120,70,RGB(255,255,255));
 	LCD->drawText(180,60, "Snake", RGB(0,0,255),RGB(255,255,255),1);
 
-	LCD->fillCircle(190+60 , 49 ,3,RGB(244,176,66));
-	
-	LCD->fillRect(190 , 40 ,3,12,RGB(255,0,0));
-	LCD->fillRect(192 , 49 ,14,3,RGB(255,0,0));
+	LCD->fillRect(190, 25, 3, 27, RGB(255,0,0));
+	LCD->fillRect(192, 49, 17, 3, RGB(255,0,0));
 
 	LCD->fillRect(60+190 , 63 ,3,16,RGB(0,0,255));
 	LCD->fillRect(60+190+3 , 60+16 ,14,3,RGB(0,0,255));
-	LCD->fillRect(60+190+14 , 63+16 ,3,10,RGB(0,0,255));
+	LCD->fillRect(60+190+14 , 63+16 ,3,16,RGB(0,0,255));
 
 	//bottomleft
 	LCD->fillRect(20,120,5,80,RGB(255,0,0));
@@ -66,7 +64,9 @@ void SelectGameView::drawMenu(){
 	LCD->fillRect(20,120+75,130,5,RGB(255,0,0));
 	LCD->fillRect(25,125,120,70,RGB(255,255,255));		
 	
-	LCD->drawText(54,147, "???", RGB(0,0,255),RGB(255,255,255),3);
+	LCD->drawText(54,147, "Rock Paper", RGB(0,0,255),RGB(255,255,255),1);
+	LCD->drawText(70,167, "Scissors", RGB(0,0,255),RGB(255,255,255),1);
+
 	//bottomright
 	LCD->fillRect(170,120,5,80,RGB(255,0,0));
 	LCD->fillRect(125+170,120,5,80,RGB(255,0,0));
@@ -228,14 +228,14 @@ void SelectGameView::Update(){
 
 	if(Input->NunchuckAnalogX > 200 && !_arrowMoved && _timeMoved +2 < GameFastTime){
 		//right
-		if(_buttonIndex == BombermanGame || _buttonIndex  == PongGame){
+		if(_buttonIndex == BombermanGame || _buttonIndex  == RockPaperScissorsGame){
 			_buttonIndex ++;
 			_arrowMoved = 1;
 			_timeMoved = GameFastTime;
 		}
 	}else if(Input->NunchuckAnalogY > 200 && !_arrowMoved && _timeMoved +2 < GameFastTime){
 		// up
-		if(_buttonIndex == PongGame || _buttonIndex  == Marathon || _buttonIndex ==Back ){
+		if(_buttonIndex == RockPaperScissorsGame || _buttonIndex  == Marathon || _buttonIndex == Back){
 			_buttonIndex -=2;
 			_arrowMoved = 1;	
 			_timeMoved = GameFastTime;		
@@ -255,7 +255,7 @@ void SelectGameView::Update(){
 			_buttonIndex ++;
 			_arrowMoved = 1;
 			_timeMoved = GameFastTime;
-		}else if(_buttonIndex == BombermanGame || _buttonIndex  == SnakeGame || _buttonIndex == PongGame ){
+		}else if(_buttonIndex == BombermanGame || _buttonIndex  == SnakeGame || _buttonIndex == RockPaperScissorsGame){
 			_buttonIndex +=2;
 			_arrowMoved = 1;
 			_timeMoved = GameFastTime;
@@ -269,6 +269,16 @@ void SelectGameView::Update(){
 			_pageSelected = 0;
 		} else if(Input->LCDTouchX > 750 && Input->LCDTouchX < 950){
 			_buttonIndex = SnakeGame;
+			_arrowMoved = 1;
+			_pageSelected = 0;
+		}
+	} else if(Input->LCDTouchY > 300 && Input->LCDTouchY < 400){
+		if(Input->LCDTouchX > 500 && Input->LCDTouchX < 750){
+			_buttonIndex = RockPaperScissorsGame;
+			_arrowMoved = 1;
+			_pageSelected = 0;
+		} else if(Input->LCDTouchX > 750 && Input->LCDTouchX < 950){
+			_buttonIndex = Marathon;
 			_arrowMoved = 1;
 			_pageSelected = 0;
 		}
@@ -329,7 +339,7 @@ void SelectGameView::Update(){
 				LCD->fillRect(170,20,130,5,RGB(0,255,0));
 				LCD->fillRect(170,95,130,5,RGB(0,255,0));
 			break;
-			case PongGame:
+			case RockPaperScissorsGame:
 				LCD->fillRect(20,120,5,80,RGB(0,255,0));
 				LCD->fillRect(145,120,5,80,RGB(0,255,0));
 				LCD->fillRect(20,120,130,5,RGB(0,255,0));
@@ -354,10 +364,13 @@ void SelectGameView::Update(){
 		_pageSelected = 1;
 		switch(_buttonIndex){
 			case BombermanGame:
-				new Bomberman(LCD, Input, CommunicationHandler);
+				//new Bomberman(LCD, Input, CommunicationHandler);
 				break;
 			case SnakeGame:
-				new Snake(LCD, Input, CommunicationHandler);
+				//new Snake(LCD, Input, CommunicationHandler);
+				break;
+			case RockPaperScissorsGame:
+				new RockPaperScissors(LCD, Input, CommunicationHandler);
 				break;
 			case Back:
 				new MainMenuView(LCD, Input, CommunicationHandler);

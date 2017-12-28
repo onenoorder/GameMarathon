@@ -37,6 +37,9 @@ public:
 protected:
 	Game(MI0283QT9 *LCD, InputController *inputController,Communication *communication);
 	virtual void EndGame() = 0;
+	void UpdatePlayers();
+	virtual unsigned char GetOutputData() = 0;
+	virtual void DoInputData(unsigned char data) = 0;
 
 }; //Game
 

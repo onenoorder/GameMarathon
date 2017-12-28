@@ -364,13 +364,13 @@ void SelectGameView::Update(){
 		_pageSelected = 1;
 		switch(_buttonIndex){
 			case BombermanGame:
-				//new Bomberman(LCD, Input, CommunicationHandler);
+				new Bomberman(LCD, Input, CommunicationHandler);
 				break;
 			case SnakeGame:
 				//new Snake(LCD, Input, CommunicationHandler);
 				break;
 			case RockPaperScissorsGame:
-				new RockPaperScissors(LCD, Input, CommunicationHandler);
+				//new RockPaperScissors(LCD, Input, CommunicationHandler);
 				break;
 			case Back:
 				new MainMenuView(LCD, Input, CommunicationHandler);

@@ -55,6 +55,12 @@ void Bomberman::Load()
 			// Wall
 			else if(x % 2 == 1 && y % 2 == 1)
 				Grid[x][y] = Wall;
+			// PowerUp more bombs
+			else if(x == 2 && y == 2 || x == MaxX-3 && y == 2 || x == 2 && y == MaxY-3 || x == MaxX-3 && y == MaxY-3)
+				Grid[x][y] = MoreBombs | Rock;
+			// PowerUp more power
+			else if(x % 2 == 0 && y % 2 == 0)
+				Grid[x][y] = MorePower | Rock;
 			// Rock
 			else
 				Grid[x][y] = Rock;
@@ -316,7 +322,7 @@ void Bomberman::DrawGridCell(char x, char y){
 		LCD->drawLine(OffsetX + x * GridBlockSize, OffsetY + y * GridBlockSize + GridBlockSize-1, OffsetX + x * GridBlockSize + GridBlockSize-1, OffsetY + y * GridBlockSize + GridBlockSize-1, RockGlowColor);
 		LCD->drawLine(OffsetX + x * GridBlockSize, OffsetY + y * GridBlockSize, OffsetX + x * GridBlockSize, OffsetY + y * GridBlockSize + GridBlockSize-1, RockGlowColor);
 		LCD->drawLine(OffsetX + x * GridBlockSize + GridBlockSize-1, OffsetY + y * GridBlockSize, OffsetX + x * GridBlockSize + GridBlockSize-1, OffsetY + y * GridBlockSize + GridBlockSize-1, RockGlowColor);
-	} else if(Grid[x][y] == Rock) {
+	} else if((Grid[x][y] & Rock) > 0) {
 		LCD->fillRect(OffsetX + x * GridBlockSize, OffsetY + y * GridBlockSize, GridBlockSize, GridBlockSize, RockColor);
 
 		// Outerlines
@@ -377,14 +383,20 @@ void Bomberman::DrawGridCell(char x, char y){
 			LCD->fillRect(OffsetX + x * GridBlockSize, OffsetY + y * GridBlockSize, GridBlockSize, GridBlockSize, BackgroundColor);
 			LCD->drawText(OffsetX + x * GridBlockSize, OffsetY + y * GridBlockSize, "M", ExplotionColor, BackgroundColor, GridBlockSize/7);
 		}
-	} else if(Grid[x][y] == Walkable)
+	} else if(Grid[x][y] == Walkable){
 		LCD->fillRect(OffsetX + x * GridBlockSize, OffsetY + y * GridBlockSize, GridBlockSize, GridBlockSize, BackgroundColor);
-	else if(Grid[x][y] == Bomb){
+	} else if(Grid[x][y] == Bomb){
 		LCD->fillEllipse(OffsetX + x * GridBlockSize + (GridBlockSize/2), OffsetY + y * GridBlockSize + (GridBlockSize/2), GridBlockSize/2, GridBlockSize/2, RGB(0,0,0));
 		LCD->fillEllipse(OffsetX + x * GridBlockSize + (GridBlockSize/2), OffsetY + y * GridBlockSize + (GridBlockSize/4), GridBlockSize/4, GridBlockSize/4, RockColor);
-	}
-	else if(Grid[x][y] == Grave)
+	} else if(Grid[x][y] == Grave){
 		LCD->fillEllipse(OffsetX + x * GridBlockSize + (GridBlockSize/2), OffsetY + y * GridBlockSize + (GridBlockSize/2), GridBlockSize/2, GridBlockSize/2, RGB(255,255,255));
+	} else if(Grid[x][y] == MorePower){
+		LCD->fillRect(OffsetX + x * GridBlockSize, OffsetY + y * GridBlockSize, GridBlockSize, GridBlockSize, RGB(0,0,255));
+		LCD->drawText(OffsetX + x * GridBlockSize, OffsetY + y * GridBlockSize, "P", RGB(255,255,0), RGB(0,0,255), GridBlockSize/7);
+	} else if(Grid[x][y] == MoreBombs){
+		LCD->fillRect(OffsetX + x * GridBlockSize, OffsetY + y * GridBlockSize, GridBlockSize, GridBlockSize, RGB(0,0,255));
+		LCD->drawText(OffsetX + x * GridBlockSize, OffsetY + y * GridBlockSize, "B", RGB(255,255,0), RGB(0,0,255), GridBlockSize/7);
+	}
 }
 
 // default destructor

@@ -35,6 +35,8 @@ public:
 	uint16_t BackgroundColor;
 	enum GridCell{
 		 Walkable = 0,
+		 MoreBombs = 2,
+		 MorePower = 4,
 		 Grave = 8,
 		 Explotion = 16,
 		 Explotion_1 = 20,

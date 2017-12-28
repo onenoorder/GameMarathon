@@ -19,6 +19,7 @@ public:
 	char ID;
 	uint16_t Color;
 	DirectionEnum Direction;
+	char Updated;
 protected:
 private:
 	RockPaperScissors *_game;

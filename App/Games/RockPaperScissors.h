@@ -23,6 +23,8 @@ private:
 	RockPaperScissorsPlayer *_players[2];
 	RockPaperScissorsPlayer *_currentPlayer;
 	unsigned char _turn;
+	unsigned char _maxTurn;
+	unsigned char _newTurn;
 	int _turnTime;
 	
 	enum RockPaperScissorsData{
@@ -34,7 +36,8 @@ private:
 		ROCKPAPERSCISSORS_SCISSORS = 6,
 		ROCKPAPERSCISSORS_WIN = 8,
 		ROCKPAPERSCISSORS_LOSE = 10,
-		ROCKPAPERSCISSORS_ACTIONS = 14
+		ROCKPAPERSCISSORS_ACTIONS = 14,
+		ROCKPAPERSCISSORS_TURN = 16
 	};
 
 //functions
@@ -49,6 +52,7 @@ private:
 	virtual unsigned char GetOutputData();
 	virtual void DoInputData(unsigned char data);
 	void UpdatePlayerInput();
+	void UpdateField();
 
 }; //RockPaperScissors
 

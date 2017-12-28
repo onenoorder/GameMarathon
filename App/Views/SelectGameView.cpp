@@ -364,7 +364,7 @@ void SelectGameView::Update(){
 		_pageSelected = 1;
 		switch(_buttonIndex){
 			case BombermanGame:
-				new Bomberman(LCD, Input, CommunicationHandler);
+				//new Bomberman(LCD, Input, CommunicationHandler);
 				break;
 			case SnakeGame:
 				//new Snake(LCD, Input, CommunicationHandler);

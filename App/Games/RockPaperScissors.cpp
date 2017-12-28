@@ -12,6 +12,8 @@ RockPaperScissors::RockPaperScissors(MI0283QT9 *LCD, InputController *inputContr
 {
 	BackgroundColor = RGB(66, 244, 95);
 	_turn = 0;
+	_maxTurn = 3;
+	_newTurn = 0;
 } //RockPaperScissors
 
 void RockPaperScissors::Load()
@@ -33,37 +35,27 @@ void RockPaperScissors::Update(){
 	if(PlayerID == 0 && NewFrame == 0) return;
 	Game::Update();
 
-	if(_turn > 3){
+	if(_turn > _maxTurn){
 		EndGame();
 		return;
+	} else if(_turn == _maxTurn){
+		if(_turnTime <= GameSeconds)
+			_turn++;
+		return;
+	}
+
+	if(PlayerID == 0 && _turnTime <= GameSeconds){
+		_newTurn = 1;
 	}
 
 	this->UpdatePlayerInput();
 	this->UpdatePlayers();
-
-	if(_turnTime <= GameSeconds){
-		_players[0]->Draw(LCD);
-		_players[1]->Draw(LCD);
-
-		if(_players[0]->Direction == Up && _players[1]->Direction != Left)
-			_players[0]->Score += 100;
-		else if(_players[0]->Direction == Left && _players[1]->Direction != Right)
-			_players[0]->Score += 100;
-		else if(_players[0]->Direction == Right && _players[1]->Direction != Up)
-			_players[0]->Score += 100;
-		else
-			_players[1]->Score += 100;
-
-		_turn++;
-		_turnTime += 3;
-	} else {
-		_currentPlayer->Draw(LCD);
-	}
+	this->UpdateField();
 }
 
 void RockPaperScissors::EndGame(){
 	if(_players[0]->Score == _players[1]->Score){
-		_turn--;
+		_maxTurn++;
 		return;
 	}
 
@@ -84,12 +76,49 @@ void RockPaperScissors::EndGame(){
 void RockPaperScissors::UpdatePlayerInput(){
 	Input->UpdateInput();
 
-	if(Input->NunchuckAnalogX > 200)
-		_currentPlayer->Direction = Right;
-	else if(Input->NunchuckAnalogY > 200)
-		_currentPlayer->Direction = Up;
-	else if(Input->NunchuckAnalogX < 50)
-		_currentPlayer->Direction = Left;
+	if(Input->NunchuckAnalogX > 200){
+		if(_currentPlayer->Direction != Right){
+			_currentPlayer->Direction = Right;
+			_currentPlayer->Updated = 1;
+		}
+	} else if(Input->NunchuckAnalogY > 200){
+		if(_currentPlayer->Direction != Up){
+			_currentPlayer->Direction = Up;
+			_currentPlayer->Updated = 1;
+		}
+	} else if(Input->NunchuckAnalogX < 50){
+		if(_currentPlayer->Direction != Left){
+			_currentPlayer->Direction = Left;
+			_currentPlayer->Updated = 1;
+		}
+	}
+}
+
+void RockPaperScissors::UpdateField(){
+	if(_newTurn == 1){
+		_players[0]->Updated = 1;
+		_players[0]->Draw(LCD);
+		_players[1]->Updated = 1;
+		_players[1]->Draw(LCD);
+
+		LCD->drawText(120, 20, "Turn: ", RGB(255,0,0), BackgroundColor, 1);
+		LCD->drawInteger(170, 20, _turn+1, DEC, RGB(255,0,0), BackgroundColor, 1);
+
+		if(_players[0]->Direction == Up && _players[1]->Direction != Left)
+			_players[0]->Score += 100;
+		else if(_players[0]->Direction == Left && _players[1]->Direction != Right)
+			_players[0]->Score += 100;
+		else if(_players[0]->Direction == Right && _players[1]->Direction != Up)
+			_players[0]->Score += 100;
+		else
+			_players[1]->Score += 100;
+
+		_turn++;
+		_turnTime += 3;
+		_newTurn = 0;
+	} else {
+		_currentPlayer->Draw(LCD);
+	}
 }
 
 //functie voor outputdata, zet waarde van bepaalde actie weg in 'data' en verwerkdit met Doinputdata
@@ -110,6 +139,9 @@ unsigned char RockPaperScissors::GetOutputData(){
 	
 	if(_currentPlayer->Alive == 0)
 		data |= ROCKPAPERSCISSORS_LOSE;
+
+	if(_newTurn == 1)
+		data |= ROCKPAPERSCISSORS_TURN;
 	
 	DoInputData(data);
 	return data;
@@ -142,6 +174,9 @@ void RockPaperScissors::DoInputData(unsigned char data){
 					break;
 			};
 		}
+
+		if((data & ROCKPAPERSCISSORS_TURN) == ROCKPAPERSCISSORS_TURN)
+			_newTurn = 1;
 	}
 }
 

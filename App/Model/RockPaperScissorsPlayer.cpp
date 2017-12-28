@@ -13,9 +13,13 @@ RockPaperScissorsPlayer::RockPaperScissorsPlayer(char ID, uint16_t color, RockPa
 	this->ID = ID;
 	this->Color = color;
 	this->_game = game;
+	this->Updated = 1;
 } //RockPaperScissorsPlayer
 
 void RockPaperScissorsPlayer::Draw(MI0283QT9 *LCD){
+	if(Updated == 0)
+		return;
+	
 	unsigned char x = ID == 1 ? 25 : 175;
 	unsigned char y = 50;
 
@@ -33,6 +37,7 @@ void RockPaperScissorsPlayer::Draw(MI0283QT9 *LCD){
 			_game->LCD->drawLine(x+40, y+80, x+100, y+20, Color);
 			break;
 	};
+	Updated = 0;
 }
 
 // default destructor

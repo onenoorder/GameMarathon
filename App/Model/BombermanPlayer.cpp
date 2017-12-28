@@ -15,7 +15,7 @@ BombermanPlayer::BombermanPlayer(char X,char Y, uint16_t color, Bomberman * game
 	this->Direction = Up;
 	this->Color = color;
 	this->ShadowColor = RGB(166, 24, 204);
-	this->Blastpower = 5;
+	this->Blastpower = 1;
 	this->Bombs = 0;
 	this->MaxBombs = 1;
 	this->_game = game;
@@ -31,42 +31,33 @@ void BombermanPlayer::Move(){
 		if(this->X+1 < _game->MaxX &&_game->Grid[this->X+1][this->Y] < _game->Bomb){
 			if(_game->Grid[this->X][this->Y] != _game->Bomb)
 				_game->Grid[this->X][this->Y] = _game->Walkable;	
-			
-				this->X++;
-				if (_game->Grid[this->X][this->Y] != _game->Explotion)
-					_game->Grid[this->X][this->Y] = 1;
-			}
-		
+			this->X++;
+		}
 	} else if(Direction == Up){
 		if(this->Y-1 >= 0 && _game->Grid[this->X][this->Y-1] < _game->Bomb){
 			if(_game->Grid[this->X][this->Y] != _game->Bomb)
 				_game->Grid[this->X][this->Y] = _game->Walkable;
-		
 			this->Y--;
-			if (_game->Grid[this->X][this->Y] != _game->Explotion)
-				_game->Grid[this->X][this->Y] = 1;
 		}
-
 	} else if(Direction == Left){
 		if(this->X-1 >= 0 &&_game->Grid[this->X-1][this->Y] < _game->Bomb){
 			if(_game->Grid[this->X][this->Y] != _game->Bomb)
-			_game->Grid[this->X][this->Y] = _game->Walkable;		
-
+				_game->Grid[this->X][this->Y] = _game->Walkable;		
 			this->X--;
-			if (_game->Grid[this->X][this->Y] != _game->Explotion)
-				_game->Grid[this->X][this->Y] = 1;
 		}
-	
 	} else if(Direction == Down){
 		if(this->Y+1 < _game->MaxY &&_game->Grid[this->X][this->Y+1] < _game->Bomb){
 			if(_game->Grid[this->X][this->Y] != _game->Bomb)
-			_game->Grid[this->X][this->Y] = _game->Walkable;		
-		
+				_game->Grid[this->X][this->Y] = _game->Walkable;		
 			this->Y++;
-			if (_game->Grid[this->X][this->Y] != _game->Explotion)
-				_game->Grid[this->X][this->Y] = 1;
-		}	
+		}
 	}
+	if(_game->Grid[this->X][this->Y] == _game->MoreBombs)
+		MaxBombs++;
+	if(_game->Grid[this->X][this->Y] == _game->MorePower)
+		Blastpower++;
+	if (_game->Grid[this->X][this->Y] != _game->Explotion)
+		_game->Grid[this->X][this->Y] = 1;
 }
 
 //teken speler (evt op nieuwe locatie)

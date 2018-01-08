@@ -224,6 +224,7 @@ void SelectGameView::drawBombermanFrame(){
 
 //selectgame-menu updaten,
 void SelectGameView::Update(){
+	View::Update();
 	Input->UpdateInput();
 
 	if(Input->NunchuckAnalogX > 200 && !_arrowMoved && _timeMoved +2 < GameFastTime){

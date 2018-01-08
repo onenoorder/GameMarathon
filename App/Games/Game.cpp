@@ -19,6 +19,7 @@ Game::Game(MI0283QT9 *LCD, InputController *inputController, Communication *comm
 
 //updaten game, frame reset.
 void Game::Update(){
+	View::Update();
 	NewFrame = 0;
 }
 

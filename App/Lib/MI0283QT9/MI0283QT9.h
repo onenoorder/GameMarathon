@@ -20,7 +20,7 @@ class MI0283QT9 : public GraphicsLib
     void drawStart(void);
     void draw(uint_least16_t color);
     void drawStop(void);
-
+	uint16_t SchermResult = 0;
     uint_least8_t touchRead(void);
     void touchStartCal(void);
 

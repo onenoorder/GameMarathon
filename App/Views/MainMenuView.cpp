@@ -37,6 +37,7 @@ void MainMenuView::Load(){
 
 // mainmenuscherm updaten op basis van input met controller.
 void MainMenuView::Update(){
+	View::Update();
 	Input->UpdateInput();
 
 	if(Input->NunchuckAnalogY > 200 && _buttonIndex > 0){

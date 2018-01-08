@@ -35,6 +35,7 @@ void HighScoreView::Load(){
 }
 
 void HighScoreView::Update(){
+	View::Update();
 	Input->UpdateInput();
 	
 	if(Input->LCDTouchY > 400){

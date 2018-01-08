@@ -16,7 +16,7 @@
 #define RL_MASTER 0
 #define RL_SLAVE 1
 
-#define GLBL_Players 2
+#define GLBL_Players 1
 #define GLBL_Role RL_SLAVE
 
 class View
@@ -35,9 +35,11 @@ public:
 public:
 	virtual ~View(){}
 	virtual void Load() = 0;
-	virtual void Update() = 0;
+	virtual void Update();
 protected:
 	View(MI0283QT9 *LCD, InputController *inputController, Communication * communication);
+	void Potmeter();
+
 }; //View
 
 extern View * CurrentView;

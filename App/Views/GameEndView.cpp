@@ -36,6 +36,7 @@ void GameEndView::Load(){
 
 //updaten eindscherm.
 void GameEndView::Update(){
+	View::Update();
 	Input->UpdateInput();
 	
 	if(Input->LCDTouchY > 400){

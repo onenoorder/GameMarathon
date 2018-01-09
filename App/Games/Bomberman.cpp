@@ -92,7 +92,7 @@ void Bomberman::Update(){
 		return;
 	}
 	this->UpdatePlayerInput();
-	this->UpdatePlayers();
+	Game::UpdatePlayers();
 	this->UpdateBombs();
 }
 

@@ -37,7 +37,7 @@ void InputController::UpdateInput(){
 	NunchuckAccelZ = _nunchuck->accelZ;
 	NunchuckAnalogX = _nunchuck->analogX;
 	NunchuckAnalogY = _nunchuck->analogY;
-
+	
 	_LCD->touchRead();
 	LCDTouchX = _LCD->tp_x;
 	LCDTouchY = _LCD->tp_y;

@@ -53,7 +53,7 @@ void Snake::Update(){
 	}
 
 	this->UpdatePlayerInput();
-	this->UpdatePlayers();
+	Game::UpdatePlayers();
 }
 
 //afgelopen spel spel eindigen

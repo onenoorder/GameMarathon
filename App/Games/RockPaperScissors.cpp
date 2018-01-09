@@ -49,7 +49,7 @@ void RockPaperScissors::Update(){
 	}
 
 	this->UpdatePlayerInput();
-	this->UpdatePlayers();
+	Game::UpdatePlayers();
 	this->UpdateField();
 }
 
